@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Azfar Suhail — AI, Backend &amp; Infrastructure Engineer</title>
+<meta name="description" content="Portfolio of Azfar Suhail, an AI, backend and infrastructure engineer based in Karachi, Pakistan.">
+<link rel="canonical" href="https://YOUR-DOMAIN.vercel.app/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+<!-- Social preview. Replace YOUR-DOMAIN with your real Vercel domain (4 places on this page). -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Azfar Suhail — AI, Backend &amp; Infrastructure Engineer">
+<meta property="og:description" content="Final-year CS student in Karachi. Inference services, video pipelines, and the infrastructure holding them up.">
+<meta property="og:url" content="https://YOUR-DOMAIN.vercel.app/">
+<meta property="og:image" content="https://YOUR-DOMAIN.vercel.app/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://YOUR-DOMAIN.vercel.app/og.png">
+<meta name="theme-color" content="#0C0C0C">
+
+<link rel="preload" href="/fonts/archivo-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/dm-mono-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* Self-hosted so the page has no third-party requests and renders
+   the same on networks where Google Fonts is slow or blocked. */
+@font-face{font-family:Archivo;font-style:normal;font-weight:500;font-display:swap;
+  src:url(/fonts/archivo-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:Archivo;font-style:normal;font-weight:700;font-display:swap;
+  src:url(/fonts/archivo-latin-700-normal.woff2) format("woff2")}
+@font-face{font-family:Archivo;font-style:normal;font-weight:800;font-display:swap;
+  src:url(/fonts/archivo-latin-800-normal.woff2) format("woff2")}
+@font-face{font-family:"DM Mono";font-style:normal;font-weight:300;font-display:swap;
+  src:url(/fonts/dm-mono-latin-300-normal.woff2) format("woff2")}
+@font-face{font-family:"DM Mono";font-style:normal;font-weight:400;font-display:swap;
+  src:url(/fonts/dm-mono-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"DM Mono";font-style:normal;font-weight:500;font-display:swap;
+  src:url(/fonts/dm-mono-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:Newsreader;font-style:normal;font-weight:400;font-display:swap;
+  src:url(/fonts/newsreader-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:Newsreader;font-style:italic;font-weight:400;font-display:swap;
+  src:url(/fonts/newsreader-latin-400-italic.woff2) format("woff2")}
+</style>
+<style>
+/* ---------------------------------------------------------------
+   PALETTE — provenance: SMPTE bars and the PLUGE strip, the patches
+   an engineer uses to set black level on a broadcast monitor.
+   vh       #000000  PLUGE 0% — true black, the canvas
+   panel    #0C0C0C  PLUGE +4% — the patch you should just barely see
+   panel-2  #161616  recessed row, one step up
+   ink      #E8E5DE  100% white as a CRT renders it: warm, not blue
+   mag      #BF00BF  SMPTE 75% bars, magenta — carries the accent load
+   --------------------------------------------------------------- */
+:root{
+  --vh:#000000;
+  --panel:#0C0C0C;
+  --panel-2:#161616;
+  --ink:#E8E5DE;
+  --mag:#BF00BF;
+  --mag-lt:#E979DF;
+
+  --rule:rgba(232,229,222,.13);
+  --rule-soft:rgba(232,229,222,.06);
+  --mute:rgba(232,229,222,.62);
+  --mute-lg:rgba(232,229,222,.45);
+
+  --mono:"DM Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --disp:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --body:"Newsreader",Georgia,serif;
+
+  /* type scale, ratio 1.333 off a 13px mono base */
+  --pad:clamp(18px,4vw,64px);
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--vh);color:var(--ink);
+  font-family:var(--body);font-size:17px;line-height:1.55;
+  font-variant-numeric:tabular-nums;
+}
+::selection{background:var(--mag);color:var(--vh)}
+a{color:inherit}
+a:focus-visible,button:focus-visible{outline:2px solid var(--mag-lt);outline-offset:3px}
+
+/* ---- structural primitives ---- */
+.bleed{width:100%;border-top:1px solid var(--rule)}
+.wrap{padding-left:var(--pad);padding-right:var(--pad)}
+.lab{font-family:var(--mono);font-size:11px;font-weight:400;letter-spacing:.16em;
+     text-transform:uppercase;color:var(--mute)}
+.mono{font-family:var(--mono);font-size:13px;line-height:1.5}
+
+
+/* ================= MASTER CONTROL ================= */
+.mcr{position:sticky;top:0;z-index:40;background:var(--panel);
+     border-top:3px solid var(--mag);border-bottom:1px solid var(--rule)}
+.mcr-in{display:flex;align-items:center;gap:20px;height:46px;overflow:hidden}
+.sig{font-family:var(--disp);font-weight:800;font-size:14px;letter-spacing:-.01em;
+     text-transform:uppercase;white-space:nowrap}
+.lamp{display:inline-flex;align-items:center;gap:8px;white-space:nowrap;margin-left:auto;
+      font-family:var(--mono);font-size:12px;letter-spacing:.05em;color:var(--mag-lt)}
+.lamp i{width:7px;height:7px;background:var(--mag);display:block}
+.nav{display:flex;gap:16px;white-space:nowrap;overflow-x:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav a{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+       color:var(--mute);text-decoration:none;padding:2px 0;border-bottom:1px solid transparent}
+.nav a:hover{color:var(--ink);border-bottom-color:var(--mag)}
+@media(max-width:900px){.nav{display:none}}
+@media(max-width:520px){.lamp{font-size:11px;letter-spacing:0}}
+
+/* ================= SECTION SHELL =================
+   Depth comes from stacked surface values and hairlines rather than
+   drop shadows: #000 canvas, #0C0C0C raised, #161616 for rows in focus.
+   On a dark screen a real shadow is invisible anyway — contrast reads. */
+section{padding-bottom:clamp(46px,7vw,92px)}
+#skills,#contact{background:var(--panel)}
+#skills{border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.head{padding:clamp(30px,5vw,58px) 0 0}
+.head .n{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.16em;
+         text-transform:uppercase;color:var(--mag-lt);margin-bottom:12px}
+.head h2{font-family:var(--disp);font-weight:800;font-size:clamp(27px,4vw,44px);
+         letter-spacing:-.03em;line-height:1;margin:0}
+.head p{margin:12px 0 0;max-width:62ch;color:var(--mute);font-size:16.5px}
+
+/* ================= IDENT ================= */
+.ident{padding-top:clamp(34px,7vw,72px)}
+.ident-grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:0 clamp(24px,5vw,72px)}
+h1{font-family:var(--disp);font-weight:800;margin:0;
+   font-size:clamp(40px,8.4vw,104px);line-height:.94;letter-spacing:-.035em;text-transform:uppercase}
+h1 em{font-style:normal;color:var(--mute-lg)}
+.name{font-family:var(--mono);font-size:13px;letter-spacing:.28em;text-transform:uppercase;
+      margin:0 0 18px;display:block}
+.bio{max-width:66ch;margin:26px 0 0;font-size:18px;line-height:1.6}
+.bio + .bio{margin-top:14px}
+.spec{margin-top:34px;border-top:1px solid var(--rule)}
+.spec div{display:grid;grid-template-columns:104px 1fr;gap:16px;padding:9px 0;
+          border-bottom:1px solid var(--rule-soft);font-family:var(--mono);font-size:13px}
+.spec dt{color:var(--mute)}
+.spec dd{margin:0}
+@media(max-width:860px){.ident-grid{grid-template-columns:1fr}.spec{margin-top:26px}}
+
+/* ================= STACK TICKER =================
+   The stack as a broadcast ticker rather than an icon grid: marks sit
+   at text size, monochrome, inline with their labels. Hover to pause. */
+.ticker{margin-top:clamp(30px,5vw,58px);background:var(--panel);
+        border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.tk-row{overflow:hidden}
+.tk-row + .tk-row{border-top:1px solid var(--rule-soft)}
+.tk{display:flex;width:max-content}
+.tk i{display:flex;align-items:center;gap:9px;padding:12px 20px;font-style:normal;
+      font-family:var(--mono);font-size:13px;letter-spacing:.05em;white-space:nowrap;
+      color:var(--mute);border-right:1px solid var(--rule-soft);
+      transition:color 120ms linear}
+.tk i:hover{color:var(--ink)}
+.tk i svg{width:15px;height:15px;fill:currentColor;flex:none}
+.tk i svg.none{display:none}
+@keyframes tkA{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes tkB{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+@media(prefers-reduced-motion:no-preference){
+  .tk{animation:tkA 64s linear infinite}
+  .tk2{animation:tkB 72s linear infinite}
+  .ticker:hover .tk{animation-play-state:paused}
+}
+@media(max-width:640px){.tk i{padding:10px 15px;font-size:12px}.tk i svg{width:13px;height:13px}}
+
+/* ================= RUNDOWN (experience) ================= */
+.rows{margin-top:28px;border-top:1px solid var(--rule)}
+.row{border-bottom:1px solid var(--rule-soft);border-left:2px solid transparent;
+     padding-left:16px;transition:background 130ms linear,border-left-color 130ms linear}
+.row:hover{background:var(--panel)}
+.row.now{border-left-color:var(--mag);background:var(--panel)}
+.row:last-child{border-bottom:1px solid var(--rule)}
+.rhead{display:grid;grid-template-columns:96px minmax(0,1fr) 96px 104px;gap:0 20px;
+       align-items:baseline;padding:16px 0 6px;font-family:var(--mono);font-size:12px;color:var(--mute)}
+.rhead .t{display:flex;align-items:flex-start;gap:14px;
+          font-family:var(--disp);font-weight:700;font-size:clamp(19px,2.5vw,27px);
+          letter-spacing:-.02em;color:var(--ink);line-height:1.15}
+/* Company mark. Sits in a fixed square with a hairline — no radius, no card.
+   Knocked to greyscale so a coloured logo doesn't fight the palette; hovering
+   the row brings it back to full colour. The monogram behind it shows if the
+   image file is missing, so the row never breaks. */
+.mark{position:relative;width:38px;height:38px;flex:none;margin-top:2px;
+      border:1px solid var(--rule);background:var(--panel-2);
+      display:grid;place-items:center;overflow:hidden}
+.mark::before{content:attr(data-fb);font-family:var(--mono);font-size:12px;
+              font-weight:400;letter-spacing:.08em;color:var(--mute-lg)}
+.mark img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;
+          filter:grayscale(1) contrast(1.04);opacity:.85;
+          transition:filter 140ms linear,opacity 140ms linear}
+.row:hover .mark img{filter:none;opacity:1}
+.rhead .tt{display:block;min-width:0}
+.rhead .t small{display:block;font-family:var(--mono);font-size:12px;font-weight:400;
+                letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin-top:5px}
+.rhead .st{text-align:right;letter-spacing:.14em}
+.live{color:var(--mag-lt)}
+.live::after{content:"";display:inline-block;width:6px;height:6px;background:var(--mag);
+             margin-left:7px;vertical-align:middle}
+.rbody{padding:2px 0 20px;margin-left:116px;max-width:74ch}
+.rbody ul{margin:0;padding:0;list-style:none}
+.rbody li{padding:5px 0 5px 20px;position:relative;font-size:16.5px;line-height:1.5}
+.rbody li::before{content:"—";position:absolute;left:0;color:var(--mute-lg)}
+.stack{margin-top:11px;font-family:var(--mono);font-size:12px;color:var(--mute);
+       letter-spacing:.04em;line-height:1.9}
+@media(max-width:760px){
+  .rhead{grid-template-columns:1fr;gap:4px}
+  .rhead .d,.rhead .st{text-align:left}
+  .rbody{margin-left:0}
+}
+
+/* ================= SOURCES (projects) ================= */
+.tbl{margin-top:28px;border-top:1px solid var(--rule)}
+.tbl-h{display:grid;grid-template-columns:60px minmax(0,1.5fr) minmax(0,1fr);gap:0 24px;
+       padding:8px 0;border-bottom:1px solid var(--rule)}
+.p{display:grid;grid-template-columns:60px minmax(0,1.5fr) minmax(0,1fr);gap:0 24px;
+   padding:18px 0 18px 14px;border-bottom:1px solid var(--rule-soft);
+   border-left:2px solid transparent;
+   transition:background 120ms linear,border-left-color 120ms linear}
+.p:hover{background:var(--panel-2);border-left-color:var(--mag)}
+.p .id{font-family:var(--mono);font-size:12px;color:var(--mute);padding-top:4px}
+.p h3{font-family:var(--disp);font-weight:700;font-size:19px;letter-spacing:-.015em;margin:0;line-height:1.25}
+.p .flag{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+         color:var(--mag-lt);margin-left:10px;white-space:nowrap}
+.p p{margin:7px 0 0;font-size:16.5px;line-height:1.5;max-width:60ch}
+.p .tech{font-family:var(--mono);font-size:12px;color:var(--mute);line-height:1.85;padding-top:4px;letter-spacing:.03em}
+@media(max-width:760px){
+  .tbl-h{display:none}
+  .p{grid-template-columns:52px 1fr;gap:0 12px}
+  .p .tech{grid-column:2;padding-top:10px}
+}
+
+/* ================= RACK (skills) ================= */
+.rack{margin-top:28px;border-top:1px solid var(--rule)}
+.strip{display:grid;grid-template-columns:190px 1fr;gap:0 24px;padding:13px 0;
+       border-bottom:1px solid var(--rule-soft);align-items:baseline}
+.strip .k{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
+.strip .v{font-family:var(--mono);font-size:13.5px;line-height:1.95;letter-spacing:.01em}
+.strip .v i{font-style:normal;color:var(--mute-lg);padding:0 8px}
+@media(max-width:760px){.strip{grid-template-columns:1fr;gap:5px}}
+
+/* ================= MARKS ================= */
+.marks{margin-top:28px;border-top:1px solid var(--rule);
+       display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 clamp(24px,5vw,64px)}
+.mk{display:grid;grid-template-columns:132px 1fr;gap:0 18px;align-items:baseline;
+    padding:15px 0;border-bottom:1px solid var(--rule-soft)}
+.mk b{font-family:var(--disp);font-weight:800;font-size:clamp(26px,3.4vw,38px);
+      letter-spacing:-.035em;line-height:1;display:block}
+.mk b u{text-decoration:none;font-size:.5em;letter-spacing:0;padding-left:2px;color:var(--mute-lg)}
+.mk span{font-size:16px;line-height:1.45}
+@media(max-width:760px){.marks{grid-template-columns:1fr}.mk{grid-template-columns:112px 1fr}}
+
+/* ================= SIGN OFF ================= */
+.signoff{background:var(--panel);border-top:1px solid var(--rule);
+         padding-top:clamp(34px,6vw,64px);padding-bottom:clamp(30px,5vw,52px);margin-top:8px}
+.signoff h2{font-family:var(--disp);font-weight:800;text-transform:uppercase;
+            font-size:clamp(30px,6vw,64px);letter-spacing:-.035em;line-height:.98;margin:0 0 26px}
+.contact{border-top:1px solid var(--rule);max-width:720px}
+.contact a,.contact span.row-c{display:grid;grid-template-columns:112px 1fr;gap:16px;
+  padding:11px 0;border-bottom:1px solid var(--rule-soft);font-family:var(--mono);font-size:13.5px;
+  text-decoration:none}
+.contact a:hover .val{border-bottom:1px solid var(--mag)}
+.contact .key{color:var(--mute);letter-spacing:.14em;text-transform:uppercase;font-size:11px}
+.contact .val{justify-self:start}
+.todo{color:var(--mag-lt)}
+.colophon{margin-top:30px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;
+          text-transform:uppercase;color:var(--mute);display:flex;flex-wrap:wrap;gap:6px 22px}
+
+/* ================= BOOT SEQUENCE (one moment) ================= */
+@media(prefers-reduced-motion:no-preference){
+  .boot .ident h1,.boot .name,.boot .bio,.boot .spec{
+    opacity:0;transform:translateY(9px)}
+  .lit .ident h1,.lit .name,.lit .bio,.lit .spec{
+    opacity:1;transform:none;
+    transition:opacity 420ms linear,transform 480ms cubic-bezier(.2,.7,.3,1)}
+  .lit .name{transition-delay:40ms}
+  .lit .ident h1{transition-delay:100ms}
+  .lit .bio{transition-delay:220ms}
+  .lit .spec{transition-delay:300ms}
+  .boot .lamp i{opacity:0}
+  .lit .lamp i{opacity:1;transition:opacity 160ms step-end;transition-delay:620ms}
+}
+</style>
+</head>
+<body class="boot">
+
+<!-- =============== MASTER CONTROL =============== -->
+<header class="mcr">
+  <div class="mcr-in wrap">
+    <span class="sig">Azfar Suhail</span>
+    <nav class="nav" aria-label="Sections">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#impact">Impact</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <span class="lamp"><i></i>Open to work &mdash; Jan 2027</span>
+  </div>
+</header>
+
+<main>
+
+<!-- =============== IDENT =============== -->
+<section id="about" class="ident wrap">
+  <div class="ident-grid">
+    <div>
+      <span class="name">Azfar Suhail</span>
+      <h1>AI, backend<br>and the wiring<br><em>underneath.</em></h1>
+    </div>
+    <div>
+      <p class="bio">Final-year computer science student in Karachi, currently a junior software engineer at a financial brokerage. I work on the parts that have to keep running when nobody is watching: inference services, video pipelines, and the infrastructure holding them up.</p>
+      <p class="bio">Most of what I have shipped started as somebody's manual afternoon and ended as something that runs on a schedule.</p>
+      <dl class="spec">
+        <div><dt>Open to</dt><dd>AI · Backend · DevOps &amp; Cloud</dd></div>
+        <div><dt>Base</dt><dd>Karachi, PK — or remote</dd></div>
+        <div><dt>Level</dt><dd>Entry / junior</dd></div>
+        <div><dt>Degree</dt><dd>BSCS, IoBM — Jan 2027</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- =============== STACK TICKER (full bleed) =============== -->
+<svg class="sprite" aria-hidden="true" width="0" height="0" style="position:absolute"><symbol id="i-python" viewBox="0 0 24 24"><path d="M14.25.18l.9.2.73.26.59.3.45.32.34.34.25.34.16.33.1.3.04.26.02.2-.01.13V8.5l-.05.63-.13.55-.21.46-.26.38-.3.31-.33.25-.35.19-.35.14-.33.1-.3.07-.26.04-.21.02H8.77l-.69.05-.59.14-.5.22-.41.27-.33.32-.27.35-.2.36-.15.37-.1.35-.07.32-.04.27-.02.21v3.06H3.17l-.21-.03-.28-.07-.32-.12-.35-.18-.36-.26-.36-.36-.35-.46-.32-.59-.28-.73-.21-.88-.14-1.05-.05-1.23.06-1.22.16-1.04.24-.87.32-.71.36-.57.4-.44.42-.33.42-.24.4-.16.36-.1.32-.05.24-.01h.16l.06.01h8.16v-.83H6.18l-.01-2.75-.02-.37.05-.34.11-.31.17-.28.25-.26.31-.23.38-.2.44-.18.51-.15.58-.12.64-.1.71-.06.77-.04.84-.02 1.27.05zm-6.3 1.98l-.23.33-.08.41.08.41.23.34.33.22.41.09.41-.09.33-.22.23-.34.08-.41-.08-.41-.23-.33-.33-.22-.41-.09-.41.09zm13.09 3.95l.28.06.32.12.35.18.36.27.36.35.35.47.32.59.28.73.21.88.14 1.04.05 1.23-.06 1.23-.16 1.04-.24.86-.32.71-.36.57-.4.45-.42.33-.42.24-.4.16-.36.09-.32.05-.24.02-.16-.01h-8.22v.82h5.84l.01 2.76.02.36-.05.34-.11.31-.17.29-.25.25-.31.24-.38.2-.44.17-.51.15-.58.13-.64.09-.71.07-.77.04-.84.01-1.27-.04-1.07-.14-.9-.2-.73-.25-.59-.3-.45-.33-.34-.34-.25-.34-.16-.33-.1-.3-.04-.25-.02-.2.01-.13v-5.34l.05-.64.13-.54.21-.46.26-.38.3-.32.33-.24.35-.2.35-.14.33-.1.3-.06.26-.04.21-.02.13-.01h5.84l.69-.05.59-.14.5-.21.41-.28.33-.32.27-.35.2-.36.15-.36.1-.35.07-.32.04-.28.02-.21V6.07h2.09l.14.01zm-6.47 14.25l-.23.33-.08.41.08.41.23.33.33.23.41.08.41-.08.33-.23.23-.33.08-.41-.08-.41-.23-.33-.33-.23-.41-.08-.41.08z"/></symbol><symbol id="i-typescript" viewBox="0 0 24 24"><path d="M1.125 0C.502 0 0 .502 0 1.125v21.75C0 23.498.502 24 1.125 24h21.75c.623 0 1.125-.502 1.125-1.125V1.125C24 .502 23.498 0 22.875 0zm17.363 9.75c.612 0 1.154.037 1.627.111a6.38 6.38 0 0 1 1.306.34v2.458a3.95 3.95 0 0 0-.643-.361 5.093 5.093 0 0 0-.717-.26 5.453 5.453 0 0 0-1.426-.2c-.3 0-.573.028-.819.086a2.1 2.1 0 0 0-.623.242c-.17.104-.3.229-.393.374a.888.888 0 0 0-.14.49c0 .196.053.373.156.529.104.156.252.304.443.444s.423.276.696.41c.273.135.582.274.926.416.47.197.892.407 1.266.628.374.222.695.473.963.753.268.279.472.598.614.957.142.359.214.776.214 1.253 0 .657-.125 1.21-.373 1.656a3.033 3.033 0 0 1-1.012 1.085 4.38 4.38 0 0 1-1.487.596c-.566.12-1.163.18-1.79.18a9.916 9.916 0 0 1-1.84-.164 5.544 5.544 0 0 1-1.512-.493v-2.63a5.033 5.033 0 0 0 3.237 1.2c.333 0 .624-.03.872-.09.249-.06.456-.144.623-.25.166-.108.29-.234.373-.38a1.023 1.023 0 0 0-.074-1.089 2.12 2.12 0 0 0-.537-.5 5.597 5.597 0 0 0-.807-.444 27.72 27.72 0 0 0-1.007-.436c-.918-.383-1.602-.852-2.053-1.405-.45-.553-.676-1.222-.676-2.005 0-.614.123-1.141.369-1.582.246-.441.58-.804 1.004-1.089a4.494 4.494 0 0 1 1.47-.629 7.536 7.536 0 0 1 1.77-.201zm-15.113.188h9.563v2.166H9.506v9.646H6.789v-9.646H3.375z"/></symbol><symbol id="i-fastapi" viewBox="0 0 24 24"><path d="M12 .0387C5.3729.0384.0003 5.3931 0 11.9988c-.001 6.6066 5.372 11.9628 12 11.9625 6.628.0003 12.001-5.3559 12-11.9625-.0003-6.6057-5.3729-11.9604-12-11.96m-.829 5.4153h7.55l-7.5805 5.3284h5.1828L5.279 18.5436q2.9466-6.5444 5.892-13.0896"/></symbol><symbol id="i-django" viewBox="0 0 24 24"><path d="M11.146 0h3.924v18.166c-2.013.382-3.491.535-5.096.535-4.791 0-7.288-2.166-7.288-6.32 0-4.002 2.65-6.6 6.753-6.6.637 0 1.121.05 1.707.203zm0 9.143a3.894 3.894 0 00-1.325-.204c-1.988 0-3.134 1.223-3.134 3.365 0 2.09 1.096 3.236 3.109 3.236.433 0 .79-.025 1.35-.102V9.142zM21.314 6.06v9.098c0 3.134-.229 4.638-.917 5.937-.637 1.249-1.478 2.039-3.211 2.905l-3.644-1.733c1.733-.815 2.574-1.53 3.109-2.625.561-1.121.739-2.421.739-5.835V6.059h3.924zM17.39.021h3.924v4.026H17.39z"/></symbol><symbol id="i-react" viewBox="0 0 24 24"><path d="M14.23 12.004a2.236 2.236 0 0 1-2.235 2.236 2.236 2.236 0 0 1-2.236-2.236 2.236 2.236 0 0 1 2.235-2.236 2.236 2.236 0 0 1 2.236 2.236zm2.648-10.69c-1.346 0-3.107.96-4.888 2.622-1.78-1.653-3.542-2.602-4.887-2.602-.41 0-.783.093-1.106.278-1.375.793-1.683 3.264-.973 6.365C1.98 8.917 0 10.42 0 12.004c0 1.59 1.99 3.097 5.043 4.03-.704 3.113-.39 5.588.988 6.38.32.187.69.275 1.102.275 1.345 0 3.107-.96 4.888-2.624 1.78 1.654 3.542 2.603 4.887 2.603.41 0 .783-.09 1.106-.275 1.374-.792 1.683-3.263.973-6.365C22.02 15.096 24 13.59 24 12.004c0-1.59-1.99-3.097-5.043-4.032.704-3.11.39-5.587-.988-6.38-.318-.184-.688-.277-1.092-.278zm-.005 1.09v.006c.225 0 .406.044.558.127.666.382.955 1.835.73 3.704-.054.46-.142.945-.25 1.44-.96-.236-2.006-.417-3.107-.534-.66-.905-1.345-1.727-2.035-2.447 1.592-1.48 3.087-2.292 4.105-2.295zm-9.77.02c1.012 0 2.514.808 4.11 2.28-.686.72-1.37 1.537-2.02 2.442-1.107.117-2.154.298-3.113.538-.112-.49-.195-.964-.254-1.42-.23-1.868.054-3.32.714-3.707.19-.09.4-.127.563-.132zm4.882 3.05c.455.468.91.992 1.36 1.564-.44-.02-.89-.034-1.345-.034-.46 0-.915.01-1.36.034.44-.572.895-1.096 1.345-1.565zM12 8.1c.74 0 1.477.034 2.202.093.406.582.802 1.203 1.183 1.86.372.64.71 1.29 1.018 1.946-.308.655-.646 1.31-1.013 1.95-.38.66-.773 1.288-1.18 1.87-.728.063-1.466.098-2.21.098-.74 0-1.477-.035-2.202-.093-.406-.582-.802-1.204-1.183-1.86-.372-.64-.71-1.29-1.018-1.946.303-.657.646-1.313 1.013-1.954.38-.66.773-1.286 1.18-1.868.728-.064 1.466-.098 2.21-.098zm-3.635.254c-.24.377-.48.763-.704 1.16-.225.39-.435.782-.635 1.174-.265-.656-.49-1.31-.676-1.947.64-.15 1.315-.283 2.015-.386zm7.26 0c.695.103 1.365.23 2.006.387-.18.632-.405 1.282-.66 1.933-.2-.39-.41-.783-.64-1.174-.225-.392-.465-.774-.705-1.146zm3.063.675c.484.15.944.317 1.375.498 1.732.74 2.852 1.708 2.852 2.476-.005.768-1.125 1.74-2.857 2.475-.42.18-.88.342-1.355.493-.28-.958-.646-1.956-1.1-2.98.45-1.017.81-2.01 1.085-2.964zm-13.395.004c.278.96.645 1.957 1.1 2.98-.45 1.017-.812 2.01-1.086 2.964-.484-.15-.944-.318-1.37-.5-1.732-.737-2.852-1.706-2.852-2.474 0-.768 1.12-1.742 2.852-2.476.42-.18.88-.342 1.356-.494zm11.678 4.28c.265.657.49 1.312.676 1.948-.64.157-1.316.29-2.016.39.24-.375.48-.762.705-1.158.225-.39.435-.788.636-1.18zm-9.945.02c.2.392.41.783.64 1.175.23.39.465.772.705 1.143-.695-.102-1.365-.23-2.006-.386.18-.63.406-1.282.66-1.933zM17.92 16.32c.112.493.2.968.254 1.423.23 1.868-.054 3.32-.714 3.708-.147.09-.338.128-.563.128-1.012 0-2.514-.807-4.11-2.28.686-.72 1.37-1.536 2.02-2.44 1.107-.118 2.154-.3 3.113-.54zm-11.83.01c.96.234 2.006.415 3.107.532.66.905 1.345 1.727 2.035 2.446-1.595 1.483-3.092 2.295-4.11 2.295-.22-.005-.406-.05-.553-.132-.666-.38-.955-1.834-.73-3.703.054-.46.142-.944.25-1.438zm4.56.64c.44.02.89.034 1.345.034.46 0 .915-.01 1.36-.034-.44.572-.895 1.095-1.345 1.565-.455-.47-.91-.993-1.36-1.565z"/></symbol><symbol id="i-nextdotjs" viewBox="0 0 24 24"><path d="M18.665 21.978C16.758 23.255 14.465 24 12 24 5.377 24 0 18.623 0 12S5.377 0 12 0s12 5.377 12 12c0 3.583-1.574 6.801-4.067 9.001L9.219 7.2H7.2v9.596h1.615V9.251l9.85 12.727Zm-3.332-8.533 1.6 2.061V7.2h-1.6v6.245Z"/></symbol><symbol id="i-expo" viewBox="0 0 24 24"><path d="M0 20.084c.043.53.23 1.063.718 1.778.58.849 1.576 1.315 2.303.567.49-.505 5.794-9.776 8.35-13.29a.761.761 0 011.248 0c2.556 3.514 7.86 12.785 8.35 13.29.727.748 1.723.282 2.303-.567.57-.835.728-1.42.728-2.046 0-.426-8.26-15.798-9.092-17.078-.8-1.23-1.044-1.498-2.397-1.542h-1.032c-1.353.044-1.597.311-2.398 1.542C8.267 3.991.33 18.758 0 19.77Z"/></symbol><symbol id="i-tailwindcss" viewBox="0 0 24 24"><path d="M12.001,4.8c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 C13.666,10.618,15.027,12,18.001,12c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C16.337,6.182,14.976,4.8,12.001,4.8z M6.001,12c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 c1.177,1.194,2.538,2.576,5.512,2.576c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C10.337,13.382,8.976,12,6.001,12z"/></symbol><symbol id="i-streamlit" viewBox="0 0 24 24"><path d="M16.673 11.32l6.862-3.618c.233-.136.554.12.442.387L20.463 17.1zm-8.556-.229l3.473-5.187c.203-.328.578-.316.793-.028l7.886 11.75zm-3.375 7.25c-.28 0-.835-.284-.993-.716l-3.72-9.46c-.118-.331.139-.614.48-.464l19.474 10.306c-.149.147-.453.337-.72.334z"/></symbol><symbol id="i-postgresql" viewBox="0 0 24 24"><path d="M23.5594 14.7228a.5269.5269 0 0 0-.0563-.1191c-.139-.2632-.4768-.3418-1.0074-.2321-1.6533.3411-2.2935.1312-2.5256-.0191 1.342-2.0482 2.445-4.522 3.0411-6.8297.2714-1.0507.7982-3.5237.1222-4.7316a1.5641 1.5641 0 0 0-.1509-.235C21.6931.9086 19.8007.0248 17.5099.0005c-1.4947-.0158-2.7705.3461-3.1161.4794a9.449 9.449 0 0 0-.5159-.0816 8.044 8.044 0 0 0-1.3114-.1278c-1.1822-.0184-2.2038.2642-3.0498.8406-.8573-.3211-4.7888-1.645-7.2219.0788C.9359 2.1526.3086 3.8733.4302 6.3043c.0409.818.5069 3.334 1.2423 5.7436.4598 1.5065.9387 2.7019 1.4334 3.582.553.9942 1.1259 1.5933 1.7143 1.7895.4474.1491 1.1327.1441 1.8581-.7279.8012-.9635 1.5903-1.8258 1.9446-2.2069.4351.2355.9064.3625 1.39.3772a.0569.0569 0 0 0 .0004.0041 11.0312 11.0312 0 0 0-.2472.3054c-.3389.4302-.4094.5197-1.5002.7443-.3102.064-1.1344.2339-1.1464.8115-.0025.1224.0329.2309.0919.3268.2269.4231.9216.6097 1.015.6331 1.3345.3335 2.5044.092 3.3714-.6787-.017 2.231.0775 4.4174.3454 5.0874.2212.5529.7618 1.9045 2.4692 1.9043.2505 0 .5263-.0291.8296-.0941 1.7819-.3821 2.5557-1.1696 2.855-2.9059.1503-.8707.4016-2.8753.5388-4.1012.0169-.0703.0357-.1207.057-.1362.0007-.0005.0697-.0471.4272.0307a.3673.3673 0 0 0 .0443.0068l.2539.0223.0149.001c.8468.0384 1.9114-.1426 2.5312-.4308.6438-.2988 1.8057-1.0323 1.5951-1.6698zM2.371 11.8765c-.7435-2.4358-1.1779-4.8851-1.2123-5.5719-.1086-2.1714.4171-3.6829 1.5623-4.4927 1.8367-1.2986 4.8398-.5408 6.108-.13-.0032.0032-.0066.0061-.0098.0094-2.0238 2.044-1.9758 5.536-1.9708 5.7495-.0002.0823.0066.1989.0162.3593.0348.5873.0996 1.6804-.0735 2.9184-.1609 1.1504.1937 2.2764.9728 3.0892.0806.0841.1648.1631.2518.2374-.3468.3714-1.1004 1.1926-1.9025 2.1576-.5677.6825-.9597.5517-1.0886.5087-.3919-.1307-.813-.5871-1.2381-1.3223-.4796-.839-.9635-2.0317-1.4155-3.5126zm6.0072 5.0871c-.1711-.0428-.3271-.1132-.4322-.1772.0889-.0394.2374-.0902.4833-.1409 1.2833-.2641 1.4815-.4506 1.9143-1.0002.0992-.126.2116-.2687.3673-.4426a.3549.3549 0 0 0 .0737-.1298c.1708-.1513.2724-.1099.4369-.0417.156.0646.3078.26.3695.4752.0291.1016.0619.2945-.0452.4444-.9043 1.2658-2.2216 1.2494-3.1676 1.0128zm2.094-3.988-.0525.141c-.133.3566-.2567.6881-.3334 1.003-.6674-.0021-1.3168-.2872-1.8105-.8024-.6279-.6551-.9131-1.5664-.7825-2.5004.1828-1.3079.1153-2.4468.079-3.0586-.005-.0857-.0095-.1607-.0122-.2199.2957-.2621 1.6659-.9962 2.6429-.7724.4459.1022.7176.4057.8305.928.5846 2.7038.0774 3.8307-.3302 4.7363-.084.1866-.1633.3629-.2311.5454zm7.3637 4.5725c-.0169.1768-.0358.376-.0618.5959l-.146.4383a.3547.3547 0 0 0-.0182.1077c-.0059.4747-.054.6489-.115.8693-.0634.2292-.1353.4891-.1794 1.0575-.11 1.4143-.8782 2.2267-2.4172 2.5565-1.5155.3251-1.7843-.4968-2.0212-1.2217a6.5824 6.5824 0 0 0-.0769-.2266c-.2154-.5858-.1911-1.4119-.1574-2.5551.0165-.5612-.0249-1.9013-.3302-2.6462.0044-.2932.0106-.5909.019-.8918a.3529.3529 0 0 0-.0153-.1126 1.4927 1.4927 0 0 0-.0439-.208c-.1226-.4283-.4213-.7866-.7797-.9351-.1424-.059-.4038-.1672-.7178-.0869.067-.276.1831-.5875.309-.9249l.0529-.142c.0595-.16.134-.3257.213-.5012.4265-.9476 1.0106-2.2453.3766-5.1772-.2374-1.0981-1.0304-1.6343-2.2324-1.5098-.7207.0746-1.3799.3654-1.7088.5321a5.6716 5.6716 0 0 0-.1958.1041c.0918-1.1064.4386-3.1741 1.7357-4.4823a4.0306 4.0306 0 0 1 .3033-.276.3532.3532 0 0 0 .1447-.0644c.7524-.5706 1.6945-.8506 2.802-.8325.4091.0067.8017.0339 1.1742.081 1.939.3544 3.2439 1.4468 4.0359 2.3827.8143.9623 1.2552 1.9315 1.4312 2.4543-1.3232-.1346-2.2234.1268-2.6797.779-.9926 1.4189.543 4.1729 1.2811 5.4964.1353.2426.2522.4522.2889.5413.2403.5825.5515.9713.7787 1.2552.0696.087.1372.1714.1885.245-.4008.1155-1.1208.3825-1.0552 1.717-.0123.1563-.0423.4469-.0834.8148-.0461.2077-.0702.4603-.0994.7662zm.8905-1.6211c-.0405-.8316.2691-.9185.5967-1.0105a2.8566 2.8566 0 0 0 .135-.0406 1.202 1.202 0 0 0 .1342.103c.5703.3765 1.5823.4213 3.0068.1344-.2016.1769-.5189.3994-.9533.6011-.4098.1903-1.0957.333-1.7473.3636-.7197.0336-1.0859-.0807-1.1721-.151zm.5695-9.2712c-.0059.3508-.0542.6692-.1054 1.0017-.055.3576-.112.7274-.1264 1.1762-.0142.4368.0404.8909.0932 1.3301.1066.887.216 1.8003-.2075 2.7014a3.5272 3.5272 0 0 1-.1876-.3856c-.0527-.1276-.1669-.3326-.3251-.6162-.6156-1.1041-2.0574-3.6896-1.3193-4.7446.3795-.5427 1.3408-.5661 2.1781-.463zm.2284 7.0137a12.3762 12.3762 0 0 0-.0853-.1074l-.0355-.0444c.7262-1.1995.5842-2.3862.4578-3.4385-.0519-.4318-.1009-.8396-.0885-1.2226.0129-.4061.0666-.7543.1185-1.0911.0639-.415.1288-.8443.1109-1.3505.0134-.0531.0188-.1158.0118-.1902-.0457-.4855-.5999-1.938-1.7294-3.253-.6076-.7073-1.4896-1.4972-2.6889-2.0395.5251-.1066 1.2328-.2035 2.0244-.1859 2.0515.0456 3.6746.8135 4.8242 2.2824a.908.908 0 0 1 .0667.1002c.7231 1.3556-.2762 6.2751-2.9867 10.5405zm-8.8166-6.1162c-.025.1794-.3089.4225-.6211.4225a.5821.5821 0 0 1-.0809-.0056c-.1873-.026-.3765-.144-.5059-.3156-.0458-.0605-.1203-.178-.1055-.2844.0055-.0401.0261-.0985.0925-.1488.1182-.0894.3518-.1226.6096-.0867.3163.0441.6426.1938.6113.4186zm7.9305-.4114c.0111.0792-.049.201-.1531.3102-.0683.0717-.212.1961-.4079.2232a.5456.5456 0 0 1-.075.0052c-.2935 0-.5414-.2344-.5607-.3717-.024-.1765.2641-.3106.5611-.352.297-.0414.6111.0088.6356.1851z"/></symbol><symbol id="i-redis" viewBox="0 0 24 24"><path d="M22.71 13.145c-1.66 2.092-3.452 4.483-7.038 4.483-3.203 0-4.397-2.825-4.48-5.12.701 1.484 2.073 2.685 4.214 2.63 4.117-.133 6.94-3.852 6.94-7.239 0-4.05-3.022-6.972-8.268-6.972-3.752 0-8.4 1.428-11.455 3.685C2.59 6.937 3.885 9.958 4.35 9.626c2.648-1.904 4.748-3.13 6.784-3.744C8.12 9.244.886 17.05 0 18.425c.1 1.261 1.66 4.648 2.424 4.648.232 0 .431-.133.664-.365a100.49 100.49 0 0 0 5.54-6.765c.222 3.104 1.748 6.898 6.014 6.898 3.819 0 7.604-2.756 9.33-8.965.2-.764-.73-1.361-1.261-.73zm-4.349-5.013c0 1.959-1.926 2.922-3.685 2.922-.941 0-1.664-.247-2.235-.568 1.051-1.592 2.092-3.225 3.21-4.973 1.972.334 2.71 1.43 2.71 2.619z"/></symbol><symbol id="i-apachekafka" viewBox="0 0 24 24"><path d="M9.71 2.136a1.43 1.43 0 0 0-2.047 0h-.007a1.48 1.48 0 0 0-.421 1.042c0 .41.161.777.422 1.039l.007.007c.257.264.616.426 1.019.426.404 0 .766-.162 1.027-.426l.003-.007c.261-.262.421-.629.421-1.039 0-.408-.159-.777-.421-1.042H9.71zM8.683 22.295c.404 0 .766-.167 1.027-.429l.003-.008c.261-.261.421-.631.421-1.036 0-.41-.159-.778-.421-1.044H9.71a1.42 1.42 0 0 0-1.027-.432 1.4 1.4 0 0 0-1.02.432h-.007c-.26.266-.422.634-.422 1.044 0 .406.161.775.422 1.036l.007.008c.258.262.617.429 1.02.429zm7.89-4.462c.359-.096.683-.33.882-.684l.027-.052a1.47 1.47 0 0 0 .114-1.067 1.454 1.454 0 0 0-.675-.896l-.021-.014a1.425 1.425 0 0 0-1.078-.132c-.36.091-.684.335-.881.686-.2.349-.241.75-.146 1.119.099.363.33.691.675.896h.002c.346.203.737.239 1.101.144zm-6.405-7.342a2.083 2.083 0 0 0-1.485-.627c-.58 0-1.103.242-1.482.627-.378.385-.612.916-.612 1.507s.233 1.124.612 1.514a2.08 2.08 0 0 0 2.967 0c.379-.39.612-.923.612-1.514s-.233-1.122-.612-1.507zm-.835-2.51c.843.141 1.6.552 2.178 1.144h.004c.092.093.182.196.265.299l1.446-.851a3.176 3.176 0 0 1-.047-1.808 3.149 3.149 0 0 1 1.456-1.926l.025-.016a3.062 3.062 0 0 1 2.345-.306c.77.21 1.465.721 1.898 1.482v.002c.431.757.518 1.626.313 2.408a3.145 3.145 0 0 1-1.456 1.928l-.198.118h-.02a3.095 3.095 0 0 1-2.154.201 3.127 3.127 0 0 1-1.514-.944l-1.444.848a4.162 4.162 0 0 1 0 2.879l1.444.846c.413-.47.939-.789 1.514-.944a3.041 3.041 0 0 1 2.371.319l.048.023v.002a3.17 3.17 0 0 1 1.408 1.906 3.215 3.215 0 0 1-.313 2.405l-.026.053-.003-.005a3.147 3.147 0 0 1-1.867 1.436 3.096 3.096 0 0 1-2.371-.318v-.006a3.156 3.156 0 0 1-1.456-1.927 3.175 3.175 0 0 1 .047-1.805l-1.446-.848a3.905 3.905 0 0 1-.265.294l-.004.005a3.938 3.938 0 0 1-2.178 1.138v1.699a3.09 3.09 0 0 1 1.56.862l.002.004c.565.572.914 1.368.914 2.243 0 .873-.35 1.664-.914 2.239l-.002.009a3.1 3.1 0 0 1-2.21.931 3.1 3.1 0 0 1-2.206-.93h-.002v-.009a3.186 3.186 0 0 1-.916-2.239c0-.875.35-1.672.916-2.243v-.004h.002a3.1 3.1 0 0 1 1.558-.862v-1.699a3.926 3.926 0 0 1-2.176-1.138l-.006-.005a4.098 4.098 0 0 1-1.173-2.874c0-1.122.452-2.136 1.173-2.872h.006a3.947 3.947 0 0 1 2.176-1.144V6.289a3.137 3.137 0 0 1-1.558-.864h-.002v-.004a3.192 3.192 0 0 1-.916-2.243c0-.871.35-1.669.916-2.243l.002-.002A3.084 3.084 0 0 1 8.683 0c.861 0 1.641.355 2.21.932v.002h.002c.565.574.914 1.372.914 2.243 0 .876-.35 1.667-.914 2.243l-.002.005a3.142 3.142 0 0 1-1.56.864v1.692zm8.121-1.129l-.012-.019a1.452 1.452 0 0 0-.87-.668 1.43 1.43 0 0 0-1.103.146h.002c-.347.2-.58.529-.677.896-.095.365-.054.768.146 1.119l.007.009c.2.347.519.579.874.673.357.103.755.059 1.098-.144l.019-.009a1.47 1.47 0 0 0 .657-.885 1.493 1.493 0 0 0-.141-1.118"/></symbol><symbol id="i-apachehadoop" viewBox="0 0 24 24"><path d="M12.098 3.01c-1.133.277-1.466.474-1.842 1.787.478-.962.84-1.315 1.842-1.787zm3.228.076c-.834-.053-1.715.177-2.756.615a3.97 3.97 0 00-1.199.76c-.31.287-.576.62-.866 1.006a1.312 1.312 0 00-.468.095 1.868 1.868 0 00-.539.356c-.141.124-.28.252-.416.383v.002c-.123.12-.244.241-.363.365-.945.152-1.72.32-2.41.588a6.314 6.314 0 00-1.97 1.217c-.252.222-.482.469-.687.736a5.435 5.435 0 00-.503.803c-.13.142-.26.288-.399.414a1.45 1.45 0 01-.441.285c-.093.035-.133.058-.137.056-.004-.001-.008-.033-.012-.047.235-.21.267-.55.289-.86.03.034.053.068.082.113.031.047.062.095.1.142l.158.2.055-.249c.046-.208.081-.484.027-.724-.034-.153-.117-.315-.235-.393l.036-.09c.04-.1.08-.204.115-.303l.069-.193-.204.035c-.27.047-.852.366-1.261.791-.152.158-.284.33-.37.514a.984.984 0 00-.093.59.91.91 0 00.272.498c.03.12.058.223.087.316.033.104.068.198.112.29.119.247.31.398.529.468.182.059.369.066.566.02a3.83 3.83 0 00-.072.69 8.911 8.911 0 00.07 1.394c.013.093.028.184.045.275l-.107.291-.166.455-.37.365-.343.34a9.22 9.22 0 01-.082.08c-.232.224-.279.27-.213.662.04.241.119.484.242.72.114.216.267.427.463.624.245.245.647.55 1.066.71.245.092.488.138.723.097l-.039.11a4.046 4.046 0 01-.123.3c-.285.624.008.95.463 1.158.227.104.497.173.748.238l.168.045c.298.08.812.228 1.281.258.513.033.974-.073 1.098-.533.049-.182.078-.322.09-.459a2.33 2.33 0 00-.01-.406c.144-.32.21-.423.316-.578l.053-.08c.115-.17.168-.29.188-.426.018-.131.004-.262-.02-.461l-.011-.084a6.822 6.822 0 001.338.05l-.118.061-.055.03c-.395.203-.413.587-.289.984.112.357.343.723.487.945.303.467.592.861.943 1.076.368.226.786.253 1.328-.04.276-.15.363-.302.48-.507.038-.066.08-.133.126-.204.101-.05.382-.296.67-.534l.296-.242c.073.053.164.09.27.115.14.034.305.05.504.065.149.01.635.01.949.01h.227c.324.001.585-.016.783-.128.21-.119.334-.331.361-.71a1.28 1.28 0 00-.008-.378.946.946 0 00-.136-.312l-.014-.502-.016-.521a2.372 2.372 0 00-.068-.536 3.558 3.558 0 00-.18-.505c-.053-.127-.096-.245-.138-.36a5.756 5.756 0 00-.229-.547l.018-.123.181.174.266.258c.203.196.39.373.607.502.226.133.479.21.807.195a1.925 1.925 0 001.016-.385c.293-.216.528-.509.627-.832l.084-.279.07-.225c.482.082.998.11 1.498.057a3.7 3.7 0 001.351-.389 3.406 3.406 0 001.35-1.33h.002v-.002c.355-.616.555-1.34.63-2.088.062-.599.028-1.415-.097-2.2-.11-.701-.295-1.38-.55-1.87a.736.736 0 00-.137-.178 1.413 1.413 0 00-.51-.31c-.206-.07-.422-.084-.594.006a.485.485 0 00-.123.09 2.793 2.793 0 00-.3.388c-.106.153-.21.307-.337.414-.149.128-.327.202-.502.272a3.454 3.454 0 00-.261-.508 4.81 4.81 0 00-.399-.54 2.21 2.21 0 00-.365-.349 5.357 5.357 0 00-.41-.275c-.407-.255-.754-.559-1.108-.87-.16-.14-.323-.282-.482-.413-.842-.695-1.628-1.031-2.469-1.084zm-4.129.004c-.57.137-.68.245-.851.804.273-.41.43-.545.851-.804zm3.952.465c.829-.001 1.587.303 2.431 1.013.412.347.774.684 1.192.983-.152.013-.283.04-.455.107.21-.04.451 0 .67.04.06.039.124.078.189.116.295.174.463.27.662.547.21.294.386.589.541.912-.101-.036-.186-.067-.262-.09a.566.566 0 00-.533.034l-.012.006c-.163.079-.416.17-.586.197a.7.7 0 00.405-.006.565.565 0 00-.018.539.269.269 0 01-.02-.12.228.228 0 01.249-.208.233.233 0 01.187.33c-.117.02-.233.055-.353.1a4.41 4.41 0 00-.237.095 3.722 3.722 0 011.084-.02c.025.117.05.24.073.366l-.137.01-.012.002c-.174-.14-.367-.117-.633-.057-.806.184-.617.637-.988 1.318.385-.47.357-.962.984-1.11.147-.036.247-.078.346-.063-.178.09-.333.237-.394.41-.173.486-.065.895-.254 1.35.234-.407.249-.802.459-1.23.075-.153.354-.4.525-.403l.14-.002c.042.27.068.539.052.761a8.535 8.535 0 01-.198 1.24c.213-.272.31-.85.403-1.257.097-.424.07-.934-.014-1.389-.117-.625.527-.522.9-.816.275-.217.463-.564.715-.809.25-.243.644.114.742.352.426 1.03.62 2.65.508 3.69-.126 1.164-.69 2.437-1.719 3.01-1.31.732-2.854.285-4.156-.154-.278-.093-.47-.229-.715-.382.067.3.097.615.008.914-.14.474-.367 1.251.277 1.394.246.055.357.048.704-.13a1.3 1.3 0 01-.616.011.397.397 0 01-.314-.273c.06.044.16.066.33.107.478.115.932-.114 1.021-.445.052-.194.043-.295.153-.559.099.03.202.059.306.084l-.177.578c-.154.501-.752.904-1.28.895-.488-.009-.797-.314-1.134-.613l-.678-.6a5.228 5.228 0 01-1.658-.834c.4.472.673.732 1.232.967-.081.83-.37 1.436-.615 2.23-.111.36-.991 1.8-1.234 1.94-.174.1-1.26 1.016-1.465 1.136-.153.203-.287.483-.516.604-.698.37-1.148-.339-1.523-.936-.171-.272-.645-1.054-.23-1.273.39-.208.61-.357 1.009-.62.059.108.159.212.225.32l-.043-.352a2.752 2.752 0 01-.008-.596c.016-.206.03-.413.047-.62-.06.21-.179.42-.239.63-.024.084-.045.152-.056.214a7.05 7.05 0 01-2.682.034 16.76 16.76 0 00-.185-.926c-.018.278-.007 1.047-.008 1.476-.001.333-.016.448-.188.731-.16.265-.228.325-.453.773.019.283.019.47-.057.739-.125.446-1.386.098-1.718.007-.41-.112-1.256-.278-1.043-.824.187-.48.307-.986.398-1.658-.75-1.08-1.448-2.56-1.582-3.873-.104-1.019-.04-1.646.18-2.27.35-.987.837-1.843 1.62-2.53C5.778 7.89 6.767 7.516 8.316 7.28c-.373.417-.741.858-1.143 1.33-.406.479-.648.963-.906 1.487-.357.722-.348.996.125 1.63.407.547.627.794.804 1.328-.146.303-.2.56-.25.973.5.545.87.918 1.354 1.033.475.113.872.093 1.297-.125.944-.482 1.816-1.107 2.88-1.132.493-1.211.444-2.222.208-3.393-.162-.8-.227-1.557-.278-2.373-.2.84-.236 1.577-.088 2.414.18 1.008.318 2.124-.18 3.01-.962.073-1.788.658-2.655 1.107-.35.18-.712.198-1.098.092-.358-.098-.6-.334-.986-.78-.006-.446.095-.653.3-1.058.33-.65.695-1.255 1.094-1.894-.49.59-.953 1.084-1.338 1.677-.147-.419-.358-.633-.707-1.105-.34-.461-.375-.662-.12-1.196.255-.536.472-1.008.907-1.478.753-.813 1.443-1.717 2.266-2.518.447-.434.628-.42 1.22-.51a20.768 20.768 0 001.606-.31 22.5 22.5 0 01-1.553.08h-.015c.506-.646.799-1.006 1.62-1.363.95-.412 1.738-.652 2.47-.652zm.556 2.79c-1.101.276-1.307.739-1.166 1.45.121-.535.335-1.05 1.166-1.45zm-3.263.061c-.446.05-.89.096-1.336.139-.375.035-.436.03-.702.293-.403.399-.794 1.768-.92 2.316.198-.455.69-1.729 1.069-2.053.105-.09.18-.143.258-.183-.271.455-.252.566-.157 1.176.081-.62.295-.859.647-1.32a9.287 9.287 0 001.14-.368zm10.226.053c-.255.517-.65.95-1.185 1.215-.288.142-.47.093-.791.062.326.094.533.21.853.096.652-.233.967-.756 1.123-1.373zm-2.28.834c.023.047.046.096.067.144a.602.602 0 00-.05.041.572.572 0 00-.126-.181l.11-.004zm-3.26.4c-.36.166-.779.126-1.087.334-.271.184-.646.764-.922 1.01.2-.078.394-.212.57-.354.002.22.101.426.27.565a.31.31 0 01.092-.492.312.312 0 01.432.191c-.148.11-.284.238-.397.387a1.666 1.666 0 00-.24.44 4.222 4.222 0 012.002-1.294c-.2-.003-.437.034-.678.114a.732.732 0 00-.482-.614c.16-.085.316-.175.44-.287zm-1.042 1.64a.735.735 0 01-.125-.083.35.35 0 00.125.084zM1.32 8.34c-.953.672-1.19.978-1.062 2.338C.352 9.608.56 9.145 1.32 8.34zm-.808.404c-.482.336-.545.475-.5 1.059.105-.482.203-.664.5-1.059zm1.779.195c-.07.15-.118.264-.152.381-.147.508.066.962-.395 1.33.217.438.207.612.711.41.195-.078.355-.187.498-.316-.07.18-.133.361-.191.545l-.03.094c-.36.153-.834.25-1.015-.13a3.458 3.458 0 01-.203-.595c-.594-.615.294-1.427.777-1.719zm.123.276c.123.071.156.2.17.375-.073-.074-.132-.122-.227-.112.008-.06.019-.119.034-.177.007-.03.014-.058.023-.086zm14.87 3.267c-.131.022-.365.07-.495.092-.348.059-.387.142-.441.484l-.086.524a9.16 9.16 0 01.228-.568c.084-.184.132-.202.31-.3.127-.068.357-.163.483-.232zm-14.47 2.4c.274.946.738 1.876 1.255 2.657v.014a.993.993 0 01-.149.369c-.369.493-1.306-.23-1.578-.508-.297-.303-.496-.662-.543-.998-.034-.246-.001-.252.17-.426l.693-.701.153-.406zm12.405.62c.056.183.101.364.183.558.138.326.205.526.215.875l.032 1.106c.117.206.136.249.115.484-.043.481-.203.513-.625.506-.192-.003-.957-.007-1.15-.023-.274-.024-.429-.05-.512-.112.43-.316 1.162-1.619 1.304-2.068.151-.474.315-.888.438-1.326z"/></symbol><symbol id="i-apachehive" viewBox="0 0 24 24"><path d="M5.902.258c-.331.216-.65.525-.994.877-.569.589-.947 1.164-1.526 1.59-.116.1-.441.26-.85.284-.192.01-.318.042-.672-.003-.312-.169-.608-.059-.897.287-.317.456-.72 1.322-.886 1.868-.345 1.39.533 2.536 1.375 3.42.749.73 1.18 1.188 1.488 1.859.233.435.405 1.032.592 1.45.067.133.053.132.235.172.39.084.934.084 1.417.126.209.003.496-.005.768-.033.375-.071.815-.14 1.185-.268.36-.09.682-.212.971-.325-.037.126-.313.249-.416.41-.962 1.376-1.24 2.605-1.09 4.51l-.008-.007.011.05.006.077c.097.874.298 1.6.6 2.43a6.8 6.8 0 0 0 .717 1.38c.072.101.152.205.238.31h-.002l.005.004c.93 1.13 2.706 2.45 5.098 2.986.457.062.975.029 1.463-.1 1.292-.392 3.925-1.319 3.925-1.319s-2.337.194-3.408.088c-.248-.039-.52-.052-.693-.221-.03-.037-.135-.25-.067-.251.093-.003.36-.113.77-.15-.877-.094-.865-.093-.929-.253a9.968 9.968 0 0 0-.409-.884c.386.033 1.24.08 1.529-.218 0 0-.505.058-.951.006a2.76 2.76 0 0 1-.484-.137c-.2-.079-.365-.103-.404-.154-.07-.177-.116-.236-.2-.473-.114-.315-.123-.665-.145-.986.292.36.664.663 1.157.818.006-.013.638.275 1.098.127l.088-.029c-.045.009-.307.02-.409-.03-.934-.398-1.075-.745-1.226-.918l-.403-.604c.123-.245.192-.254.355-.256.491.054.705.096 1.004.024.203.416.257.835.718 1.137 1.533.456 1.866-.135 2.237-.656 1.104.81 2.9 1.059 4.147.014 1.586-1.835 2.088-4.728 1.947-4.893-.198-.336-.457-.683-.68-.635-.796.217-1.09.62-1.877.529.094-.006.252-.008.253-.017.06-.667-.005-.99-.034-1.046-.24-.527-.554-1.082-.772-1.498-.057-.086-.223-.742-.5-1-.12-.102-.41-.37-.41-.37l-.026.285s.114.017.158.193c.079.322.313.854.542 1.33h-.37l.424.11c.228.465.437.852.467.888.193.312.148.673.155.98l-.11.055c-.017-.361-.405-.335-.732-.338l-.268-.066c.082.076.334.07.232.233-.086.046-.125.242-.174.407l-.145.007c.256.1.494.188.776.306l.142.021-.142.357-.193-.078-.007-.135c-.34-.136-.995-.193-1.019-.165-.242.237-.418.524-.609.8.262-.204.46-.512.813-.597.028-.003.378.065.568.098-.122.025-.32.034-.35.077-.269.332-.466.736-.697 1.105.319-.329.416-.666.957-.985.045-.03.375-.023.536.058-.051.183-.167.401-.26.607-.133.313-.386.601-.58.902.608-.74.435-.469.841-.946.17-.404.34-.84.497-1.271l.03-.016c.054.033.47-.008.795.012.559-.12.535-.367 1.018-.404.325-.025.358.586.353.634a7.248 7.248 0 0 1-.58 2.174c-.652 1.258-1.383 2.388-2.42 2.545-1.265.221-1.922-.332-2.608-.684l-.262.224c-.891.887-1.949.808-2.382-.351l-.003-.006a2.839 2.839 0 0 0-.092-.175c-.127-.246-.25-.495-.402-.724-1.338-1.058-.72-2.022-.364-2.632-.744-.188-1.73-.588-1.866-1.113-.219-1.7-.108-2.24.11-3.113-.996.21-2.006.419-3.077.776l-.001-.008c-.286.064-1.246.416-1.518.563-.617.179-1.13.366-1.917.563a2.934 2.934 0 0 1-.753-.002c-.566-.077-1.531-.008-1.593-.065-.383-.535-.488-1.493-.838-2.006l-.004-.005-.005-.004c-.203-.275-.441-.498-.675-.73C1.49 8.213.773 7.407.572 6.554c-.05-.252-.18-.513-.112-1.258l.002-.004.001-.003c.202-.697.53-1.265 1.087-1.834.58.01 1.153.022 1.6.108.205.034.631.09 1.071.254 1.115.415 2.587 1.097 2.587 1.097-1.105-.607-2.34-1.395-3.121-1.554-.117-.017-.188-.07-.222-.162 1.173-.69 1.388-1.502 2.16-2.23.353-.154.49-.232.79-.265 2.774.439 4.52 1.543 5.9 2.282.56.304 1.07.535 1.557.812.426.14 1.713 1.113 2.09 1.637.383.807.662 1.68.917 2.522.183.857.343 1.204.343 1.204s-.155-.716-.13-.845c.162.06.542.18.7.16 0 0-.705-.364-.797-.686-.296-1.033-.594-2.641-.674-2.725-.226-.284-1.168-1.005-1.746-1.339-.218-.126-.336-.204-.345-.26.184-.186.412-.433.617-.59.195-.15.374-.32.647-.42 1.2-.541 1.886.207 2.05.056 0 0-.259-.296-.144-.247.117.063.5.138.542.177.437.342 1.581 1.593 2.27 2.913.166.323.233.536.156.925-.077.39-.136.604-.22.864-.076.174-.505 1.365-.503 1.525-.087.653.28 1.471.28 1.471.003-.222-.014-.34.006-.499l.025-.284s-.016-.075-.013-.105c.019-.196.067-.361.081-.474.138-.853.377-1.467.65-2.216.08-.189.185-.294.18-.438.005-.255-.224-.598-.389-.933a10.141 10.141 0 0 0-.627-1.112c-.596-.857-1.103-1.527-2.033-1.947-.26-.114-1.284-.226-1.638-.16-.429.09-.797.178-1.092.367-.462.296-.826.755-1.252 1.025-.944-.472-1.4-.825-1.484-.874-.561-.3-1.234-.649-1.958-.98-.348-.321-2.504-1.096-4.479-1.25zm9.705 19.318c.004 0 .007-.001.007-.002zm1.957-16.262c.05.26.091.517.287.844.42.463.571.79.63.935.205.526.369 1.052.519 1.578-.05-.548-.237-1.136-.313-1.66-.043-.24-.954-1.68-1.123-1.697zm-7.078 2.51c1.051.267 2.609.274 3.368.743.011.041-.02.068-.066.09-.187-.026-.372-.077-.57-.03-.29.093-.548.269-.822.406.754-.154.965.027 1.538.075.62.236.985 1.375 1.394 1.696-.378-.827-.617-2.06-1.355-2.714-.917-.294-2.267-.226-3.487-.267zm6.987 4.916a3.036 3.036 0 0 0-.668.066c-.16.215-.17.433-.24.635.476-.525.665-.557 1.427-.666a4.429 4.429 0 0 0-.52-.035zm-7.787.365c.496 1.86 1.516 3.733 2.53 5.44.39.496.497.718 1.087 1.018-.049.103-.103.23-.162.376-1.132-.559-2.067-1.232-3.008-1.91-1.512-1.104-1.89-2.418-2.155-4.136a.363.363 0 0 1 .12-.108 4.556 4.556 0 0 1 1.588-.68zm8.185 1.135c-.466-.002-.851.16-1.351.482 0 0 .554-.08.544-.03-.037.175.048.575.073.602l.006-.005c0 .006-.003.008-.006.005l-.306.25c.654-.329 1.341-.263 2.039-.313 0 0-.588-.162-.552-.167.131-.019-.035-.613-.08-.626a4.2 4.2 0 0 1 .334-.094 2.81 2.81 0 0 0-.701-.104zm-1.351.482zm.904.081c.094.001.189.028.22.09a.484.484 0 0 1 .018.265.538.538 0 0 0-.395.12c-.071.07-.123-.347-.068-.412.034-.04.13-.064.225-.063zm3.017.298c.084-.001.256.009.287.12.02.062-.042.27-.072.292-.046.023-.356.003-.369-.061-.026-.076.037-.306.108-.348l.046-.003zm2.897.384l-.553.27c-.9.284-.954.03-1.29-.066.222.253.487.442.958.33.645-.196.667-.36.885-.534zm-16.499.699c.5 1.36 2.887 3.894 6.09 4.278l-.008.018c-.11.266-.202.724-.196 1.104l-.006.01c-4.155-.885-4.67-1.994-5.951-2.987-.093-.768-.105-1.602.071-2.423zm9.442 1.904c-.021 0-.033 0-.033.003-.296.21-.34.412-.334.586.491-.483.473-.485 1.19-.48a7.261 7.261 0 0 0-.823-.109zm.296.363c-.105.567-.487.97-.783 1.368-.059.093-.101.22.189.624.078.108.36.126.55.116-.193-.146-.488-.301-.536-.436.341.233.657.3.943.262.065-.007.146-.077.209-.183.127-.274.227-.34.328-.413l.232.29.262-.223c-.581-.455-1.07-.923-1.394-1.405zm-9.281 2.42c1.46.878 3.814 1.839 5.812 1.791.2.347.439.711.633 1.001-2.544.387-4.308-.391-5.387-.92l-.117-.118c-.345-.391-.676-1.134-.941-1.755zm6.884 3.456c.1.207.262.379.273.402.856 1.116-1.079.859-1.478.791-.71-.113-1.405-.391-2.065-.767 1.074-.021 2.208.06 3.27-.426Z"/></symbol><symbol id="i-pandas" viewBox="0 0 24 24"><path d="M16.922 0h2.623v18.104h-2.623zm-4.126 12.94h2.623v2.57h-2.623zm0-7.037h2.623v5.446h-2.623zm0 11.197h2.623v5.446h-2.623zM4.456 5.896h2.622V24H4.455zm4.213 2.559h2.623v2.57H8.67zm0 4.151h2.623v5.447H8.67zm0-11.187h2.623v5.446H8.67Z"/></symbol><symbol id="i-numpy" viewBox="0 0 24 24"><path d="M10.315 4.876L6.3048 2.8517l-4.401 2.1965 4.1186 2.0683zm1.8381.9277l4.2045 2.1223-4.3622 2.1906-4.125-2.0718zm5.6153-2.9213l4.3193 2.1658-3.863 1.9402-4.2131-2.1252zm-1.859-.9329L12.021 0 8.1742 1.9193l4.0068 2.0208zm-3.0401 16.7443V24l4.7107-2.3507-.0053-5.3085zm4.7037-4.2057l-.0052-5.2528-4.6985 2.3356v5.2546zm5.6553-.9845v5.327l-4.0178 2.0052-.0029-5.3028zm0-1.8626V6.4214l-4.0253 2.001.0034 5.2633zM11.2062 11.571L8.0333 9.9756v6.895s-3.8804-8.2564-4.2399-8.998c-.0463-.0957-.2371-.2007-.2858-.2262C2.8118 7.2812.773 6.2485.773 6.2485V18.43l2.8204 1.5076v-6.3674s3.8392 7.3775 3.878 7.458c.0389.0807.4245.8582.8362 1.1314.5485.363 2.8992 1.7766 2.8992 1.7766z"/></symbol><symbol id="i-celery" viewBox="0 0 24 24"><path d="M2.303 0A2.298 2.298 0 0 0 0 2.303v19.394A2.298 2.298 0 0 0 2.303 24h19.394A2.298 2.298 0 0 0 24 21.697V2.303A2.298 2.298 0 0 0 21.697 0zm8.177 3.072c4.098 0 7.028 1.438 7.68 1.764l-1.194 2.55c-2.442-1.057-4.993-1.41-5.672-1.41-1.574 0-2.17.922-2.17 1.763v8.494c0 .869.596 1.791 2.17 1.791.679 0 3.23-.38 5.672-1.41l1.194 2.496c-.435.271-3.637 1.818-7.68 1.818-1.112 0-4.64-.244-4.64-4.64V7.713c0-4.397 3.528-4.64 4.64-4.64z"/></symbol><symbol id="i-docker" viewBox="0 0 24 24"><path d="M13.983 11.078h2.119a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186h-2.119a.185.185 0 00-.185.185v1.888c0 .102.083.185.185.185m-2.954-5.43h2.118a.186.186 0 00.186-.186V3.574a.186.186 0 00-.186-.185h-2.118a.185.185 0 00-.185.185v1.888c0 .102.082.185.185.185m0 2.716h2.118a.187.187 0 00.186-.186V6.29a.186.186 0 00-.186-.185h-2.118a.185.185 0 00-.185.185v1.887c0 .102.082.185.185.186m-2.93 0h2.12a.186.186 0 00.184-.186V6.29a.185.185 0 00-.185-.185H8.1a.185.185 0 00-.185.185v1.887c0 .102.083.185.185.186m-2.964 0h2.119a.186.186 0 00.185-.186V6.29a.185.185 0 00-.185-.185H5.136a.186.186 0 00-.186.185v1.887c0 .102.084.185.186.186m5.893 2.715h2.118a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186h-2.118a.185.185 0 00-.185.185v1.888c0 .102.082.185.185.185m-2.93 0h2.12a.185.185 0 00.184-.185V9.006a.185.185 0 00-.184-.186h-2.12a.185.185 0 00-.184.185v1.888c0 .102.083.185.185.185m-2.964 0h2.119a.185.185 0 00.185-.185V9.006a.185.185 0 00-.184-.186h-2.12a.186.186 0 00-.186.186v1.887c0 .102.084.185.186.185m-2.92 0h2.12a.185.185 0 00.184-.185V9.006a.185.185 0 00-.184-.186h-2.12a.185.185 0 00-.184.185v1.888c0 .102.082.185.185.185M23.763 9.89c-.065-.051-.672-.51-1.954-.51-.338.001-.676.03-1.01.087-.248-1.7-1.653-2.53-1.716-2.566l-.344-.199-.226.327c-.284.438-.49.922-.612 1.43-.23.97-.09 1.882.403 2.661-.595.332-1.55.413-1.744.42H.751a.751.751 0 00-.75.748 11.376 11.376 0 00.692 4.062c.545 1.428 1.355 2.48 2.41 3.124 1.18.723 3.1 1.137 5.275 1.137.983.003 1.963-.086 2.93-.266a12.248 12.248 0 003.823-1.389c.98-.567 1.86-1.288 2.61-2.136 1.252-1.418 1.998-2.997 2.553-4.4h.221c1.372 0 2.215-.549 2.68-1.009.309-.293.55-.65.707-1.046l.098-.288Z"/></symbol><symbol id="i-kubernetes" viewBox="0 0 24 24"><path d="M10.204 14.35l.007.01-.999 2.413a5.171 5.171 0 0 1-2.075-2.597l2.578-.437.004.005a.44.44 0 0 1 .484.606zm-.833-2.129a.44.44 0 0 0 .173-.756l.002-.011L7.585 9.7a5.143 5.143 0 0 0-.73 3.255l2.514-.725.002-.009zm1.145-1.98a.44.44 0 0 0 .699-.337l.01-.005.15-2.62a5.144 5.144 0 0 0-3.01 1.442l2.147 1.523.004-.002zm.76 2.75l.723.349.722-.347.18-.78-.5-.623h-.804l-.5.623.179.779zm1.5-3.095a.44.44 0 0 0 .7.336l.008.003 2.134-1.513a5.188 5.188 0 0 0-2.992-1.442l.148 2.615.002.001zm10.876 5.97l-5.773 7.181a1.6 1.6 0 0 1-1.248.594l-9.261.003a1.6 1.6 0 0 1-1.247-.596l-5.776-7.18a1.583 1.583 0 0 1-.307-1.34L2.1 5.573c.108-.47.425-.864.863-1.073L11.305.513a1.606 1.606 0 0 1 1.385 0l8.345 3.985c.438.209.755.604.863 1.073l2.062 8.955c.108.47-.005.963-.308 1.34zm-3.289-2.057c-.042-.01-.103-.026-.145-.034-.174-.033-.315-.025-.479-.038-.35-.037-.638-.067-.895-.148-.105-.04-.18-.165-.216-.216l-.201-.059a6.45 6.45 0 0 0-.105-2.332 6.465 6.465 0 0 0-.936-2.163c.052-.047.15-.133.177-.159.008-.09.001-.183.094-.282.197-.185.444-.338.743-.522.142-.084.273-.137.415-.242.032-.024.076-.062.11-.089.24-.191.295-.52.123-.736-.172-.216-.506-.236-.745-.045-.034.027-.08.062-.111.088-.134.116-.217.23-.33.35-.246.25-.45.458-.673.609-.097.056-.239.037-.303.033l-.19.135a6.545 6.545 0 0 0-4.146-2.003l-.012-.223c-.065-.062-.143-.115-.163-.25-.022-.268.015-.557.057-.905.023-.163.061-.298.068-.475.001-.04-.001-.099-.001-.142 0-.306-.224-.555-.5-.555-.275 0-.499.249-.499.555l.001.014c0 .041-.002.092 0 .128.006.177.044.312.067.475.042.348.078.637.056.906a.545.545 0 0 1-.162.258l-.012.211a6.424 6.424 0 0 0-4.166 2.003 8.373 8.373 0 0 1-.18-.128c-.09.012-.18.04-.297-.029-.223-.15-.427-.358-.673-.608-.113-.12-.195-.234-.329-.349-.03-.026-.077-.062-.111-.088a.594.594 0 0 0-.348-.132.481.481 0 0 0-.398.176c-.172.216-.117.546.123.737l.007.005.104.083c.142.105.272.159.414.242.299.185.546.338.743.522.076.082.09.226.1.288l.16.143a6.462 6.462 0 0 0-1.02 4.506l-.208.06c-.055.072-.133.184-.215.217-.257.081-.546.11-.895.147-.164.014-.305.006-.48.039-.037.007-.09.02-.133.03l-.004.002-.007.002c-.295.071-.484.342-.423.608.061.267.349.429.645.365l.007-.001.01-.003.129-.029c.17-.046.294-.113.448-.172.33-.118.604-.217.87-.256.112-.009.23.069.288.101l.217-.037a6.5 6.5 0 0 0 2.88 3.596l-.09.218c.033.084.069.199.044.282-.097.252-.263.517-.452.813-.091.136-.185.242-.268.399-.02.037-.045.095-.064.134-.128.275-.034.591.213.71.248.12.556-.007.69-.282v-.002c.02-.039.046-.09.062-.127.07-.162.094-.301.144-.458.132-.332.205-.68.387-.897.05-.06.13-.082.215-.105l.113-.205a6.453 6.453 0 0 0 4.609.012l.106.192c.086.028.18.042.256.155.136.232.229.507.342.84.05.156.074.295.145.457.016.037.043.09.062.129.133.276.442.402.69.282.247-.118.341-.435.213-.71-.02-.039-.045-.096-.065-.134-.083-.156-.177-.261-.268-.398-.19-.296-.346-.541-.443-.793-.04-.13.007-.21.038-.294-.018-.022-.059-.144-.083-.202a6.499 6.499 0 0 0 2.88-3.622c.064.01.176.03.213.038.075-.05.144-.114.28-.104.266.039.54.138.87.256.154.06.277.128.448.173.036.01.088.019.13.028l.009.003.007.001c.297.064.584-.098.645-.365.06-.266-.128-.537-.423-.608zM16.4 9.701l-1.95 1.746v.005a.44.44 0 0 0 .173.757l.003.01 2.526.728a5.199 5.199 0 0 0-.108-1.674A5.208 5.208 0 0 0 16.4 9.7zm-4.013 5.325a.437.437 0 0 0-.404-.232.44.44 0 0 0-.372.233h-.002l-1.268 2.292a5.164 5.164 0 0 0 3.326.003l-1.27-2.296h-.01zm1.888-1.293a.44.44 0 0 0-.27.036.44.44 0 0 0-.214.572l-.003.004 1.01 2.438a5.15 5.15 0 0 0 2.081-2.615l-2.6-.44-.004.005z"/></symbol><symbol id="i-nginx" viewBox="0 0 24 24"><path d="M12 0L1.605 6v12L12 24l10.395-6V6L12 0zm6 16.59c0 .705-.646 1.29-1.529 1.29-.631 0-1.351-.255-1.801-.81l-6-7.141v6.66c0 .721-.57 1.29-1.274 1.29H7.32c-.721 0-1.29-.6-1.29-1.29V7.41c0-.705.63-1.29 1.5-1.29.646 0 1.38.255 1.83.81l5.97 7.141V7.41c0-.721.6-1.29 1.29-1.29h.075c.72 0 1.29.6 1.29 1.29v9.18H18z"/></symbol><symbol id="i-linux" viewBox="0 0 24 24"><path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.424.424 0 00-.11.135c-.26.268-.45.6-.663.839-.199.199-.485.267-.797.4-.313.136-.658.269-.864.68-.09.189-.136.394-.132.602 0 .199.027.4.055.536.058.399.116.728.04.97-.249.68-.28 1.145-.106 1.484.174.334.535.47.94.601.81.2 1.91.135 2.774.6.926.466 1.866.67 2.616.47.526-.116.97-.464 1.208-.946.587-.003 1.23-.269 2.26-.334.699-.058 1.574.267 2.577.2.025.134.063.198.114.333l.003.003c.391.778 1.113 1.132 1.884 1.071.771-.06 1.592-.536 2.257-1.306.631-.765 1.683-1.084 2.378-1.503.348-.199.629-.469.649-.853.023-.4-.2-.811-.714-1.376v-.097l-.003-.003c-.17-.2-.25-.535-.338-.926-.085-.401-.182-.786-.492-1.046h-.003c-.059-.054-.123-.067-.188-.135a.357.357 0 00-.19-.064c.431-1.278.264-2.55-.173-3.694-.533-1.41-1.465-2.638-2.175-3.483-.796-1.005-1.576-1.957-1.56-3.368.026-2.152.236-6.133-3.544-6.139zm.529 3.405h.013c.213 0 .396.062.584.198.19.135.33.332.438.533.105.259.158.459.166.724 0-.02.006-.04.006-.06v.105a.086.086 0 01-.004-.021l-.004-.024a1.807 1.807 0 01-.15.706.953.953 0 01-.213.335.71.71 0 00-.088-.042c-.104-.045-.198-.064-.284-.133a1.312 1.312 0 00-.22-.066c.05-.06.146-.133.183-.198.053-.128.082-.264.088-.402v-.02a1.21 1.21 0 00-.061-.4c-.045-.134-.101-.2-.183-.333-.084-.066-.167-.132-.267-.132h-.016c-.093 0-.176.03-.262.132a.8.8 0 00-.205.334 1.18 1.18 0 00-.09.4v.019c.002.089.008.179.02.267-.193-.067-.438-.135-.607-.202a1.635 1.635 0 01-.018-.2v-.02a1.772 1.772 0 01.15-.768c.082-.22.232-.406.43-.533a.985.985 0 01.594-.2zm-2.962.059h.036c.142 0 .27.048.399.135.146.129.264.288.344.465.09.199.14.4.153.667v.004c.007.134.006.2-.002.266v.08c-.03.007-.056.018-.083.024-.152.055-.274.135-.393.2.012-.09.013-.18.003-.267v-.015c-.012-.133-.04-.2-.082-.333a.613.613 0 00-.166-.267.248.248 0 00-.183-.064h-.021c-.071.006-.13.04-.186.132a.552.552 0 00-.12.27.944.944 0 00-.023.33v.015c.012.135.037.2.08.334.046.134.098.2.166.268.01.009.02.018.034.024-.07.057-.117.07-.176.136a.304.304 0 01-.131.068 2.62 2.62 0 01-.275-.402 1.772 1.772 0 01-.155-.667 1.759 1.759 0 01.08-.668 1.43 1.43 0 01.283-.535c.128-.133.26-.2.418-.2zm1.37 1.706c.332 0 .733.065 1.216.399.293.2.523.269 1.052.468h.003c.255.136.405.266.478.399v-.131a.571.571 0 01.016.47c-.123.31-.516.643-1.063.842v.002c-.268.135-.501.333-.775.465-.276.135-.588.292-1.012.267a1.139 1.139 0 01-.448-.067 3.566 3.566 0 01-.322-.198c-.195-.135-.363-.332-.612-.465v-.005h-.005c-.4-.246-.616-.512-.686-.71-.07-.268-.005-.47.193-.6.224-.135.38-.271.483-.336.104-.074.143-.102.176-.131h.002v-.003c.169-.202.436-.47.839-.601.139-.036.294-.065.466-.065zm2.8 2.142c.358 1.417 1.196 3.475 1.735 4.473.286.534.855 1.659 1.102 3.024.156-.005.33.018.513.064.646-1.671-.546-3.467-1.089-3.966-.22-.2-.232-.335-.123-.335.59.534 1.365 1.572 1.646 2.757.13.535.16 1.104.021 1.67.067.028.135.06.205.067 1.032.534 1.413.938 1.23 1.537v-.043c-.06-.003-.12 0-.18 0h-.016c.151-.467-.182-.825-1.065-1.224-.915-.4-1.646-.336-1.77.465-.008.043-.013.066-.018.135-.068.023-.139.053-.209.064-.43.268-.662.669-.793 1.187-.13.533-.17 1.156-.205 1.869v.003c-.02.334-.17.838-.319 1.35-1.5 1.072-3.58 1.538-5.348.334a2.645 2.645 0 00-.402-.533 1.45 1.45 0 00-.275-.333c.182 0 .338-.03.465-.067a.615.615 0 00.314-.334c.108-.267 0-.697-.345-1.163-.345-.467-.931-.995-1.788-1.521-.63-.4-.986-.87-1.15-1.396-.165-.534-.143-1.085-.015-1.645.245-1.07.873-2.11 1.274-2.763.107-.065.037.135-.408.974-.396.751-1.14 2.497-.122 3.854a8.123 8.123 0 01.647-2.876c.564-1.278 1.743-3.504 1.836-5.268.048.036.217.135.289.202.218.133.38.333.59.465.21.201.477.335.876.335.039.003.075.006.11.006.412 0 .73-.134.997-.268.29-.134.52-.334.74-.4h.005c.467-.135.835-.402 1.044-.7zm2.185 8.958c.037.6.343 1.245.882 1.377.588.134 1.434-.333 1.791-.765l.211-.01c.315-.007.577.01.847.268l.003.003c.208.199.305.53.391.876.085.4.154.78.409 1.066.486.527.645.906.636 1.14l.003-.007v.018l-.003-.012c-.015.262-.185.396-.498.595-.63.401-1.746.712-2.457 1.57-.618.737-1.37 1.14-2.036 1.191-.664.053-1.237-.2-1.574-.898l-.005-.003c-.21-.4-.12-1.025.056-1.69.176-.668.428-1.344.463-1.897.037-.714.076-1.335.195-1.814.12-.465.308-.797.641-.984l.045-.022zm-10.814.049h.01c.053 0 .105.005.157.014.376.055.706.333 1.023.752l.91 1.664.003.003c.243.533.754 1.064 1.189 1.637.434.598.77 1.131.729 1.57v.006c-.057.744-.48 1.148-1.125 1.294-.645.135-1.52.002-2.395-.464-.968-.536-2.118-.469-2.857-.602-.369-.066-.61-.2-.723-.4-.11-.2-.113-.602.123-1.23v-.004l.002-.003c.117-.334.03-.752-.027-1.118-.055-.401-.083-.71.043-.94.16-.334.396-.4.69-.533.294-.135.64-.202.915-.47h.002v-.002c.256-.268.445-.601.668-.838.19-.201.38-.336.663-.336zm7.159-9.074c-.435.201-.945.535-1.488.535-.542 0-.97-.267-1.28-.466-.154-.134-.28-.268-.373-.335-.164-.134-.144-.333-.074-.333.109.016.129.134.199.2.096.066.215.2.36.333.292.2.68.467 1.167.467.485 0 1.053-.267 1.398-.466.195-.135.445-.334.648-.467.156-.136.149-.267.279-.267.128.016.034.134-.147.332a8.097 8.097 0 01-.69.468zm-1.082-1.583V5.64c-.006-.02.013-.042.029-.05.074-.043.18-.027.26.004.063 0 .16.067.15.135-.006.049-.085.066-.135.066-.055 0-.092-.043-.141-.068-.052-.018-.146-.008-.163-.065zm-.551 0c-.02.058-.113.049-.166.066-.047.025-.086.068-.14.068-.05 0-.13-.02-.136-.068-.01-.066.088-.133.15-.133.08-.031.184-.047.259-.005.019.009.036.03.03.05v.02h.003z"/></symbol><symbol id="i-githubactions" viewBox="0 0 24 24"><path d="M10.984 13.836a.5.5 0 0 1-.353-.146l-.745-.743a.5.5 0 1 1 .706-.708l.392.391 1.181-1.18a.5.5 0 0 1 .708.707l-1.535 1.533a.504.504 0 0 1-.354.146zm9.353-.147l1.534-1.532a.5.5 0 0 0-.707-.707l-1.181 1.18-.392-.391a.5.5 0 1 0-.706.708l.746.743a.497.497 0 0 0 .706-.001zM4.527 7.452l2.557-1.585A1 1 0 0 0 7.09 4.17L4.533 2.56A1 1 0 0 0 3 3.406v3.196a1.001 1.001 0 0 0 1.527.85zm2.03-2.436L4 6.602V3.406l2.557 1.61zM24 12.5c0 1.93-1.57 3.5-3.5 3.5a3.503 3.503 0 0 1-3.46-3h-2.08a3.503 3.503 0 0 1-3.46 3 3.502 3.502 0 0 1-3.46-3h-.558c-.972 0-1.85-.399-2.482-1.042V17c0 1.654 1.346 3 3 3h.04c.244-1.693 1.7-3 3.46-3 1.93 0 3.5 1.57 3.5 3.5S13.43 24 11.5 24a3.502 3.502 0 0 1-3.46-3H8c-2.206 0-4-1.794-4-4V9.899A5.008 5.008 0 0 1 0 5c0-2.757 2.243-5 5-5s5 2.243 5 5a5.005 5.005 0 0 1-4.952 4.998A2.482 2.482 0 0 0 7.482 12h.558c.244-1.693 1.7-3 3.46-3a3.502 3.502 0 0 1 3.46 3h2.08a3.503 3.503 0 0 1 3.46-3c1.93 0 3.5 1.57 3.5 3.5zm-15 8c0 1.378 1.122 2.5 2.5 2.5s2.5-1.122 2.5-2.5-1.122-2.5-2.5-2.5S9 19.122 9 20.5zM5 9c2.206 0 4-1.794 4-4S7.206 1 5 1 1 2.794 1 5s1.794 4 4 4zm9 3.5c0-1.378-1.122-2.5-2.5-2.5S9 11.122 9 12.5s1.122 2.5 2.5 2.5 2.5-1.122 2.5-2.5zm9 0c0-1.378-1.122-2.5-2.5-2.5S18 11.122 18 12.5s1.122 2.5 2.5 2.5 2.5-1.122 2.5-2.5zm-13 8a.5.5 0 1 0 1 0 .5.5 0 0 0-1 0zm2 0a.5.5 0 1 0 1 0 .5.5 0 0 0-1 0zm12 0c0 1.93-1.57 3.5-3.5 3.5a3.503 3.503 0 0 1-3.46-3.002c-.007.001-.013.005-.021.005l-.506.017h-.017a.5.5 0 0 1-.016-.999l.506-.017c.018-.002.035.006.052.007A3.503 3.503 0 0 1 20.5 17c1.93 0 3.5 1.57 3.5 3.5zm-1 0c0-1.378-1.122-2.5-2.5-2.5S18 19.122 18 20.5s1.122 2.5 2.5 2.5 2.5-1.122 2.5-2.5z"/></symbol><symbol id="i-git" viewBox="0 0 24 24"><path d="M13.09 23.549a1.54 1.54 0 0 1-2.18 0L.451 13.089a1.54 1.54 0 0 1 0-2.179l7.191-7.19 2.733 2.733a1.85 1.85 0 0 0 .964 2.326v6.66a1.849 1.849 0 1 0 1.54 0V8.957l2.508 2.508a1.85 1.85 0 1 0 1.09-1.09l-2.634-2.634a1.85 1.85 0 0 0-2.378-2.377L8.73 2.63 10.91.451a1.54 1.54 0 0 1 2.179 0l10.459 10.46a1.54 1.54 0 0 1 0 2.179z"/></symbol><symbol id="i-vercel" viewBox="0 0 24 24"><path d="m12 1.608 12 20.784H0Z"/></symbol><symbol id="i-ffmpeg" viewBox="0 0 24 24"><path d="M21.72 17.91V6.5l-.53-.49L9.05 18.52l-1.29-.06L24 1.53l-.33-.95-11.93 1-5.75 6.6v-.23l4.7-5.39-1.38-.77-9.11.77v2.85l1.91.46v.01l.19-.01-.56.66v10.6c.609-.126 1.22-.241 1.83-.36L14.12 5.22l.83-.04L0 21.44l9.67.82 1.35-.77 6.82-6.74v2.15l-5.72 5.57 11.26.95.35-.94v-3.16l-3.29-.18c.434-.403.858-.816 1.28-1.23z"/></symbol><symbol id="i-opencv" viewBox="0 0 24 24"><path d="M11.8992.8525C8.735.8525 6.17 3.4175 6.17 6.5817c0 2.102 1.1321 3.9398 2.8198 4.9366l1.6412-2.7849c.0411-.0699.0176-.1593-.0495-.2048-.6233-.4227-1.0328-1.137-1.0328-1.947 0-1.298 1.0524-2.3504 2.3505-2.3504 1.2981 0 2.3505 1.0524 2.3505 2.3505 0 .8098-.4095 1.5242-1.0328 1.947-.0671.0454-.0907.1348-.0495.2047l1.6414 2.785c1.6878-.9969 2.8199-2.8346 2.8199-4.9367 0-3.1642-2.5653-5.7292-5.7295-5.7292zm-6.17 10.8366C2.565 11.6891 0 14.2541 0 17.4183c0 3.1642 2.565 5.7292 5.7292 5.7292 3.1798 0 5.8074-2.6995 5.7275-5.8762H8.2313c-.0847 0-.1513.0717-.1519.1564-.0082 1.266-1.0644 2.3411-2.3502 2.3411-1.2981 0-2.3505-1.0524-2.3505-2.3505 0-1.2982 1.0524-2.3505 2.3505-2.3505.34 0 .663.0724.9547.2022.0713.0318.1566.0077.1962-.0595l1.6464-2.7935c-.8273-.4636-1.7815-.7279-2.7973-.7279zm15.4424.7614l-1.6366 2.7878c-.041.07-.0172.1594.05.2048.624.4217 1.0348 1.1354 1.0363 1.9452.0022 1.298-1.0483 2.352-2.3465 2.3542-1.298.0023-2.3523-1.0482-2.3545-2.3462-.0015-.8098.4068-1.5248 1.0294-1.9486.067-.0457.0905-.1353.0492-.2051l-1.6464-2.7818c-1.6859.9998-2.8146 2.8394-2.811 4.9415.0056 3.1641 2.575 5.7248 5.7393 5.7192 3.1641-.0054 5.7246-2.575 5.7192-5.7392-.0037-2.1022-1.139-3.938-2.8284-4.9318z"/></symbol><symbol id="i-mediapipe" viewBox="0 0 24 24"><path d="M2.182 0C1 0 .037.94.002 2.114L0 2.182v6.545a2.182 2.182 0 0 0 4.364 0V2.182A2.182 2.182 0 0 0 2.182 0Zm6.545 0c-1.182 0-2.145.94-2.18 2.114l-.002.068v13.09a2.182 2.182 0 0 0 4.364 0V2.183A2.182 2.182 0 0 0 8.727 0Zm6.546 0a2.182 2.182 0 0 0-2.182 2.182 2.182 2.182 0 0 0 2.182 2.182 2.182 2.182 0 0 0 2.182-2.182A2.182 2.182 0 0 0 15.273 0Zm6.545 0c-1.182 0-2.145.94-2.18 2.114l-.002.068v19.636a2.182 2.182 0 0 0 4.364 0V2.182A2.182 2.182 0 0 0 21.818 0Zm-6.545 6.545c-1.183 0-2.145.94-2.181 2.114l-.001.068v13.091a2.182 2.182 0 0 0 4.364 0V8.728a2.182 2.182 0 0 0-2.182-2.183zM2.182 13.091c-1.182 0-2.145.94-2.18 2.114L0 15.273v6.545a2.182 2.182 0 0 0 4.364 0v-6.545a2.182 2.182 0 0 0-2.182-2.182zm6.545 6.545a2.182 2.182 0 0 0-2.182 2.182A2.182 2.182 0 0 0 8.727 24a2.182 2.182 0 0 0 2.182-2.182 2.182 2.182 0 0 0-2.182-2.182Z"/></symbol><symbol id="i-scikitlearn" viewBox="0 0 24 24"><path d="M15.601 5.53c-1.91.035-3.981.91-5.63 2.56-2.93 2.93-2.083 8.53-1.088 9.525.805.804 6.595 1.843 9.526-1.088a9.74 9.74 0 0 0 .584-.643c.043-.292.205-.66.489-1.106a1.848 1.848 0 0 1-.537.176c-.144.265-.37.55-.676.855-.354.335-.607.554-.76.656a.795.795 0 0 1-.437.152c-.35 0-.514-.308-.494-.924-.22.316-.425.549-.612.7a.914.914 0 0 1-.578.224c-.194 0-.36-.09-.496-.273a1.03 1.03 0 0 1-.193-.507 4.016 4.016 0 0 1-.726.583c-.224.132-.47.197-.74.197-.3 0-.543-.096-.727-.288a.978.978 0 0 1-.257-.524v.004c-.3.276-.564.48-.79.611a1.295 1.295 0 0 1-.649.197.693.693 0 0 1-.571-.275c-.145-.183-.218-.43-.218-.739 0-.464.101-1.02.302-1.67.201-.65.445-1.25.733-1.797l.842-.312a.21.21 0 0 1 .06-.013c.063 0 .116.047.157.14.04.095.061.221.061.38 0 .451-.104.888-.312 1.31-.207.422-.532.873-.974 1.352-.018.23-.027.388-.027.474 0 .193.036.345.106.458.071.113.165.169.282.169a.71.71 0 0 0 .382-.13c.132-.084.333-.26.602-.523.028-.418.187-.798.482-1.142.324-.38.685-.569 1.08-.569.206 0 .37.054.494.16a.524.524 0 0 1 .186.417c0 .458-.486.829-1.459 1.114.088.43.32.646.693.646a.807.807 0 0 0 .417-.117c.129-.076.321-.243.575-.497.032-.252.118-.495.259-.728.182-.3.416-.544.701-.73.285-.185.537-.278.756-.278.276 0 .47.127.58.381l.677-.374h.186l-.292.971c-.15.488-.226.823-.226 1.004 0 .19.067.285.202.285.086 0 .181-.045.285-.137.104-.092.25-.232.437-.42v.001c.143-.155.274-.32.392-.494-.19-.084-.285-.21-.285-.375 0-.17.058-.352.174-.545.116-.194.275-.29.479-.29.172 0 .258.088.258.265 0 .139-.05.338-.149.596.367-.04.687-.32.961-.842l.228-.01c1.059-2.438.828-5.075-.83-6.732-1.019-1.02-2.408-1.5-3.895-1.471zm4.725 8.203a8.938 8.938 0 0 1-1.333 2.151 1.09 1.09 0 0 0-.012.147c0 .168.047.309.14.423.092.113.206.17.34.17.296 0 .714-.264 1.254-.787-.001.04-.003.08-.003.121 0 .146.012.368.036.666l.733-.172c0-.2.003-.357.01-.474.01-.157.033-.33.066-.517.02-.11.07-.216.152-.315l.186-.216a5.276 5.276 0 0 1 .378-.397c.062-.055.116-.099.162-.13a.26.26 0 0 1 .123-.046c.055 0 .083.035.083.106 0 .07-.052.236-.156.497-.194.486-.292.848-.292 1.084 0 .175.046.314.136.418a.45.45 0 0 0 .358.155c.365 0 .803-.269 1.313-.808v-.381c-.361.426-.623.64-.784.64-.109 0-.163-.067-.163-.2 0-.1.065-.316.195-.65.19-.486.285-.836.285-1.048a.464.464 0 0 0-.112-.319.36.36 0 0 0-.282-.127c-.165 0-.354.077-.567.233-.213.156-.5.436-.863.84.053-.262.165-.622.335-1.08l-.809.156a6.54 6.54 0 0 0-.399 1.074c-.04.156-.07.316-.092.48a7.447 7.447 0 0 1-.49.45.38.38 0 0 1-.229.08.208.208 0 0 1-.174-.082.352.352 0 0 1-.064-.222c0-.1.019-.214.056-.343.038-.13.12-.373.249-.731l.308-.849zm-17.21-2.927c-.863-.016-1.67.263-2.261.854-1.352 1.352-1.07 3.827.631 5.527 1.7 1.701 4.95 1.21 5.527.632.467-.466 1.07-3.827-.631-5.527-.957-.957-2.158-1.465-3.267-1.486zm12.285.358h.166v.21H15.4zm.427 0h.166v.865l.46-.455h.195l-.364.362.428.684h-.198l-.357-.575-.164.166v.41h-.166zm1.016 0h.166v.21h-.166zm.481.122h.166v.288h.172v.135h-.172v.717c0 .037.006.062.02.075.012.013.037.02.074.02a.23.23 0 0 0 .078-.01v.141a.802.802 0 0 1-.136.014.23.23 0 0 1-.15-.043.15.15 0 0 1-.052-.123v-.79h-.141v-.136h.141zm-3.562.258c.081 0 .15.012.207.038.057.024.1.061.13.11s.045.106.045.173h-.176c-.006-.111-.075-.167-.208-.167a.285.285 0 0 0-.164.041.134.134 0 0 0-.06.117c0 .035.015.065.045.088.03.024.08.044.15.06l.16.039a.47.47 0 0 1 .224.105c.047.046.07.108.07.186a.3.3 0 0 1-.052.175.327.327 0 0 1-.152.116.585.585 0 0 1-.226.041c-.136 0-.24-.03-.309-.088-.069-.059-.105-.149-.109-.269h.176c.004.037.01.065.017.084a.166.166 0 0 0 .034.054c.044.043.112.065.204.065a.31.31 0 0 0 .177-.045.139.139 0 0 0 .067-.119.116.116 0 0 0-.038-.09.287.287 0 0 0-.124-.055l-.156-.038a1.248 1.248 0 0 1-.159-.05.359.359 0 0 1-.098-.061.22.22 0 0 1-.058-.083.32.32 0 0 1-.016-.108c0-.096.036-.174.109-.232a.45.45 0 0 1 .29-.087zm1.035 0a.46.46 0 0 1 .202.043.351.351 0 0 1 .187.212.577.577 0 0 1 .023.126h-.168a.256.256 0 0 0-.078-.168.242.242 0 0 0-.17-.06.248.248 0 0 0-.155.05.306.306 0 0 0-.1.144.662.662 0 0 0-.034.224.58.58 0 0 0 .035.214.299.299 0 0 0 .101.135.261.261 0 0 0 .157.048c.142 0 .227-.084.256-.252h.167a.519.519 0 0 1-.065.22.35.35 0 0 1-.146.138.464.464 0 0 1-.216.048.448.448 0 0 1-.246-.066.441.441 0 0 1-.161-.192.703.703 0 0 1-.057-.293c0-.085.01-.163.032-.233a.522.522 0 0 1 .095-.182.403.403 0 0 1 .15-.117.453.453 0 0 1 .191-.04zm.603.03h.166v1.046H15.4zm1.443 0h.166v1.046h-.166zm-5.05.618c-.08 0-.2.204-.356.611-.155.407-.308.977-.459 1.71.281-.312.509-.662.683-1.05.175-.387.262-.72.262-.999a.455.455 0 0 0-.036-.197c-.025-.05-.056-.075-.093-.075zm4.662 1.797c-.221 0-.431.188-.629.563-.197.376-.296.722-.296 1.038 0 .12.029.216.088.29a.273.273 0 0 0 .223.111c.221 0 .43-.188.625-.565.196-.377.294-.725.294-1.043a.457.457 0 0 0-.083-.29.269.269 0 0 0-.222-.104zm-2.848.007c-.146 0-.285.11-.417.333-.133.222-.2.51-.2.866.566-.159.849-.452.849-.881 0-.212-.077-.318-.232-.318Z"/></symbol><symbol id="i-googlegemini" viewBox="0 0 24 24"><path d="M11.04 19.32Q12 21.51 12 24q0-2.49.93-4.68.96-2.19 2.58-3.81t3.81-2.55Q21.51 12 24 12q-2.49 0-4.68-.93a12.3 12.3 0 0 1-3.81-2.58 12.3 12.3 0 0 1-2.58-3.81Q12 2.49 12 0q0 2.49-.96 4.68-.93 2.19-2.55 3.81a12.3 12.3 0 0 1-3.81 2.58Q2.49 12 0 12q2.49 0 4.68.96 2.19.93 3.81 2.55t2.55 3.81"/></symbol><symbol id="i-n8n" viewBox="0 0 24 24"><path d="M21.4737 5.6842c-1.1772 0-2.1663.8051-2.4468 1.8947h-2.8955c-1.235 0-2.289.893-2.492 2.111l-.1038.623a1.263 1.263 0 0 1-1.246 1.0555H11.289c-.2805-1.0896-1.2696-1.8947-2.4468-1.8947s-2.1663.8051-2.4467 1.8947H4.973c-.2805-1.0896-1.2696-1.8947-2.4468-1.8947C1.1311 9.4737 0 10.6047 0 12s1.131 2.5263 2.5263 2.5263c1.1772 0 2.1663-.8051 2.4468-1.8947h1.4223c.2804 1.0896 1.2696 1.8947 2.4467 1.8947 1.1772 0 2.1663-.8051 2.4468-1.8947h1.0008a1.263 1.263 0 0 1 1.2459 1.0555l.1038.623c.203 1.218 1.257 2.111 2.492 2.111h.3692c.2804 1.0895 1.2696 1.8947 2.4468 1.8947 1.3952 0 2.5263-1.131 2.5263-2.5263s-1.131-2.5263-2.5263-2.5263c-1.1772 0-2.1664.805-2.4468 1.8947h-.3692a1.263 1.263 0 0 1-1.246-1.0555l-.1037-.623A2.52 2.52 0 0 0 13.9607 12a2.52 2.52 0 0 0 .821-1.4794l.1038-.623a1.263 1.263 0 0 1 1.2459-1.0555h2.8955c.2805 1.0896 1.2696 1.8947 2.4468 1.8947 1.3952 0 2.5263-1.131 2.5263-2.5263s-1.131-2.5263-2.5263-2.5263m0 1.2632a1.263 1.263 0 0 1 1.2631 1.2631 1.263 1.263 0 0 1-1.2631 1.2632 1.263 1.263 0 0 1-1.2632-1.2632 1.263 1.263 0 0 1 1.2632-1.2631M2.5263 10.7368A1.263 1.263 0 0 1 3.7895 12a1.263 1.263 0 0 1-1.2632 1.2632A1.263 1.263 0 0 1 1.2632 12a1.263 1.263 0 0 1 1.2631-1.2632m6.3158 0A1.263 1.263 0 0 1 10.1053 12a1.263 1.263 0 0 1-1.2632 1.2632A1.263 1.263 0 0 1 7.579 12a1.263 1.263 0 0 1 1.2632-1.2632m10.1053 3.7895a1.263 1.263 0 0 1 1.2631 1.2632 1.263 1.263 0 0 1-1.2631 1.2631 1.263 1.263 0 0 1-1.2632-1.2631 1.263 1.263 0 0 1 1.2632-1.2632"/></symbol><symbol id="i-postman" viewBox="0 0 24 24"><path d="M13.527.099C6.955-.744.942 3.9.099 10.473c-.843 6.572 3.8 12.584 10.373 13.428 6.573.843 12.587-3.801 13.428-10.374C24.744 6.955 20.101.943 13.527.099zm2.471 7.485a.855.855 0 0 0-.593.25l-4.453 4.453-.307-.307-.643-.643c4.389-4.376 5.18-4.418 5.996-3.753zm-4.863 4.861l4.44-4.44a.62.62 0 1 1 .847.903l-4.699 4.125-.588-.588zm.33.694l-1.1.238a.06.06 0 0 1-.067-.032.06.06 0 0 1 .01-.073l.645-.645.512.512zm-2.803-.459l1.172-1.172.879.878-1.979.426a.074.074 0 0 1-.085-.039.072.072 0 0 1 .013-.093zm-3.646 6.058a.076.076 0 0 1-.069-.083.077.077 0 0 1 .022-.046h.002l.946-.946 1.222 1.222-2.123-.147zm2.425-1.256a.228.228 0 0 0-.117.256l.203.865a.125.125 0 0 1-.211.117h-.003l-.934-.934-.294-.295 3.762-3.758 1.82-.393.874.874c-1.255 1.102-2.971 2.201-5.1 3.268zm5.279-3.428h-.002l-.839-.839 4.699-4.125a.952.952 0 0 0 .119-.127c-.148 1.345-2.029 3.245-3.977 5.091zm3.657-6.46l-.003-.002a1.822 1.822 0 0 1 2.459-2.684l-1.61 1.613a.119.119 0 0 0 0 .169l1.247 1.247a1.817 1.817 0 0 1-2.093-.343zm2.578 0a1.714 1.714 0 0 1-.271.218h-.001l-1.207-1.207 1.533-1.533c.661.72.637 1.832-.054 2.522zM18.855 6.05a.143.143 0 0 0-.053.157.416.416 0 0 1-.053.45.14.14 0 0 0 .023.197.141.141 0 0 0 .084.03.14.14 0 0 0 .106-.05.691.691 0 0 0 .087-.751.138.138 0 0 0-.194-.033z"/></symbol></svg>
+<div class="ticker" aria-hidden="true">
+  <div class="tk-row"><div class="tk"><i><svg><use href="#i-python"/></svg>Python</i><i><svg><use href="#i-typescript"/></svg>TypeScript</i><i><svg><use href="#i-fastapi"/></svg>FastAPI</i><i><svg><use href="#i-django"/></svg>Django</i><i><svg><use href="#i-react"/></svg>React / Native</i><i><svg><use href="#i-nextdotjs"/></svg>Next.js</i><i><svg><use href="#i-expo"/></svg>Expo</i><i><svg><use href="#i-tailwindcss"/></svg>Tailwind</i><i><svg><use href="#i-streamlit"/></svg>Streamlit</i><i><svg><use href="#i-postgresql"/></svg>PostgreSQL</i><i><svg><use href="#i-redis"/></svg>Redis</i><i><svg><use href="#i-apachekafka"/></svg>Kafka</i><i><svg><use href="#i-apachehadoop"/></svg>Hadoop</i><i><svg><use href="#i-apachehive"/></svg>Hive</i><i><svg><use href="#i-pandas"/></svg>pandas</i><i><svg><use href="#i-numpy"/></svg>NumPy</i><i><svg><use href="#i-celery"/></svg>Celery</i><i><svg><use href="#i-python"/></svg>Python</i><i><svg><use href="#i-typescript"/></svg>TypeScript</i><i><svg><use href="#i-fastapi"/></svg>FastAPI</i><i><svg><use href="#i-django"/></svg>Django</i><i><svg><use href="#i-react"/></svg>React / Native</i><i><svg><use href="#i-nextdotjs"/></svg>Next.js</i><i><svg><use href="#i-expo"/></svg>Expo</i><i><svg><use href="#i-tailwindcss"/></svg>Tailwind</i><i><svg><use href="#i-streamlit"/></svg>Streamlit</i><i><svg><use href="#i-postgresql"/></svg>PostgreSQL</i><i><svg><use href="#i-redis"/></svg>Redis</i><i><svg><use href="#i-apachekafka"/></svg>Kafka</i><i><svg><use href="#i-apachehadoop"/></svg>Hadoop</i><i><svg><use href="#i-apachehive"/></svg>Hive</i><i><svg><use href="#i-pandas"/></svg>pandas</i><i><svg><use href="#i-numpy"/></svg>NumPy</i><i><svg><use href="#i-celery"/></svg>Celery</i></div></div>
+  <div class="tk-row"><div class="tk tk2"><i><svg><use href="#i-docker"/></svg>Docker</i><i><svg><use href="#i-kubernetes"/></svg>Kubernetes</i><i><svg><use href="#i-nginx"/></svg>Nginx</i><i><svg><use href="#i-linux"/></svg>Linux</i><i><svg><use href="#i-githubactions"/></svg>GitHub Actions</i><i><svg><use href="#i-git"/></svg>Git</i><i><svg class="none"></svg>AWS</i><i><svg class="none"></svg>Azure</i><i><svg><use href="#i-vercel"/></svg>Vercel</i><i><svg><use href="#i-ffmpeg"/></svg>FFmpeg</i><i><svg><use href="#i-opencv"/></svg>OpenCV</i><i><svg><use href="#i-mediapipe"/></svg>MediaPipe</i><i><svg><use href="#i-scikitlearn"/></svg>scikit-learn</i><i><svg class="none"></svg>OpenAI</i><i><svg><use href="#i-googlegemini"/></svg>Gemini</i><i><svg><use href="#i-n8n"/></svg>n8n</i><i><svg><use href="#i-postman"/></svg>Postman</i><i><svg><use href="#i-docker"/></svg>Docker</i><i><svg><use href="#i-kubernetes"/></svg>Kubernetes</i><i><svg><use href="#i-nginx"/></svg>Nginx</i><i><svg><use href="#i-linux"/></svg>Linux</i><i><svg><use href="#i-githubactions"/></svg>GitHub Actions</i><i><svg><use href="#i-git"/></svg>Git</i><i><svg class="none"></svg>AWS</i><i><svg class="none"></svg>Azure</i><i><svg><use href="#i-vercel"/></svg>Vercel</i><i><svg><use href="#i-ffmpeg"/></svg>FFmpeg</i><i><svg><use href="#i-opencv"/></svg>OpenCV</i><i><svg><use href="#i-mediapipe"/></svg>MediaPipe</i><i><svg><use href="#i-scikitlearn"/></svg>scikit-learn</i><i><svg class="none"></svg>OpenAI</i><i><svg><use href="#i-googlegemini"/></svg>Gemini</i><i><svg><use href="#i-n8n"/></svg>n8n</i><i><svg><use href="#i-postman"/></svg>Postman</i></div></div>
+</div>
+
+<!-- =============== RUNDOWN =============== -->
+<section id="experience" class="wrap">
+  <div class="head">
+    <span class="n">Four roles</span>
+    <h2>Experience</h2>
+    <p>Three internships and a junior role, most recent first.</p>
+  </div>
+
+  <div class="rows">
+
+    <article class="row now">
+      <div class="rhead">
+        <span class="in">Aug 2026</span>
+        <span class="t"><span class="mark" data-fb="TG"><img src="https://tse1.mm.bing.net/th/id/OIP.dtTiMBHic3j0BtqhbVCXNwAAAA?r=0&amp;rs=1&amp;pid=ImgDetMain&amp;o=7&amp;rm=3" alt="" loading="lazy" onerror="this.remove()"></span><span class="tt">Traders Global Generation<small>Junior Software Engineer</small></span></span>
+        <span class="d">Ongoing</span>
+        <span class="st live">Current</span>
+      </div>
+      <div class="rbody">
+        <ul>
+          <li>Ran the technical handoff of a fintech platform from an external agency — code audit first, then full engineering ownership.</li>
+          <li>Building the cross-platform mobile app for the brokerage in React Native and Expo, tuned for real-time market data.</li>
+          <li>Building the FastAPI backend behind it: low-latency endpoints, secure integrations, an API surface that can grow.</li>
+        </ul>
+        <div class="stack">Python / FastAPI / React Native / Expo / PostgreSQL / Docker / REST / Git</div>
+      </div>
+    </article>
+
+    <article class="row">
+      <div class="rhead">
+        <span class="in">Jan 2026</span>
+        <span class="t"><span class="mark" data-fb="TM"><img src="https://media.licdn.com/dms/image/v2/C4D0BAQEaVwOw9b7C5g/company-logo_200_200/company-logo_200_200/0/1676451794449/tapmad_logo?e=2147483647&amp;v=beta&amp;t=T0iOPOLYUvmjd0m0H23LMusbFYt9sMJsOAZJrSuJFB8" alt="" loading="lazy" onerror="this.remove()"></span><span class="tt">Tapmad Entertainment<small>Stream Intern</small></span></span>
+        <span class="d">3 months</span>
+        <span class="st">Completed</span>
+      </div>
+      <div class="rbody">
+        <ul>
+          <li>Built an automated highlight pipeline for live sport — the "AI Sports Content Machine" — from empty repo to running system in 14 days.</li>
+          <li>Cut the marketing team's manual clipping work, lifting their output by roughly 70%.</li>
+          <li>Ran an accelerated dual-pipe FFmpeg architecture in Docker so processing kept pace with the broadcast.</li>
+        </ul>
+        <div class="stack">Python / FFmpeg / Docker / Docker Compose / real-time video / automation</div>
+      </div>
+    </article>
+
+    <article class="row">
+      <div class="rhead">
+        <span class="in">Jun 2025</span>
+        <span class="t"><span class="mark" data-fb="WD"><img src="https://media.licdn.com/dms/image/v2/D4E0BAQEqgnwHOeWy1A/company-logo_200_200/B4EZweW1svG0AM-/0/1770035830184/websity_digital_logo?e=2147483647&amp;v=beta&amp;t=JqBNUHDI4O7Gb4-K7vH9pHxUMUKiVSs5AhFX1IS8YF0" alt="" loading="lazy" onerror="this.remove()"></span><span class="tt">Websity Digital<small>Software Engineer Intern</small></span></span>
+        <span class="d">4 months</span>
+        <span class="st">Completed</span>
+      </div>
+      <div class="rbody">
+        <ul>
+          <li>Owned internal tooling end to end — backend integrations through to the interface people actually used.</li>
+          <li>Shipped Streamlit apps that gave the content team no-code AI tools, which kept working through subscription outages.</li>
+          <li>Automated scraping and reporting, taking proposal generation from hours to about two minutes across 100+ client projects.</li>
+        </ul>
+        <div class="stack">Python / Streamlit / REST APIs / web scraping / data visualisation / AWS</div>
+      </div>
+    </article>
+
+    <article class="row">
+      <div class="rhead">
+        <span class="in">Jan 2027</span>
+        <span class="t"><span class="mark" data-fb="IB"><img src="https://tse2.mm.bing.net/th/id/OIP.ODj_op9ZFWMeRUvVmOeF9wHaHa?r=0&amp;rs=1&amp;pid=ImgDetMain&amp;o=7&amp;rm=3" alt="" loading="lazy" onerror="this.remove()"></span><span class="tt">BSCS, Institute of Business Management<small>Karachi · exchange semester at TED University, Ankara</small></span></span>
+        <span class="d">Final year</span>
+        <span class="st">In progress</span>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- =============== SOURCES =============== -->
+<section id="projects" class="wrap bleed">
+  <div class="head">
+    <span class="n">Eleven builds</span>
+    <h2>Projects</h2>
+    <p>Everything below is mine end to end, from the final-year system down to the weekend tools.</p>
+  </div>
+
+  <div class="tbl">
+    <div class="tbl-h">
+      <span class="lab">Src</span><span class="lab">Project</span><span class="lab">Stack</span>
+    </div>
+
+    <article class="p">
+      <span class="id">P01</span>
+      <div>
+        <h3>AI Medical Image Analysis Platform<span class="flag">Final year</span></h3>
+        <p>Diagnostic evaluation of medical imaging at 97.8% accuracy with sub-second inference, served through FastAPI to a React Native client. Deployed on a CI/CD pipeline that holds 32 concurrent users without degrading. Presented at Technova, August 2026.</p>
+      </div>
+      <div class="tech">Python · deep learning · computer vision · FastAPI · React Native · PostgreSQL · Docker · CI/CD</div>
+    </article>
+
+    <article class="p">
+      <span class="id">P02</span>
+      <div>
+        <h3>Cloud Video Processing Environment</h3>
+        <p>A production server on AWS EC2 running custom-compiled, hardware-accelerated video runtimes under Docker Compose, behind an Nginx reverse proxy, writing to locked-down object storage.</p>
+      </div>
+      <div class="tech">AWS EC2 · Docker Compose · Nginx · FFmpeg · S3 · Linux</div>
+    </article>
+
+    <article class="p">
+      <span class="id">P03</span>
+      <div>
+        <h3>Big Data E-Commerce Pipeline</h3>
+        <p>Batch processing over large e-commerce datasets in Hadoop and Hive. Reworking the job structure and partitioning cut total execution time by about 40%.</p>
+      </div>
+      <div class="tech">Hadoop · Hive · HDFS · SQL</div>
+    </article>
+
+    <article class="p">
+      <span class="id">P04</span>
+      <div>
+        <h3>Trendd — Commerce Analytics Platform</h3>
+        <p>An AI-assisted platform that ingests QuickBooks and Faire data, maps it automatically, and runs the ETL and reporting asynchronously through Celery and Redis.</p>
+      </div>
+      <div class="tech">Next.js · Django REST · Celery · Redis · PostgreSQL · Amazon S3</div>
+    </article>
+
+    <article class="p">
+      <span class="id">P05</span>
+      <div>
+        <h3>Jujutsu Kaisen Hand Sign Classifier</h3>
+        <p>Real-time hand-sign recognition on a custom landmark dataset I collected myself, holding a steady 30 FPS. Trained in Colab, runs on a webcam.</p>
+      </div>
+      <div class="tech">Python · MediaPipe · OpenCV · scikit-learn · Google Colab</div>
+    </article>
+
+    <article class="p">
+      <span class="id">P06</span>
+      <div>
+        <h3>vMix Broadcast Ad Panel</h3>
+        <p>An ad-insertion panel for live production, driven by a FastAPI backend over local network protocols with full runtime activity logging.</p>
+      </div>
+      <div class="tech">Python · FastAPI · REST · networking · logging</div>
+    </article>
+
+    <article class="p">
+      <span class="id">P07</span>
+      <div>
+        <h3>Prospect Analysis Dashboard</h3>
+        <p>Scrapes, cleans and charts client data in one Streamlit app, which turned proposal writing for 100+ clients into a two-minute job.</p>
+      </div>
+      <div class="tech">Python · Streamlit · web scraping · Pandas</div>
+    </article>
+
+    <article class="p">
+      <span class="id">P08</span>
+      <div>
+        <h3>GitHub Repo Auditor</h3>
+        <p>Pulls repository metrics through the GitHub API, runs them past Gemini for a written read, and files the results automatically.</p>
+      </div>
+      <div class="tech">Python · GitHub API · Gemini API · n8n · Apps Script</div>
+    </article>
+
+    <article class="p">
+      <span class="id">P09</span>
+      <div>
+        <h3>Internal Image Generation Tool</h3>
+        <p>A DALL·E 3 front end for the content team, built to keep image output flowing without hitting a shared ChatGPT Pro ceiling.</p>
+      </div>
+      <div class="tech">Python · Streamlit · OpenAI API · DALL·E 3</div>
+    </article>
+
+    <article class="p">
+      <span class="id">P10</span>
+      <div>
+        <h3>Conversational AI Web App</h3>
+        <p>A ChatGPT-style client with streaming responses and persisted threads, written in TypeScript against the OpenAI API.</p>
+      </div>
+      <div class="tech">Next.js · React · TypeScript · OpenAI API</div>
+    </article>
+
+    <article class="p">
+      <span class="id">P11</span>
+      <div>
+        <h3>Phone Data Enrichment App</h3>
+        <p>Takes raw phone-number records and runs them through an automated enrichment and validation pipeline before handoff.</p>
+      </div>
+      <div class="tech">Python · REST APIs · Pandas · data pipelines</div>
+    </article>
+
+  </div>
+</section>
+
+<!-- =============== RACK =============== -->
+<section id="skills" class="wrap bleed">
+  <div class="head">
+    <span class="n">Nine groups</span>
+    <h2>Skills</h2>
+    <p>Grouped the way I actually reach for it, not by how long the list looks.</p>
+  </div>
+
+  <div class="rack">
+    <div class="strip"><span class="k">Languages</span><span class="v">Python<i>/</i>TypeScript<i>/</i>JavaScript<i>/</i>Java<i>/</i>C++<i>/</i>C<i>/</i>SQL</span></div>
+    <div class="strip"><span class="k">Backend &amp; APIs</span><span class="v">FastAPI<i>/</i>Django<i>/</i>Django REST Framework<i>/</i>SQLModel<i>/</i>Uvicorn<i>/</i>REST design</span></div>
+    <div class="strip"><span class="k">AI &amp; Machine learning</span><span class="v">Deep learning<i>/</i>computer vision<i>/</i>scikit-learn<i>/</i>OpenCV<i>/</i>MediaPipe<i>/</i>Whisper<i>/</i>OpenAI<i>/</i>Gemini</span></div>
+    <div class="strip"><span class="k">Video &amp; media</span><span class="v">FFmpeg<i>/</i>hardware-accelerated transcoding<i>/</i>real-time processing<i>/</i>vMix integration</span></div>
+    <div class="strip"><span class="k">Infrastructure</span><span class="v">Docker<i>/</i>Docker Compose<i>/</i>Kubernetes<i>/</i>Nginx<i>/</i>Linux<i>/</i>GitHub Actions<i>/</i>CI/CD<i>/</i>secrets management</span></div>
+    <div class="strip"><span class="k">Cloud</span><span class="v">AWS EC2<i>/</i>AWS S3<i>/</i>Azure<i>/</i>Vercel<i>/</i>object storage<i>/</i>production server config</span></div>
+    <div class="strip"><span class="k">Data</span><span class="v">PostgreSQL<i>/</i>MySQL<i>/</i>SQLite<i>/</i>Redis<i>/</i>Kafka<i>/</i>Hadoop<i>/</i>Hive<i>/</i>Pandas<i>/</i>NumPy</span></div>
+    <div class="strip"><span class="k">Front end</span><span class="v">React<i>/</i>Next.js<i>/</i>React Native<i>/</i>Expo<i>/</i>Tailwind<i>/</i>shadcn/ui<i>/</i>Streamlit</span></div>
+    <div class="strip"><span class="k">Foundations</span><span class="v">Data structures &amp; algorithms<i>/</i>operating systems<i>/</i>networks<i>/</i>distributed systems<i>/</i>OOP</span></div>
+  </div>
+</section>
+
+<!-- =============== MARKS =============== -->
+<section id="impact" class="wrap bleed">
+  <div class="head">
+    <span class="n">Eight numbers</span>
+    <h2>Impact</h2>
+    <p>Results I am happy to be asked about in an interview.</p>
+  </div>
+
+  <div class="marks">
+    <div class="mk"><b><span class="num" data-to="97.8" data-dec="1">0.0</span><u>%</u></b><span>Diagnostic accuracy on the final-year medical imaging system, at sub-second inference.</span></div>
+    <div class="mk"><b><span class="num" data-to="14" data-dec="0">0</span><u> days</u></b><span>From nothing to a running AI highlight pipeline for live sport.</span></div>
+    <div class="mk"><b><span class="num" data-to="70" data-dec="0">0</span><u>%</u></b><span>Lift in the marketing team's output once clipping stopped being manual.</span></div>
+    <div class="mk"><b><span class="num" data-to="40" data-dec="0">0</span><u>%</u></b><span>Cut in execution time on the Hadoop and Hive analytics pipeline.</span></div>
+    <div class="mk"><b><span class="num" data-to="2" data-dec="0">0</span><u> min</u></b><span>What proposal generation takes now. It used to take hours.</span></div>
+    <div class="mk"><b><span class="num" data-to="100" data-dec="0">0</span><u>+</u></b><span>Client projects running through the automation I built at Websity.</span></div>
+    <div class="mk"><b><span class="num" data-to="30" data-dec="0">0</span><u> fps</u></b><span>Sustained landmark tracking in the real-time hand-sign classifier.</span></div>
+    <div class="mk"><b><span class="num" data-to="32" data-dec="0">0</span></b><span>Concurrent users held by the medical platform's pipeline with no measurable degradation.</span></div>
+  </div>
+</section>
+
+</main>
+
+<!-- =============== SIGN OFF =============== -->
+<footer id="contact" class="signoff wrap">
+  <h2>Open to work<br>from January 2027.</h2>
+  <div class="contact">
+    <!-- Replace the placeholder values below with real details. -->
+    <a href="mailto:azfarsuhail2011@gmail.com"><span class="key">Email</span><span class="val todo">azfarsuhail2011@gmail.com</span></a>
+    <a href="https://github.com/azfarsuhail"><span class="key">GitHub</span><span class="val todo">https://github.com/azfarsuhail</span></a>
+    <a href="https://linkedin.com/in/azfarsuhail"><span class="key">LinkedIn</span><span class="val todo">https://linkedin.com/in/azfarsuhail</span></a>
+    <a href="/resume.pdf" download><span class="key">Résumé</span><span class="val todo">Resume</span></a>
+    <span class="row-c"><span class="key">Location</span><span class="val">Karachi, Pakistan — UTC+5</span></span>
+  </div>
+  <div class="colophon">
+    <span>Azfar Suhail</span><span>AI · Backend · Infrastructure</span><span>Karachi</span><span id="year">2026</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var yr = document.getElementById('year');
+  if (yr) yr.textContent = new Date().getFullYear();
+
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Page-load sequence: the hero settles into place once, then nothing moves.
+  if (reduced) {
+    document.body.classList.remove('boot');
+  } else {
+    requestAnimationFrame(function(){
+      document.body.classList.remove('boot');
+      document.body.classList.add('lit');
+    });
+  }
+
+  // Each figure in Impact counts up to its real value the first time it scrolls in.
+  var nums = [].slice.call(document.querySelectorAll('.num'));
+  function settle(el){
+    el.textContent = parseFloat(el.dataset.to).toFixed(+(el.dataset.dec || 0));
+  }
+  function countUp(el){
+    var to = parseFloat(el.dataset.to), dec = +(el.dataset.dec || 0), t0 = null, D = 900;
+    requestAnimationFrame(function step(ts){
+      if (t0 === null) t0 = ts;
+      var p = Math.min((ts - t0) / D, 1);
+      el.textContent = (to * (1 - Math.pow(1 - p, 3))).toFixed(dec);
+      if (p < 1) requestAnimationFrame(step); else settle(el);
+    });
+  }
+  if (reduced || !('IntersectionObserver' in window)) {
+    nums.forEach(settle);
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting) { countUp(en.target); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.5 });
+    nums.forEach(function(el){ io.observe(el); });
+  }
+})();
+</script>
+</body>
+</html>
