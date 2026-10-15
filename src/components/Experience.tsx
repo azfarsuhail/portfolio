@@ -97,11 +97,13 @@ export default function Experience() {
                   data-fb={r.mark}
                   className="relative mt-0.5 grid size-[38px] flex-none place-items-center overflow-hidden border border-rule bg-panel-2 before:font-mono before:text-xs before:font-normal before:tracking-[.08em] before:text-mute-lg before:content-[attr(data-fb)]"
                 >
+                  {/* Unoptimized: 38px marks gain nothing from the optimizer, and
+                      skipping it means no remote-host allowlist to abuse as a proxy. */}
                   <Image
                     src={r.logo}
                     alt=""
                     fill
-                    sizes="38px"
+                    unoptimized
                     className="object-contain opacity-85 grayscale transition-[filter,opacity] group-hover:opacity-100 group-hover:grayscale-0"
                   />
                 </span>

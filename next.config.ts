@@ -11,13 +11,6 @@ const nextConfig: NextConfig = {
       },
     },
   },
-  // Company marks in Experience are hotlinked from these hosts.
-  images: {
-    remotePatterns: [
-      { protocol: "https", hostname: "*.mm.bing.net" },
-      { protocol: "https", hostname: "media.licdn.com" },
-    ],
-  },
 };
 
 export default nextConfig;
