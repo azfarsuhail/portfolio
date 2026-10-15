@@ -1,4 +1,5 @@
 import { Head, Section } from "./Section";
+import SkillsConstellation from "./SkillsConstellation";
 
 const groups: [string, string[]][] = [
   ["Languages", ["Python", "SQL", "TypeScript", "JavaScript", "Java", "C++", "C"]],
@@ -20,6 +21,7 @@ export default function Skills() {
       <Head n={`${groups.length} groups`} title="Skills">
         Grouped the way I actually reach for it, not by how long the list looks.
       </Head>
+      <SkillsConstellation />
       <div className="mt-7 border-t border-rule">
         {groups.map(([k, items]) => (
           <div
