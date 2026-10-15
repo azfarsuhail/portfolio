@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------
+   PALETTE — provenance: SMPTE bars and the PLUGE strip, the patches
+   an engineer uses to set black level on a broadcast monitor.
+   Muted text is ink at 72% / 55%: 8.3:1 and 5.1:1 on vh, both WCAG AA.
+   --------------------------------------------------------------- */
+@theme {
+  --color-vh: #0a0a0b;
+  --color-panel: #121214;
+  --color-panel-2: #1a1a1d;
+  --color-ink: #e8e5de;
+  --color-mag: #bf00bf;
+  --color-mag-lt: #e979df;
+  --color-rule: rgb(232 229 222 / 0.13);
+  --color-rule-soft: rgb(232 229 222 / 0.06);
+  --color-mute: rgb(232 229 222 / 0.72);
+  --color-mute-lg: rgb(232 229 222 / 0.55);
+
+  --animate-tk-a: tk-a 64s linear infinite;
+  --animate-tk-b: tk-b 72s linear infinite;
+  @keyframes tk-a {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes tk-b {
+    from { transform: translateX(-50%); }
+    to { transform: translateX(0); }
+  }
+}
+
+@theme inline {
+  --font-disp: var(--font-archivo), "Helvetica Neue", Arial, sans-serif;
+  --font-mono: var(--font-dm-mono), ui-monospace, Menlo, monospace;
+  --font-body: var(--font-newsreader), Georgia, serif;
+}
+
+@utility wrap {
+  padding-inline: clamp(18px, 4vw, 64px);
+}
+
+@utility lab {
+  @apply font-mono text-[11px] tracking-[.16em] text-mute uppercase;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-vh font-body text-[17px] leading-[1.55] text-ink tabular-nums;
+    overflow-x: hidden;
+  }
+  ::selection {
+    background: var(--color-mag);
+    color: var(--color-vh);
+  }
+  a {
+    color: inherit;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-mag-lt);
+    outline-offset: 3px;
+  }
+}
+
+/* GSAP reveals these on scroll. Hidden only when script will run and motion
+   is welcome, so no-JS and reduced-motion visitors see everything at once. */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  [data-reveal] {
+    visibility: hidden;
+  }
+}
