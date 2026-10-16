@@ -3,7 +3,7 @@ import { Head, Section } from "./Section";
 const paras = [
   "I enjoy the work that connects an idea to a functioning application: building the API, integrating services, handling data and debugging the parts that do not work as expected.",
   "At Traders Global Generation, I am developing a social platform with an integrated marketplace, Redis-based trend tracking and AWS hosting. I also support software quality assurance on an outsourced project. Previously, I worked on a Python and FFmpeg sports-highlight pipeline at Tapmad Entertainment and built API-connected Python tools at Websity Digital.",
-  "My interest in applied AI has led me to team projects in scholarship discovery and code review, as well as an ongoing final-year project combining medical-image analysis with recommendations grounded in curated information. I was recognised as a Top Performer in the Pak Angels / ASPIRE Generative and Agentic AI training programme, and have completed three Claude Academy courses.",
+  "My interest in applied AI has led me to team projects in scholarship discovery and code review, as well as an ongoing final-year project combining medical-image analysis with recommendations grounded in curated information. I was recognised as a Top Performer in the Pak Angels / ASPIRE Generative and Agentic AI training programme, and have completed four Claude Academy courses.",
   "I am completing my BS Computer Science at IoBM, with graduation expected in January 2027. I want to keep developing my skills in backend engineering, cloud-native applications and reliable AI systems.",
 ];
 
