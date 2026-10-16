@@ -25,7 +25,7 @@ export default function Footer() {
           <h2 className="font-disp text-[clamp(30px,6vw,64px)] leading-[.98] lg:text-[clamp(30px,3.6vw,60px)] font-extrabold tracking-[-.035em] uppercase">
             Open to work
             <br />
-            from January 2027.
+            from <span className="text-mag">January 2027</span>.
           </h2>
           <p className="mt-5 mb-[26px] max-w-[62ch] text-lg leading-[1.6] text-mute lg:mb-0">
             I&apos;m interested in Python backend, applied AI and software engineering opportunities. If you&apos;re
