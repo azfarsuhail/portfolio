@@ -49,13 +49,19 @@ const credentials: RowData[] = [
     body: "Claude Academy course completion badge.",
     tech: verify("Oct 16, 2026", "https://academy.claude.com/verify/2f39d05c354e9e96ebb1ea5bbdf61143"),
   },
+  {
+    id: "C06",
+    title: "Claude Platform 101",
+    body: "Claude Academy course completion badge.",
+    tech: verify("Oct 16, 2026", "https://academy.claude.com/verify/7a11d2729e3c417d8e33731b5305c184"),
+  },
 ];
 
 export default function Certifications() {
   return (
     <Section id="training" className="border-t border-rule">
-      <Head n="Five credentials" title="Training & Credentials">
-        A training programme and four course badges. The badges link to pages where you can check them yourself.
+      <Head n="Six credentials" title="Training & Credentials">
+        A training programme and five course badges. The badges link to pages where you can check them yourself.
       </Head>
       <Table head={["Ref", "Credential", "Issued"]} className="mt-7 border-t border-rule">
         {credentials.map((c) => (
