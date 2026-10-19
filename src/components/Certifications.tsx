@@ -55,6 +55,12 @@ const credentials: RowData[] = [
     body: "Claude Academy course completion badge.",
     tech: verify("Oct 16, 2026", "https://academy.claude.com/verify/7a11d2729e3c417d8e33731b5305c184"),
   },
+  {
+    id: "C07",
+    title: "Introduction to Model Context Protocols",
+    body: "Claude Academy course completion badge.",
+    tech: verify("Oct 16, 2026", "https://academy.claude.com/verify/3bfab9feeb1d46f42b96bafe742d8f34"),
+  },
 ];
 
 export default function Certifications() {
