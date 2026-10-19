@@ -66,8 +66,8 @@ const credentials: RowData[] = [
 export default function Certifications() {
   return (
     <Section id="training" className="border-t border-rule">
-      <Head n="Six credentials" title="Training & Credentials">
-        A training programme and five course badges. The badges link to pages where you can check them yourself.
+      <Head n="Seven credentials" title="Training & Credentials">
+        A training programme and six course badges. The badges link to pages where you can check them yourself.
       </Head>
       <Table head={["Ref", "Credential", "Issued"]} className="mt-7 border-t border-rule">
         {credentials.map((c) => (
