@@ -6,7 +6,7 @@ type Role = {
   org: string;
   title: string;
   mark: string;
-  logo: string;
+  logo?: string;
   length: string;
   status: string;
   now?: boolean;
@@ -49,6 +49,23 @@ const roles: Role[] = [
   },
   {
     start: "Jun 2025",
+    org: "JCCAIR Journal",
+    title: "Technical Administrator",
+    mark: "JC",
+    logo: "https://jccair.org/public/journals/1/favicon_en.png",
+    length: "Ongoing",
+    status: "Current",
+    now: true,
+    points: [
+      "Deploying and operating the journal's Open Journal Systems (OJS) platform on Hostinger as sole technical administrator.",
+      "Administering the hosting environment over SSH and configuring cron jobs for scheduled tasks.",
+      "Troubleshooting application issues with PHP command-line tools.",
+      "Integrating and configuring OJS plugins.",
+    ],
+    stack: "OJS / Hostinger / SSH / PHP CLI / Cron / server administration",
+  },
+  {
+    start: "Jun 2025",
     org: "Websity Digital",
     title: "Software Engineer Intern",
     mark: "WD",
@@ -77,8 +94,8 @@ const roles: Role[] = [
 export default function Experience() {
   return (
     <Section id="experience">
-      <Head n="Three roles" title="Experience">
-        A junior role and two internships, most recent first.
+      <Head n="Four roles" title="Experience">
+        A junior role, a technical administrator role and two internships, most recent first.
       </Head>
       <div className="mt-7 border-t border-rule">
         {roles.map((r) => (
@@ -99,13 +116,15 @@ export default function Experience() {
                 >
                   {/* Unoptimized: 38px marks gain nothing from the optimizer, and
                       skipping it means no remote-host allowlist to abuse as a proxy. */}
-                  <Image
-                    src={r.logo}
-                    alt=""
-                    fill
-                    unoptimized
-                    className="object-contain opacity-85 grayscale transition-[filter,opacity] group-hover:opacity-100 group-hover:grayscale-0"
-                  />
+                  {r.logo && (
+                    <Image
+                      src={r.logo}
+                      alt=""
+                      fill
+                      unoptimized
+                      className="object-contain opacity-85 grayscale transition-[filter,opacity] group-hover:opacity-100 group-hover:grayscale-0"
+                    />
+                  )}
                 </span>
                 <span className="block min-w-0">
                   {r.org}
