@@ -1,73 +1,148 @@
 @import "tailwindcss";
+/* The scroll-craft engine's stylesheet, vendored unedited. In the base layer
+   so Tailwind utilities still override its element defaults. */
+@import "../lib/scrollcraft/scrollcraft.css" layer(base);
 
 /* ---------------------------------------------------------------
-   PALETTE — provenance: SMPTE bars and the PLUGE strip, the patches
-   an engineer uses to set black level on a broadcast monitor.
-   Muted text is ink at 72% / 55%: 8.3:1 and 5.1:1 on vh, both WCAG AA.
+   PALETTE — Webflow off-black and Electric Blue, six roles, one accent.
+   #0066FF is 4.2:1 on the canvas: fills, borders, nodes and the focus ring
+   only (3:1 needed). Blue TEXT uses --glow #297FFF: 5.4:1 on the canvas,
+   4.9:1 on cards and on a spotlight peak. White on #0066FF is 4.8:1; white
+   on #297FFF is 3.8:1, so hovers glow around a button rather than refill it.
+   The engine's drift writes --sc-canvas inline, so the page is dark only.
    --------------------------------------------------------------- */
-@theme {
-  --color-vh: #0a0a0b;
-  --color-panel: #121214;
-  --color-panel-2: #1a1a1d;
-  --color-ink: #e8e5de;
-  --color-mag: #bf00bf;
-  --color-mag-lt: #e979df;
-  --color-rule: rgb(232 229 222 / 0.13);
-  --color-rule-soft: rgb(232 229 222 / 0.06);
-  --color-mute: rgb(232 229 222 / 0.72);
-  --color-mute-lg: rgb(232 229 222 / 0.55);
+:root {
+  color-scheme: dark;
+  --sc-canvas: #050505;
+  --sc-surface: #141416;
+  --sc-ink: #f4f5f6; /* Ice White */
+  --sc-ink-soft: #9e9ea7; /* 7.7:1 on the canvas, 6.9:1 on cards */
+  --sc-accent: #0066ff; /* Electric Blue */
+  --sc-accent-ink: #ffffff;
+  --sc-hairline: #222226;
+  --sc-hairline-strong: #34343a;
+  --glow: #297fff; /* hover, highlights, active indicators, blue text */
+  --accent-press: #0052cc; /* pressed CTA: white on it is 6.8:1 */
 
-  --animate-tk-a: tk-a 64s linear infinite;
-  --animate-tk-b: tk-b 72s linear infinite;
-  @keyframes tk-a {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
-  @keyframes tk-b {
-    from { transform: translateX(-50%); }
-    to { transform: translateX(0); }
-  }
+  --sc-font-display: var(--font-archivo), "Archivo", system-ui, sans-serif;
+  --sc-font-text: var(--font-archivo), "Archivo", system-ui, sans-serif;
+  --sc-font-mono: var(--font-dm-mono), ui-monospace, Menlo, monospace;
+
+  /* Architectural: one tight radius scale, held everywhere. */
+  --sc-r-sm: 2px;
+  --sc-r-md: 4px;
+  --sc-r-lg: 6px;
+  --sc-shadow-color: 218 40% 2%; /* tinted toward the blue, never pure black */
 }
 
 @theme inline {
-  --font-disp: var(--font-archivo), "Helvetica Neue", Arial, sans-serif;
-  --font-mono: var(--font-dm-mono), ui-monospace, Menlo, monospace;
-  --font-body: var(--font-newsreader), Georgia, serif;
+  --color-canvas: var(--sc-canvas);
+  --color-surface: var(--sc-surface);
+  --color-ink: var(--sc-ink);
+  --color-ink-soft: var(--sc-ink-soft);
+  --color-accent: var(--sc-accent);
+  --color-accent-ink: var(--sc-accent-ink);
+  --color-glow: var(--glow);
+  --color-accent-press: var(--accent-press);
+  --color-hairline: var(--sc-hairline);
+  --color-hairline-strong: var(--sc-hairline-strong);
+
+  --font-sans: var(--sc-font-text);
+  --font-mono: var(--sc-font-mono);
+
+  --text-xs: var(--sc-t-xs);
+  --text-sm: var(--sc-t-sm);
+  --text-base: var(--sc-t-base);
+  --text-lg: var(--sc-t-lg);
+  --text-xl: var(--sc-t-xl);
+
+  --radius-sm: var(--sc-r-sm);
+  --radius-md: var(--sc-r-md);
+
+  --shadow-e1: var(--sc-e1);
+  --shadow-e2: var(--sc-e2);
+  --shadow-e3: var(--sc-e3);
 }
 
-@utility wrap {
-  padding-inline: clamp(18px, 4vw, 64px);
+/* Light text on dark, compensated on three axes: a step more weight, a touch
+   more tracking and leading than the engine's light-ground defaults. */
+body {
+  font-weight: 420;
+  letter-spacing: 0.002em;
+  line-height: 1.68;
 }
 
-@utility lab {
-  @apply font-mono text-[11px] tracking-[.16em] text-mute uppercase;
+/* Monolithic display: Archivo's width axis, expanded, one step heavier. */
+.sc-display {
+  font-stretch: 112%;
+  font-weight: 620;
 }
 
-@layer base {
-  html {
-    -webkit-text-size-adjust: 100%;
-  }
-  body {
-    @apply bg-vh font-body text-[17px] leading-[1.55] text-ink tabular-nums;
-    overflow-x: hidden;
-  }
-  ::selection {
-    background: var(--color-mag);
-    color: var(--color-vh);
-  }
-  a {
-    color: inherit;
-  }
-  :focus-visible {
-    outline: 2px solid var(--color-mag-lt);
-    outline-offset: 3px;
+/* A faint blue pool of light behind a block. Sections stay transparent so
+   the world shows through; these and hairlines are the only boundaries.
+   Peak is the accent at 14% over the canvas (#041328): SkillsConstellation
+   grades its labels against exactly that. */
+@utility spot {
+  isolation: isolate;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(
+      var(--spot-size, 60% 70%) at var(--spot-x, 70%) var(--spot-y, 40%),
+      color-mix(in srgb, var(--sc-accent) 14%, transparent),
+      transparent 72%
+    );
   }
 }
 
-/* GSAP reveals these on scroll. Hidden only when script will run and motion
-   is welcome, so no-JS and reduced-motion visitors see everything at once. */
-@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
-  [data-reveal] {
-    visibility: hidden;
+/* The Impact numbers glow: the brief asks for it, so it is earned, and it
+   stays faint. */
+@utility halo {
+  text-shadow: 0 0 28px color-mix(in srgb, var(--glow) 30%, transparent);
+}
+
+/* ---- signature move: the 2D map takes over from the 3D field ----
+   The pinned Skills act publishes --sc-p. NodeField flies 42 nodes onto the
+   star positions over p 0 to 0.2; the canvas fades in over them here. */
+.constellation-canvas {
+  opacity: clamp(0, calc((var(--sc-p, 1) - 0.16) * 12.5), 1);
+}
+
+/* ---- the project rail: items settle in sequence as it travels ----
+   The first item (the heading) is exempt. Opacity floors at 0.55 so an
+   arriving card reads as arriving, not as failing to load. */
+@media (prefers-reduced-motion: no-preference) {
+  .rail-item {
+    --settle: clamp(0, calc(var(--sc-p, 1) * 6.5 - var(--i) + 1.6), 1);
+    opacity: calc(0.55 + 0.45 * var(--settle));
+    transform: translateY(calc((1 - var(--settle)) * 18px));
+  }
+}
+
+/* The closing stage holds like any pinned stage when its content fits one
+   screen, and grows instead of clipping when it does not (short phones). */
+.close-stage {
+  height: auto;
+  min-height: 100svh;
+  overflow: visible;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .constellation-canvas {
+    opacity: 1;
+  }
+}
+
+/* The engine hides cues and reveals until its script runs. Without script it
+   never runs, so show everything settled. */
+@media (scripting: none) {
+  [data-sc-cue],
+  [data-sc-in],
+  [data-sc-stagger] > * {
+    opacity: 1 !important;
+    transform: none !important;
   }
 }

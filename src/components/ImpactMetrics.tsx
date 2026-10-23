@@ -1,7 +1,8 @@
-import { Head, Section } from "./Section";
+import { Head } from "./Section";
 
-// [value, decimals, unit, what it measures]. Motion counts each value up on
-// first scroll-in; the server renders the final number so it reads without JS.
+// [value, decimals, unit, what it measures]. The engine's count device ticks
+// each value up once on entry; the server renders the final number, so it
+// reads without JS and under reduced motion. Real figures only (owner's call).
 const marks: [number, number, string, string][] = [
   [97.8, 1, "%", "Diagnostic accuracy on the final-year medical imaging system, at sub-second inference."],
   [14, 0, " days", "From nothing to a running AI highlight pipeline for live sport."],
@@ -15,27 +16,35 @@ const marks: [number, number, string, string][] = [
 
 export default function ImpactMetrics() {
   return (
-    <Section id="impact" className="border-t border-rule">
-      <Head n="Eight numbers" title="Impact">
-        Results I am happy to be asked about in an interview.
-      </Head>
-      <div className="mt-7 grid border-t border-rule md:grid-cols-2 md:gap-x-[clamp(24px,5vw,64px)]">
-        {marks.map(([to, dec, unit, text]) => (
-          <div
-            key={text}
-            data-reveal
-            className="grid grid-cols-[112px_1fr] items-baseline gap-x-[18px] border-b border-rule-soft py-[15px] md:grid-cols-[132px_1fr]"
-          >
-            <b className="block font-disp text-[clamp(26px,3.4vw,38px)] leading-none font-extrabold tracking-[-.035em]">
-              <span data-count={to} data-dec={dec}>
-                {to.toFixed(dec)}
-              </span>
-              {unit && <span className="pl-0.5 text-[.5em] tracking-normal text-mute-lg">{unit}</span>}
-            </b>
-            <span className="text-base leading-[1.45]">{text}</span>
-          </div>
-        ))}
+    <section
+      id="impact"
+      data-sc-act="flow"
+      data-sc-drift="#0b0b0d"
+      className="sc-section spot relative border-t border-hairline [--spot-x:80%] [--spot-y:45%]"
+    >
+      <div className="sc-wrap">
+        <div data-sc-in>
+          <Head title="Impact">Results I am happy to be asked about in an interview.</Head>
+        </div>
+        <div
+          className="mt-8 grid border-t border-hairline md:grid-cols-2 md:gap-x-[clamp(1.5rem,5vw,4rem)]"
+          data-sc-in
+          data-sc-stagger="60"
+        >
+          {marks.map(([to, dec, unit, text]) => (
+            <div
+              key={text}
+              className="grid grid-cols-[7.5rem_1fr] items-baseline gap-x-5 border-b border-hairline py-5 md:grid-cols-[9rem_1fr]"
+            >
+              <b className="sc-display halo block text-[clamp(1.9rem,3.4vw,2.75rem)] leading-none">
+                <span data-sc-count={`0 ${to.toFixed(dec)}`}>{to.toFixed(dec)}</span>
+                {unit && <span className="pl-0.5 text-[.48em] tracking-normal text-ink-soft">{unit}</span>}
+              </b>
+              <span className="leading-snug">{text}</span>
+            </div>
+          ))}
+        </div>
       </div>
-    </Section>
+    </section>
   );
 }

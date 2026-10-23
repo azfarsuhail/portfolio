@@ -14,10 +14,10 @@ export const site = {
     "Azfar Suhail is a software engineer in Karachi building Python APIs, AI applications and automation workflows with FastAPI, Docker and AWS.",
   ogDescription:
     "Software engineer in Karachi building Python APIs, AI applications and automation workflows.",
-  availability: "Open to work — Jan 2027",
+  availability: "Open to work from Jan 2027",
   email: "azfarsuhail2011@gmail.com",
   github: "https://github.com/azfarsuhail",
   linkedin: "https://www.linkedin.com/in/azfarsuhail",
   resume: "/resume.pdf",
-  location: "Karachi, Pakistan — UTC+5",
+  location: "Karachi, Pakistan (UTC+5)",
 } as const;

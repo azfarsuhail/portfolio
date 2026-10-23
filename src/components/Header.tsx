@@ -1,37 +1,22 @@
 import { site } from "@/site";
+import { ctaSecondary } from "./cta";
 
-const links = [
-  ["about", "About"],
-  ["experience", "Experience"],
-  ["projects", "Projects"],
-  ["skills", "Skills"],
-  ["impact", "Impact"],
-  ["training", "Training"],
-  ["contact", "Contact"],
-] as const;
-
+// Filmic one-shot chrome: the wordmark and the one action, nothing to jump
+// between. The fade is a scrim where the bar's text sits, not a solid band
+// across the world.
 export default function Header() {
   return (
-    <header className="sticky top-0 z-40 border-t-[3px] border-b border-t-mag border-b-rule bg-panel">
-      <div className="wrap flex h-[46px] items-center gap-5 overflow-hidden">
-        <a href="#top" className="font-disp text-sm font-extrabold tracking-[-.01em] whitespace-nowrap uppercase no-underline">
+    <header className="pointer-events-none fixed inset-x-0 top-0 z-60 bg-linear-to-b from-canvas from-55% to-transparent pb-8">
+      <div className="sc-wrap pointer-events-auto flex h-16 items-center justify-between gap-4">
+        <a href="#top" className="font-semibold tracking-[.01em] whitespace-nowrap no-underline">
           {site.name}
         </a>
-        <nav aria-label="Sections" className="hidden gap-4 whitespace-nowrap min-[901px]:flex">
-          {links.map(([id, label]) => (
-            <a
-              key={id}
-              href={`#${id}`}
-              className="border-b border-transparent py-0.5 font-mono text-[11px] tracking-[.14em] text-mute uppercase no-underline hover:border-mag hover:text-ink"
-            >
-              {label}
-            </a>
-          ))}
-        </nav>
-        <span className="ml-auto inline-flex items-center gap-2 font-mono text-xs tracking-[.05em] whitespace-nowrap text-mag-lt max-[520px]:text-[11px] max-[520px]:tracking-normal">
-          <i className="block size-[7px] bg-mag" />
-          {site.availability}
-        </span>
+        <a
+          href={`mailto:${site.email}`}
+          className={`${ctaSecondary} px-4 py-2 text-sm whitespace-nowrap`}
+        >
+          Get in touch
+        </a>
       </div>
     </header>
   );

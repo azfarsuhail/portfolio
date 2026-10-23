@@ -1,4 +1,4 @@
-import { Head, Section } from "./Section";
+import { Head } from "./Section";
 
 const paras = [
   "I enjoy the work that connects an idea to a functioning application: building the API, integrating services, handling data and debugging the parts that do not work as expected.",
@@ -9,42 +9,44 @@ const paras = [
 
 const glance = [
   ["Now", "Junior Software Engineer, Traders Global Generation"],
-  ["Building", "Knee osteoarthritis analysis system — final-year project"],
+  ["Open to", "Python backend · Applied AI · Automation"],
+  ["Base", "Karachi, PK (remote or relocation)"],
+  ["Building", "Knee osteoarthritis analysis system, my final-year project"],
   ["Led", "ScholarCompass and CodeGuard AI teams"],
   ["Recognised", "Top Performer, Pak Angels / ASPIRE Cohort 11"],
-  ["Studying", "BSCS, IoBM — graduating Jan 2027"],
+  ["Studying", "BSCS, IoBM, graduating Jan 2027"],
   ["Learning", "Cloud-native systems, MLOps, model evaluation"],
 ] as const;
 
+// Act 2, Orientation: the quiet act before the peak. Flow, fade-in only.
 export default function About() {
   return (
-    <Section id="about">
-      {/* Wide screens: heading and facts on the left, the story on the right. */}
-      <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.45fr)] lg:gap-x-[clamp(40px,6vw,112px)]">
-        <div>
-          <Head n="Python backend & applied AI" title="About">
-            From an idea to something that runs.
-          </Head>
-          <dl data-reveal className="mt-7 border-t border-rule">
+    <section
+      id="about"
+      data-sc-act="flow"
+      data-sc-drift="#08080a"
+      className="sc-section spot relative border-t border-hairline [--spot-x:85%] [--spot-y:20%]"
+    >
+      <div className="sc-wrap grid gap-x-[clamp(2.5rem,6vw,7rem)] gap-y-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.35fr)]">
+        <div data-sc-in>
+          <Head title="From an idea to something that runs." />
+          <dl className="mt-8 border-t border-hairline">
             {glance.map(([k, v]) => (
-              <div
-                key={k}
-                className="grid grid-cols-[104px_1fr] gap-4 border-b border-rule-soft py-[11px] font-mono text-[13px] leading-normal"
-              >
-                <dt className="text-mute">{k}</dt>
+              <div key={k} className="grid grid-cols-[7rem_1fr] gap-4 border-b border-hairline py-3 text-sm">
+                <dt className="font-mono text-xs leading-6 tracking-[.06em] text-ink-soft uppercase">{k}</dt>
                 <dd>{v}</dd>
               </div>
             ))}
           </dl>
         </div>
-        <div className="mt-9 border-t border-rule pt-5 lg:mt-0 lg:border-t-0 lg:pt-[clamp(30px,5vw,58px)]">
+        <div className="sc-stack lg:pt-2" data-sc-stagger="70" data-sc-in>
           {paras.map((p) => (
-            <p key={p.slice(0, 24)} data-reveal className="mt-5 max-w-[68ch] text-lg leading-[1.65] first:mt-0">
+            <p key={p.slice(0, 24)} className="max-w-(--sc-measure) text-pretty">
               {p}
             </p>
           ))}
         </div>
       </div>
-    </Section>
+    </section>
   );
 }

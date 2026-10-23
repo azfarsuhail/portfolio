@@ -1,11 +1,11 @@
-import { Head, Section } from "./Section";
+import { Head } from "./Section";
 import { Row, Table, type RowData } from "./Rows";
 
 const verify = (date: string, href: string) => (
   <>
     {date}
     <br />
-    <a href={href} className="underline decoration-mag underline-offset-4 hover:text-ink">
+    <a href={href} className="text-ink underline decoration-hairline-strong transition-colors duration-150 hover:text-glow">
       Verify
     </a>
   </>
@@ -14,14 +14,14 @@ const verify = (date: string, href: string) => (
 const credentials: RowData[] = [
   {
     id: "C01",
-    title: "Generative & Agentic AI Application Developer",
+    title: "Pak Angels Gen AI",
     flag: "Top performer",
-    body: "Pak Angels with ASPIRE Pakistan, Cohort 11 (Aug – Oct 2026). Generative AI app development, agentic and multi-agent workflows, RAG, vector retrieval and prompt engineering. I led the team on ScholarCompass and CodeGuard AI.",
+    body: "Issued by ASPIRE Pakistan, Cohort 11 (Aug – Oct 2026). Generative AI app development, agentic and multi-agent workflows, RAG, vector retrieval and prompt engineering. I led the team on ScholarCompass and CodeGuard AI.",
     tech: (
       <>
-        Oct 7, 2026
+        Oct 2026
         <br />
-        ID PAGAI-TP-0111
+        ID PAGAI-TP-0749
       </>
     ),
   },
@@ -65,15 +65,21 @@ const credentials: RowData[] = [
 
 export default function Certifications() {
   return (
-    <Section id="training" className="border-t border-rule">
-      <Head n="Seven credentials" title="Training & Credentials">
-        A training programme and six course badges. The badges link to pages where you can check them yourself.
-      </Head>
-      <Table head={["Ref", "Credential", "Issued"]} className="mt-7 border-t border-rule">
-        {credentials.map((c) => (
-          <Row key={c.id} {...c} />
-        ))}
-      </Table>
-    </Section>
+    <section id="training" data-sc-act="flow" className="sc-section relative border-t border-hairline">
+      <div className="sc-wrap">
+        <div data-sc-in>
+          <Head title="Training & credentials">
+            A training programme and six course badges. The badges link to pages where you can check them yourself.
+          </Head>
+        </div>
+        <div data-sc-in>
+          <Table head={["Ref", "Credential", "Issued"]} className="mt-8 border-t border-hairline">
+            {credentials.map((c) => (
+              <Row key={c.id} {...c} />
+            ))}
+          </Table>
+        </div>
+      </div>
+    </section>
   );
 }

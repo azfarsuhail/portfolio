@@ -1,6 +1,5 @@
-import { Head, Section } from "./Section";
+import { Head } from "./Section";
 import { Flag, Row, Table, type RowData } from "./Rows";
-import TiltCard from "./TiltCard";
 
 const featured: RowData[] = [
   {
@@ -60,7 +59,7 @@ const more: RowData[] = [
   },
   {
     id: "P09",
-    title: "Trendd — Commerce Analytics Platform",
+    title: "Trendd: Commerce Analytics Platform",
     body: "An AI-assisted platform that ingests QuickBooks and Faire data, maps it automatically, and runs the ETL and reporting asynchronously through Celery and Redis.",
     tech: "Next.js · Django REST · Celery · Redis · PostgreSQL · Amazon S3",
   },
@@ -108,41 +107,64 @@ const more: RowData[] = [
   },
 ];
 
+const item = "rail-item w-[min(80vw,27rem)] shrink-0";
+
+// Act 4, Conviction. A pan rail: the heading is the first item (already in view),
+// the four builds settle in as it travels and lean toward the pointer, and a
+// closing note points at the archive. Reduced motion turns it into a native
+// horizontal scroll region (the engine's floor).
 export default function Projects() {
   return (
-    <Section id="projects" className="border-t border-rule">
-      <Head n="Sixteen builds" title="Projects">
-        Four up top — two team builds I led, a media pipeline and my final-year system. The rest are one click away.
-      </Head>
+    <>
+      <section id="projects" data-sc-act="pan" data-sc-span="2.6" data-sc-drift="#0a0a0c" className="border-t border-hairline">
+        <div data-sc-stage className="spot flex items-center [--spot-size:60%_60%] [--spot-x:30%] [--spot-y:50%]">
+          <div data-sc-pan="0.04" className="items-center gap-6 px-(--sc-gutter) pt-16">
+            <div className={`${item} pr-4`} style={{ "--i": 0 } as React.CSSProperties}>
+              <Head eyebrow="Sixteen builds" title="Projects">
+                Four here: two team builds I led, a media pipeline and my final-year system. The other twelve are listed
+                below.
+              </Head>
+            </div>
+            {featured.map((p, i) => (
+              <div key={p.id} className={item} style={{ "--i": i + 1 } as React.CSSProperties}>
+                <article
+                  data-sc-tilt="6"
+                  className="flex min-h-[25rem] flex-col rounded-md border border-hairline bg-surface p-7 shadow-[var(--sc-e2),var(--sc-edge)] transition-colors duration-150 hover:border-accent md:p-8"
+                >
+                  <span className="font-mono text-xs text-ink-soft">{p.id}</span>
+                  <h3 className="mt-3 text-xl leading-tight font-semibold text-balance">
+                    {p.title}
+                    {p.flag && <Flag>{p.flag}</Flag>}
+                  </h3>
+                  <p className="mt-3 text-ink-soft">{p.body}</p>
+                  <div className="mt-auto pt-6 font-mono text-xs leading-[1.85] tracking-[.03em] text-ink-soft">
+                    {p.tech}
+                  </div>
+                </article>
+              </div>
+            ))}
+            <div className={`${item} w-[min(70vw,18rem)]`} style={{ "--i": featured.length + 1 } as React.CSSProperties}>
+              {/* No links inside the rail: a focused link here would sit translated off-screen. */}
+              <p className="text-lg text-ink-soft">
+                Twelve more, from a Hadoop pipeline to a hand-sign classifier, in the archive below.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-      {/* Hairline grid: a 1px gap over the rule colour, no shadows. */}
-      <div className="mt-7 grid gap-px border border-rule bg-rule md:grid-cols-2">
-        {featured.map((p) => (
-          <TiltCard
-            key={p.id}
-            className="flex flex-col border-t-2 border-transparent bg-vh px-[22px] pt-[22px] pb-5 transition-colors hover:border-t-mag hover:bg-panel-2"
-          >
-            <span className="font-mono text-xs text-mute">{p.id}</span>
-            <h3 className="mt-3 font-disp text-[clamp(20px,2.2vw,24px)] leading-[1.2] font-bold tracking-[-.02em]">
-              {p.title}
-              {p.flag && <Flag>{p.flag}</Flag>}
-            </h3>
-            <p className="mt-2.5 text-[16.5px] leading-normal">{p.body}</p>
-            <div className="mt-auto pt-4 font-mono text-xs leading-[1.85] tracking-[.03em] text-mute">{p.tech}</div>
-          </TiltCard>
-        ))}
-      </div>
-
-      <details className="group mt-7">
-        <summary className="lab flex cursor-pointer list-none justify-between border-y border-rule py-3.5 hover:text-ink after:text-mag-lt after:content-['+'] group-open:after:content-['−'] [&::-webkit-details-marker]:hidden">
-          More projects — {more.length}
-        </summary>
-        <Table head={["Src", "Project", "Stack"]}>
-          {more.map((p) => (
-            <Row key={p.id} {...p} />
-          ))}
-        </Table>
-      </details>
-    </Section>
+      <section id="archive" data-sc-act="flow" className="sc-wrap relative scroll-mt-20 pt-4 pb-(--sc-section)">
+        <details className="group">
+          <summary className="sc-label flex cursor-pointer list-none justify-between border-y border-hairline py-4 transition-colors duration-150 hover:text-ink after:text-glow after:content-['+'] group-open:after:content-['−'] [&::-webkit-details-marker]:hidden">
+            More projects ({more.length})
+          </summary>
+          <Table head={["Ref", "Project", "Stack"]}>
+            {more.map((p) => (
+              <Row key={p.id} {...p} />
+            ))}
+          </Table>
+        </details>
+      </section>
+    </>
   );
 }

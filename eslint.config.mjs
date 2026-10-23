@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Vendored scroll-craft engine: never edited per project, so never linted.
+    "src/lib/scrollcraft/**",
   ]),
 ]);
 

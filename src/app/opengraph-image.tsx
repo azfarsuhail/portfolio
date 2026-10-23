@@ -16,9 +16,10 @@ export default function OpengraphImage() {
           flexDirection: "column",
           justifyContent: "space-between",
           padding: 72,
-          background: "#0a0a0b",
-          color: "#e8e5de",
-          borderTop: "12px solid #bf00bf",
+          // The site's off-black ground with its faint blue spotlight, Ice White ink.
+          background: "radial-gradient(70% 80% at 20% 85%, #041328, #050505 75%)",
+          color: "#f4f5f6",
+          borderTop: "6px solid #0066ff",
         }}
       >
         <div style={{ display: "flex", fontSize: 28, letterSpacing: 8, textTransform: "uppercase" }}>
@@ -28,18 +29,16 @@ export default function OpengraphImage() {
           style={{
             display: "flex",
             flexDirection: "column",
-            fontSize: 104,
-            fontWeight: 800,
-            lineHeight: 0.95,
+            fontSize: 96,
+            fontWeight: 700,
+            lineHeight: 1,
             letterSpacing: -3,
-            textTransform: "uppercase",
           }}
         >
-          <span>AI, backend</span>
-          <span>and the wiring</span>
-          <span style={{ color: "rgba(232,229,222,.55)" }}>underneath.</span>
+          <span>AI, backend and the wiring</span>
+          <span style={{ color: "#9e9ea7" }}>underneath.</span>
         </div>
-        <div style={{ display: "flex", fontSize: 26, color: "#e979df" }}>{site.availability}</div>
+        <div style={{ display: "flex", fontSize: 26, color: "#297fff" }}>{site.availability}</div>
       </div>
     ),
     size,

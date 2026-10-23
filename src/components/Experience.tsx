@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Head, Section } from "./Section";
+import { Head } from "./Section";
 
 type Role = {
   start: string;
@@ -41,7 +41,7 @@ const roles: Role[] = [
     length: "to Feb 2026",
     status: "Completed",
     points: [
-      "Built a Python/FastAPI pipeline with FFmpeg and Docker for sports clipping and highlight workflows — from empty repo to running system in 14 days.",
+      "Built a Python/FastAPI pipeline with FFmpeg and Docker for sports clipping and highlight workflows, from empty repo to running system in 14 days.",
       "Integrated video-processing services and automated repetitive processing steps, lifting the marketing team's clipping output by roughly 70%.",
       "Debugged application workflows and service integrations.",
     ],
@@ -91,28 +91,32 @@ const roles: Role[] = [
   },
 ];
 
+// Act 5, Trust: the record, dated and in order. Flow, fade-in only.
 export default function Experience() {
   return (
-    <Section id="experience">
-      <Head n="Four roles" title="Experience">
-        A junior role, a technical administrator role and two internships, most recent first.
-      </Head>
-      <div className="mt-7 border-t border-rule">
+    <section
+      id="experience"
+      data-sc-act="flow"
+      data-sc-drift="#070708"
+      className="sc-section spot relative border-t border-hairline [--spot-x:12%] [--spot-y:8%]"
+    >
+      <div className="sc-wrap">
+        <div data-sc-in>
+          <Head title="Experience">A junior role, a technical administrator role and two internships, most recent first.</Head>
+        </div>
+        <div className="mt-8 border-t border-hairline" data-sc-in data-sc-stagger="60">
         {roles.map((r) => (
           <article
             key={r.org}
-            data-reveal
-            className={`group border-b border-l-2 border-b-rule-soft pl-4 transition-colors last:border-b-rule hover:bg-panel ${
-              r.now ? "border-l-mag bg-panel" : "border-l-transparent"
-            }`}
+            className={`group border-b border-hairline px-4 transition-colors duration-150 hover:bg-surface ${r.now ? "bg-surface/60" : ""}`}
           >
-            <div className="grid gap-1 pt-4 pb-1.5 font-mono text-xs text-mute md:grid-cols-[96px_minmax(0,1fr)_96px_104px] md:items-baseline md:gap-x-5">
+            <div className="grid gap-1 pt-5 pb-1.5 font-mono text-xs text-ink-soft md:grid-cols-[6rem_minmax(0,1fr)_6rem_6.5rem] md:items-baseline md:gap-x-5">
               <span>{r.start}</span>
-              <span className="flex items-start gap-3.5 font-disp text-[clamp(19px,2.5vw,27px)] leading-[1.15] font-bold tracking-[-.02em] text-ink">
+              <span className="flex items-start gap-3.5 font-sans text-xl leading-tight font-semibold text-ink">
                 {/* Monogram shows behind the logo, and stays if the image fails. */}
                 <span
                   data-fb={r.mark}
-                  className="relative mt-0.5 grid size-[38px] flex-none place-items-center overflow-hidden border border-rule bg-panel-2 before:font-mono before:text-xs before:font-normal before:tracking-[.08em] before:text-mute-lg before:content-[attr(data-fb)]"
+                  className="relative mt-0.5 grid size-[38px] flex-none place-items-center overflow-hidden rounded-sm border border-hairline bg-canvas before:font-mono before:text-xs before:font-normal before:tracking-[.08em] before:text-ink-soft before:content-[attr(data-fb)]"
                 >
                   {/* Unoptimized: 38px marks gain nothing from the optimizer, and
                       skipping it means no remote-host allowlist to abuse as a proxy. */}
@@ -128,40 +132,39 @@ export default function Experience() {
                 </span>
                 <span className="block min-w-0">
                   {r.org}
-                  <small className="mt-[5px] block font-mono text-xs font-normal tracking-[.1em] text-mute uppercase">
-                    {r.title}
-                  </small>
+                  <small className="sc-label mt-1.5 block">{r.title}</small>
                 </span>
               </span>
               <span>{r.length}</span>
               <span
-                className={`tracking-[.14em] md:text-right ${
+                className={`tracking-[.1em] md:text-right ${
                   r.now
-                    ? "text-mag-lt after:ml-[7px] after:inline-block after:size-1.5 after:bg-mag after:align-middle after:content-['']"
+                    ? "text-glow after:ml-[7px] after:inline-block after:size-1.5 after:rounded-full after:bg-accent after:align-middle after:content-['']"
                     : ""
                 }`}
               >
                 {r.status}
               </span>
             </div>
-            <div className="max-w-[74ch] pt-0.5 pb-5 md:ml-[116px]">
+            <div className="max-w-[74ch] pt-1 pb-6 md:ml-[7.25rem]">
               {r.points && (
                 <ul>
                   {r.points.map((p) => (
                     <li
                       key={p}
-                      className="relative py-[5px] pl-5 text-[16.5px] leading-normal before:absolute before:left-0 before:text-mute-lg before:content-['—']"
+                      className="relative py-1.5 pl-5 before:absolute before:top-[0.95em] before:left-0 before:h-px before:w-2.5 before:bg-ink-soft before:content-['']"
                     >
                       {p}
                     </li>
                   ))}
                 </ul>
               )}
-              <div className="mt-[11px] font-mono text-xs leading-[1.9] tracking-[.04em] text-mute">{r.stack}</div>
+              <div className="mt-3 font-mono text-xs leading-[1.9] tracking-[.04em] text-ink-soft">{r.stack}</div>
             </div>
           </article>
         ))}
+        </div>
       </div>
-    </Section>
+    </section>
   );
 }

@@ -1,14 +1,14 @@
 import type { ReactNode } from "react";
 
-// The ruled table used by "More projects" and "Training & Credentials".
-const cols = "md:grid-cols-[60px_minmax(0,1.5fr)_minmax(0,1fr)] md:gap-x-6";
+// The ruled table used by the project archive and the credentials.
+const cols = "md:grid-cols-[4rem_minmax(0,1.5fr)_minmax(0,1fr)] md:gap-x-6";
 
 export function Table({ head, className = "", children }: { head: [string, string, string]; className?: string; children: ReactNode }) {
   return (
     <div className={className}>
-      <div className={`hidden border-b border-rule py-2 md:grid ${cols}`}>
+      <div className={`hidden border-b border-hairline py-2 md:grid ${cols}`}>
         {head.map((h) => (
-          <span key={h} className="lab">
+          <span key={h} className="sc-label">
             {h}
           </span>
         ))}
@@ -18,9 +18,10 @@ export function Table({ head, className = "", children }: { head: [string, strin
   );
 }
 
+// A status tag, not an accent: ink-soft on a hairline, so the blue stays owned by actions.
 export function Flag({ children }: { children: ReactNode }) {
   return (
-    <span className="ml-2.5 font-mono text-[11px] font-normal tracking-[.14em] whitespace-nowrap text-mag-lt uppercase">
+    <span className="ml-2.5 inline-block rounded-sm border border-hairline-strong px-2 py-0.5 align-middle font-mono text-xs leading-[1.3] font-normal tracking-[.04em] whitespace-nowrap text-ink-soft">
       {children}
     </span>
   );
@@ -30,19 +31,16 @@ export type RowData = { id: string; title: string; flag?: string; body: string; 
 
 export function Row({ id, title, flag, body, tech }: RowData) {
   return (
-    <article
-      data-reveal
-      className={`grid grid-cols-[52px_1fr] gap-x-3 border-b border-l-2 border-b-rule-soft border-l-transparent py-[18px] pl-3.5 transition-colors hover:border-l-mag hover:bg-panel-2 ${cols}`}
-    >
-      <span className="pt-1 font-mono text-xs text-mute">{id}</span>
+    <article className={`grid grid-cols-[3.25rem_1fr] gap-x-3 border-b border-hairline py-5 transition-colors duration-150 hover:bg-surface ${cols}`}>
+      <span className="pt-1 font-mono text-xs text-ink-soft">{id}</span>
       <div>
-        <h3 className="font-disp text-[19px] leading-[1.25] font-bold tracking-[-.015em]">
+        <h3 className="text-lg leading-snug font-semibold">
           {title}
           {flag && <Flag>{flag}</Flag>}
         </h3>
-        <p className="mt-[7px] max-w-[60ch] text-[16.5px] leading-normal">{body}</p>
+        <p className="mt-2 max-w-(--sc-measure) text-ink-soft">{body}</p>
       </div>
-      <div className="col-start-2 pt-2.5 font-mono text-xs leading-[1.85] tracking-[.03em] text-mute md:col-start-auto md:pt-1">
+      <div className="col-start-2 pt-2.5 font-mono text-xs leading-[1.85] tracking-[.03em] text-ink-soft md:col-start-auto md:pt-1">
         {tech}
       </div>
     </article>

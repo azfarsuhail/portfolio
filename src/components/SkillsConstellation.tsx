@@ -16,90 +16,88 @@ type Skill = {
   name: string;
   cluster: ClusterId;
   level: Level;
-  brandColor: string;
   /** Anchor position, normalised 0–1 within the canvas. */
   x: number;
   y: number;
   connections: string[];
 };
 
-const CLUSTERS: Record<ClusterId, { label: string; color: string; at: [number, number] }> = {
-  frontend: { label: "Frontend & Web", color: "#38bdf8", at: [0.15, 0.28] },
-  lang: { label: "Languages & Core Tools", color: "#7aa7ff", at: [0.5, 0.27] },
-  ai: { label: "AI/ML, Vision & Media", color: "#e979df", at: [0.85, 0.28] },
-  backend: { label: "Backend & Systems", color: "#2dd4bf", at: [0.15, 0.71] },
-  data: { label: "Data & Big Data", color: "#f59e0b", at: [0.5, 0.72] },
-  cloud: { label: "Cloud & DevOps", color: "#60a5fa", at: [0.85, 0.71] },
+const CLUSTERS: Record<ClusterId, { label: string; at: [number, number] }> = {
+  frontend: { label: "Frontend & Web", at: [0.15, 0.28] },
+  lang: { label: "Languages & Core Tools", at: [0.5, 0.27] },
+  ai: { label: "AI/ML, Vision & Media", at: [0.85, 0.28] },
+  backend: { label: "Backend & Systems", at: [0.15, 0.71] },
+  data: { label: "Data & Big Data", at: [0.5, 0.72] },
+  cloud: { label: "Cloud & DevOps", at: [0.85, 0.71] },
 };
 
-// [id, name, level, brandColor, connections]. The first skill in each cluster
+// [id, name, level, connections]. The first skill in each cluster
 // is its hub and sits at the centre; the rest ring around it.
 // ponytail: levels are placeholder self-ratings; review them before publishing.
-type Row = [string, string, Level, string, string[]];
+type Row = [string, string, Level, string[]];
 const ROWS: Record<ClusterId, Row[]> = {
   lang: [
-    ["python", "Python", "Expert", "#3776ab", ["typescript", "sql", "javascript", "java", "cpp", "git", "fastapi", "pandas", "sklearn"]],
-    ["typescript", "TypeScript", "Proficient", "#3178c6", ["javascript", "react", "nextjs"]],
-    ["javascript", "JavaScript", "Proficient", "#f7df1e", ["java"]],
-    ["java", "Java", "Comfortable", "#ed8b00", ["cpp"]],
-    ["cpp", "C++", "Comfortable", "#00599c", []],
-    ["git", "Git", "Proficient", "#f05032", ["sql", "gha"]],
-    ["sql", "SQL", "Proficient", "#e38c00", ["postgres", "sqlite"]],
+    ["python", "Python", "Expert", ["typescript", "sql", "javascript", "java", "cpp", "git", "fastapi", "pandas", "sklearn"]],
+    ["typescript", "TypeScript", "Proficient", ["javascript", "react", "nextjs"]],
+    ["javascript", "JavaScript", "Proficient", ["java"]],
+    ["java", "Java", "Comfortable", ["cpp"]],
+    ["cpp", "C++", "Comfortable", []],
+    ["git", "Git", "Proficient", ["sql", "gha"]],
+    ["sql", "SQL", "Proficient", ["postgres", "sqlite"]],
   ],
   backend: [
-    ["fastapi", "FastAPI", "Expert", "#009688", ["django", "drf", "rest", "celery", "webhooks", "pytest", "postgres", "docker", "openai"]],
-    ["django", "Django", "Proficient", "#44b78b", ["drf"]],
-    ["drf", "Django REST", "Proficient", "#e04e39", ["rest"]],
-    ["rest", "REST APIs", "Expert", "#61afef", ["webhooks"]],
-    ["webhooks", "Webhooks", "Proficient", "#c73a63", []],
-    ["pytest", "PyTest", "Proficient", "#0a9edc", ["celery", "gha"]],
-    ["celery", "Celery", "Comfortable", "#b6de64", ["redis"]],
+    ["fastapi", "FastAPI", "Expert", ["django", "drf", "rest", "celery", "webhooks", "pytest", "postgres", "docker", "openai"]],
+    ["django", "Django", "Proficient", ["drf"]],
+    ["drf", "Django REST", "Proficient", ["rest"]],
+    ["rest", "REST APIs", "Expert", ["webhooks"]],
+    ["webhooks", "Webhooks", "Proficient", []],
+    ["pytest", "PyTest", "Proficient", ["celery", "gha"]],
+    ["celery", "Celery", "Comfortable", ["redis"]],
   ],
   data: [
-    ["postgres", "PostgreSQL", "Proficient", "#4169e1", ["redis", "sqlite", "kafka", "hadoop", "hive", "pandas", "aws"]],
-    ["redis", "Redis", "Proficient", "#ff4438", ["kafka"]],
-    ["sqlite", "SQLite", "Proficient", "#44a8e0", ["pandas"]],
-    ["pandas", "Pandas", "Proficient", "#a08cff", ["hive"]],
-    ["hive", "Hive", "Comfortable", "#fdee21", ["hadoop"]],
-    ["hadoop", "Hadoop", "Comfortable", "#66ccff", ["kafka"]],
-    ["kafka", "Kafka", "Comfortable", "#d6d3cc", []],
+    ["postgres", "PostgreSQL", "Proficient", ["redis", "sqlite", "kafka", "hadoop", "hive", "pandas", "aws"]],
+    ["redis", "Redis", "Proficient", ["kafka"]],
+    ["sqlite", "SQLite", "Proficient", ["pandas"]],
+    ["pandas", "Pandas", "Proficient", ["hive"]],
+    ["hive", "Hive", "Comfortable", ["hadoop"]],
+    ["hadoop", "Hadoop", "Comfortable", ["kafka"]],
+    ["kafka", "Kafka", "Comfortable", []],
   ],
   ai: [
-    ["openai", "OpenAI", "Proficient", "#10a37f", ["gemini", "rag", "whisper", "sklearn", "opencv", "mediapipe", "ffmpeg"]],
-    ["gemini", "Gemini", "Proficient", "#8e75b2", ["rag"]],
-    ["rag", "RAG", "Proficient", "#e979df", ["whisper"]],
-    ["whisper", "Whisper", "Comfortable", "#74aa9c", ["ffmpeg"]],
-    ["ffmpeg", "FFmpeg", "Expert", "#5cb85c", ["opencv", "docker"]],
-    ["opencv", "OpenCV", "Proficient", "#5c3ee8", ["mediapipe"]],
-    ["mediapipe", "MediaPipe", "Proficient", "#0097a7", ["sklearn"]],
-    ["sklearn", "scikit-learn", "Proficient", "#f7931e", []],
+    ["openai", "OpenAI", "Proficient", ["gemini", "rag", "whisper", "sklearn", "opencv", "mediapipe", "ffmpeg"]],
+    ["gemini", "Gemini", "Proficient", ["rag"]],
+    ["rag", "RAG", "Proficient", ["whisper"]],
+    ["whisper", "Whisper", "Comfortable", ["ffmpeg"]],
+    ["ffmpeg", "FFmpeg", "Expert", ["opencv", "docker"]],
+    ["opencv", "OpenCV", "Proficient", ["mediapipe"]],
+    ["mediapipe", "MediaPipe", "Proficient", ["sklearn"]],
+    ["sklearn", "scikit-learn", "Proficient", []],
   ],
   frontend: [
-    ["react", "React", "Proficient", "#61dafb", ["nextjs", "rn", "expo", "tailwind", "streamlit"]],
-    ["nextjs", "Next.js", "Proficient", "#e8e5de", ["tailwind", "vercel"]],
-    ["tailwind", "Tailwind", "Proficient", "#38bdf8", []],
-    ["streamlit", "Streamlit", "Expert", "#ff4b4b", ["python"]],
-    ["expo", "Expo", "Comfortable", "#a3a3ff", ["rn"]],
-    ["rn", "React Native", "Proficient", "#58c4dc", []],
+    ["react", "React", "Proficient", ["nextjs", "rn", "expo", "tailwind", "streamlit"]],
+    ["nextjs", "Next.js", "Proficient", ["tailwind", "vercel"]],
+    ["tailwind", "Tailwind", "Proficient", []],
+    ["streamlit", "Streamlit", "Expert", ["python"]],
+    ["expo", "Expo", "Comfortable", ["rn"]],
+    ["rn", "React Native", "Proficient", []],
   ],
   cloud: [
-    ["docker", "Docker", "Expert", "#2496ed", ["aws", "k8s", "nginx", "linux", "gha", "vercel"]],
-    ["aws", "AWS", "Proficient", "#ff9900", ["nginx"]],
-    ["nginx", "NGINX", "Proficient", "#009639", ["linux"]],
-    ["linux", "Linux", "Proficient", "#fcc624", ["k8s"]],
-    ["k8s", "Kubernetes", "Comfortable", "#326ce5", []],
-    ["gha", "GitHub Actions", "Proficient", "#2088ff", ["vercel"]],
-    ["vercel", "Vercel", "Proficient", "#e8e5de", []],
+    ["docker", "Docker", "Expert", ["aws", "k8s", "nginx", "linux", "gha", "vercel"]],
+    ["aws", "AWS", "Proficient", ["nginx"]],
+    ["nginx", "NGINX", "Proficient", ["linux"]],
+    ["linux", "Linux", "Proficient", ["k8s"]],
+    ["k8s", "Kubernetes", "Comfortable", []],
+    ["gha", "GitHub Actions", "Proficient", ["vercel"]],
+    ["vercel", "Vercel", "Proficient", []],
   ],
 };
 
 // ---- colour: every highlighted label is lifted until it clears WCAG AA ----
-const BG: Rgb = [18, 18, 20]; // section background, --color-panel
-const INK: Rgb = [232, 229, 222];
-const hex = (h: string): Rgb => {
-  const n = parseInt(h.slice(1), 16);
-  return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
-};
+// Graded against the brightest ground the canvas can sit on: the peak of the
+// blue spotlight behind it (accent at 14% over the canvas). Darker grounds only gain.
+const BG: Rgb = [4, 19, 40];
+const INK: Rgb = [244, 245, 246]; // --sc-ink, Ice White
+const BLUE: Rgb = [0, 102, 255]; // --sc-accent, Electric Blue
 const lum = (c: Rgb) => {
   const [r, g, b] = c.map((v) => {
     const s = v / 255;
@@ -111,21 +109,53 @@ const contrast = (a: Rgb, b: Rgb) => {
   const [hi, lo] = [lum(a), lum(b)].sort((p, q) => q - p);
   return (hi + 0.05) / (lo + 0.05);
 };
-/** Mix a brand colour toward ink until it reaches 4.5:1 on the background. */
-function readable(color: string): Rgb {
-  const c = hex(color);
+const mix = (a: Rgb, b: Rgb, t: number) => a.map((v, i) => v + (b[i] - v) * t) as Rgb;
+/** Mix a colour toward ink until it reaches 4.5:1 on the given ground. */
+function readable(c: Rgb, ground: Rgb): Rgb {
   for (let t = 0; t <= 1; t += 0.05) {
-    const m = c.map((v, i) => Math.round(v + (INK[i] - v) * t)) as Rgb;
-    if (contrast(m, BG) >= 4.5) return m;
+    const m = mix(c, INK, t).map(Math.round) as Rgb;
+    if (contrast(m, ground) >= 4.5) return m;
   }
   return INK;
 }
 const css = ([r, g, b]: Rgb, a = 1) => `rgba(${r},${g},${b},${a})`;
 
-// Idle labels are ink at this alpha over the panel; fail the build if a
-// palette change ever drops them below AA.
+// ---- glow: soft, non-linear alpha falloff ----
+// A two-stop gradient falls off linearly, and the eye reads the radius where
+// that slope stops as a hard rim. These stops ease out instead, as fractions
+// of the peak; at the cluster haze's 0.28 peak they are 0.28 / 0.16 / 0.06 /
+// 0.015 / 0.
+const FALLOFF: [number, number][] = [
+  [0, 1],
+  [0.3, 0.571],
+  [0.6, 0.214],
+  [0.85, 0.054],
+  [1, 0],
+];
+const falloff = (u: number) => {
+  for (let k = 1; k < FALLOFF.length; k++) {
+    const [u1, a1] = FALLOFF[k];
+    const [u0, a0] = FALLOFF[k - 1];
+    if (u <= u1) return a0 + ((a1 - a0) * (u - u0)) / (u1 - u0);
+  }
+  return 0;
+};
+function softGlow(ctx: CanvasRenderingContext2D, x: number, y: number, r: number, peak: number) {
+  const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+  for (const [u, a] of FALLOFF) g.addColorStop(u, css(BLUE, peak * a));
+  return g;
+}
+const HAZE = 0.28; // the lit cluster's haze, at its centre
+type Glow = "hot" | "lit" | "idle";
+const GLOW: Record<Glow, number> = { hot: 0.6, lit: 0.42, idle: 0.22 }; // per-star peaks
+const GLOW_R: Record<Glow, number> = { hot: 8, lit: 5.5, idle: 3.6 }; // x core radius
+const PULSE = 1.08; // widest breathing scale
+
+// Idle labels are ink at this alpha. Graded against the spotlight plus the
+// haze's 0.6 stop, which is as far into a lit neighbour's haze as an idle
+// label sits; fail the build if a palette change drops it below AA.
 const IDLE_ALPHA = 0.62;
-if (contrast(INK.map((v, i) => v * IDLE_ALPHA + BG[i] * (1 - IDLE_ALPHA)) as Rgb, BG) < 4.5) {
+if (contrast(mix(BG, INK, IDLE_ALPHA), mix(BG, BLUE, HAZE * FALLOFF[2][1])) < 4.5) {
   throw new Error("SkillsConstellation: idle label colour is below WCAG AA");
 }
 
@@ -134,15 +164,16 @@ const RX = 0.115;
 const RY = 0.17;
 const rand = mulberry32(11);
 
-const SKILLS: Skill[] = (Object.keys(ROWS) as ClusterId[]).flatMap((cluster, ci) => {
+// Exported for NodeField: its morph flies one 3D node onto each of these anchors.
+export const SKILLS: Skill[] = (Object.keys(ROWS) as ClusterId[]).flatMap((cluster, ci) => {
   const [cx, cy] = CLUSTERS[cluster].at;
   const rows = ROWS[cluster];
   const ring = rows.length - 1;
-  return rows.map(([id, name, level, brandColor, connections], i) => {
-    if (i === 0) return { id, name, cluster, level, brandColor, connections, x: cx, y: cy };
+  return rows.map(([id, name, level, connections], i) => {
+    if (i === 0) return { id, name, cluster, level, connections, x: cx, y: cy };
     const a = -Math.PI / 2 + ci * 0.6 + ((i - 1) / ring) * Math.PI * 2;
     const k = 0.88 + rand() * 0.24;
-    return { id, name, cluster, level, brandColor, connections, x: cx + Math.cos(a) * RX * k, y: cy + Math.sin(a) * RY * k };
+    return { id, name, cluster, level, connections, x: cx + Math.cos(a) * RX * k, y: cy + Math.sin(a) * RY * k };
   });
 });
 
@@ -165,11 +196,18 @@ const EDGES: [number, number, boolean][] = [];
 }
 
 const HUBS = new Set((Object.keys(ROWS) as ClusterId[]).map((c) => ROWS[c][0][0]));
-const LABEL = SKILLS.map((s) => readable(s.brandColor));
-const CLUSTER_LABEL = Object.fromEntries(
-  (Object.keys(CLUSTERS) as ClusterId[]).map((c) => [c, readable(CLUSTERS[c].color)]),
-) as Record<ClusterId, Rgb>;
 const CORE: Record<Level, number> = { Expert: 3.4, Proficient: 2.7, Comfortable: 2.1 };
+// The alpha a star's own glow still has at its label's top edge (core + 7px
+// below the star), worst case across levels at the pulse's widest.
+const glowAtLabel = (kind: Glow) =>
+  Math.max(...Object.values(CORE).map((c) => GLOW[kind] * falloff((c + 7) / (c * GLOW_R[kind] * PULSE))));
+// Lit labels and cores: Electric Blue lifted toward Ice White until it clears
+// AA on the worst ground under them: spotlight, haze peak, then their own glow.
+const LIT = readable(BLUE, mix(mix(BG, BLUE, HAZE), BLUE, glowAtLabel("lit")));
+// The hovered label is plain ink over the hot glow; check it the same way.
+if (contrast(INK, mix(mix(BG, BLUE, HAZE), BLUE, glowAtLabel("hot"))) < 4.5) {
+  throw new Error("SkillsConstellation: hovered label colour is below WCAG AA");
+}
 const PHASE = SKILLS.map(() => rand() * Math.PI * 2);
 const STARS = Array.from({ length: 90 }, () => ({
   x: rand(),
@@ -232,22 +270,23 @@ export default function SkillsConstellation() {
       }
       ctx.globalAlpha = 1;
 
-      // Soft haze behind the lit cluster.
+      // Soft haze behind the lit cluster. Its radius never exceeds the distance
+      // to the nearest canvas edge: a glow the canvas clips before it reaches
+      // zero leaves a straight hard line along that edge.
       if (active) {
-        const c = CLUSTERS[active];
-        const [r, g, b] = hex(c.color);
-        const haze = ctx.createRadialGradient(c.at[0] * w, c.at[1] * h, 0, c.at[0] * w, c.at[1] * h, 0.2 * w);
-        haze.addColorStop(0, `rgba(${r},${g},${b},.09)`);
-        haze.addColorStop(1, `rgba(${r},${g},${b},0)`);
-        ctx.fillStyle = haze;
-        ctx.fillRect(0, 0, w, h);
+        const [ax, ay] = CLUSTERS[active].at;
+        const cx = ax * w;
+        const cy = ay * h;
+        const r = Math.min(0.2 * w, cx, w - cx, cy, h - cy);
+        ctx.fillStyle = softGlow(ctx, cx, cy, r, HAZE);
+        ctx.fillRect(cx - r, cy - r, r * 2, r * 2);
       }
 
       // Lines: within-cluster brighter than cross-cluster; both pop when lit.
       for (const [a, b, intra] of EDGES) {
         const lit = active !== null && (SKILLS[a].cluster === active || SKILLS[b].cluster === active);
         if (intra && lit) {
-          ctx.strokeStyle = css(hex(CLUSTERS[active].color), 0.6);
+          ctx.strokeStyle = css(BLUE, 0.7);
           ctx.lineWidth = 1.4;
         } else if (lit) {
           ctx.strokeStyle = css(INK, 0.22);
@@ -262,29 +301,26 @@ export default function SkillsConstellation() {
         ctx.stroke();
       }
 
-      // Stars: brand-coloured glow plus a crisp core sized by level.
+      // Stars: a blue glow plus a crisp core sized by level; Ice White at rest, lit blue.
       for (let i = 0; i < SKILLS.length; i++) {
         const s = SKILLS[i];
         const lit = s.cluster === active;
         const core = CORE[s.level];
-        const pulse = still ? 1 : 1 + 0.08 * Math.sin(t * 1.4 + PHASE[i]);
-        const glowR = core * (i === hot ? 8 : lit ? 5.5 : 3.6) * pulse;
-        const [r, g, b] = hex(s.brandColor);
-        const glow = ctx.createRadialGradient(px[i], py[i], 0, px[i], py[i], glowR);
-        glow.addColorStop(0, `rgba(${r},${g},${b},${i === hot ? 0.6 : lit ? 0.42 : 0.22})`);
-        glow.addColorStop(1, `rgba(${r},${g},${b},0)`);
-        ctx.fillStyle = glow;
+        const pulse = still ? 1 : 1 + (PULSE - 1) * Math.sin(t * 1.4 + PHASE[i]);
+        const kind: Glow = i === hot ? "hot" : lit ? "lit" : "idle";
+        const glowR = core * GLOW_R[kind] * pulse;
+        ctx.fillStyle = softGlow(ctx, px[i], py[i], glowR, GLOW[kind]);
         ctx.beginPath();
         ctx.arc(px[i], py[i], glowR, 0, Math.PI * 2);
         ctx.fill();
-        ctx.fillStyle = css(LABEL[i]);
+        ctx.fillStyle = css(lit || i === hot ? LIT : INK);
         ctx.beginPath();
         ctx.arc(px[i], py[i], core, 0, Math.PI * 2);
         ctx.fill();
       }
 
-      // Labels. Idle ink at 62% is ~6:1 on the panel; lit labels use the
-      // contrast-lifted brand colour. Kept inside the canvas edges.
+      // Labels. Idle ink at 62% clears AA even on the spotlight (checked at load);
+      // lit labels use the contrast-lifted blue. Kept inside the canvas edges.
       ctx.textAlign = "center";
       ctx.textBaseline = "top";
       for (let i = 0; i < SKILLS.length; i++) {
@@ -294,7 +330,7 @@ export default function SkillsConstellation() {
         const half = ctx.measureText(s.name).width / 2;
         const x = Math.min(Math.max(px[i], half + 4), w - half - 4);
         const y = py[i] + CORE[s.level] + 7;
-        ctx.fillStyle = i === hot ? css(INK) : lit ? css(LABEL[i]) : css(INK, still ? 0.74 : IDLE_ALPHA);
+        ctx.fillStyle = i === hot ? css(INK) : lit ? css(LIT) : css(INK, still ? 0.74 : IDLE_ALPHA);
         ctx.fillText(s.name, x, y);
         if (i === hot) {
           ctx.font = `400 10px ${family}`;
@@ -308,7 +344,7 @@ export default function SkillsConstellation() {
         const count = SKILLS.filter((s) => s.cluster === active).length;
         ctx.textAlign = "left";
         ctx.font = `500 11px ${family}`;
-        ctx.fillStyle = css(CLUSTER_LABEL[active]);
+        ctx.fillStyle = css(LIT);
         ctx.fillText(`${CLUSTERS[active].label.toUpperCase()} · ${count}`, 12, 12);
       }
     }
@@ -392,12 +428,10 @@ export default function SkillsConstellation() {
     };
   }, []);
 
+  // data-constellation is how NodeField finds the anchors' screen rectangle.
   return (
-    <div data-reveal className="mt-7 hidden md:block">
-      <div ref={wrapRef} aria-hidden className="relative h-[460px] border-y border-rule">
-        <canvas ref={canvasRef} className="absolute inset-0 size-full font-mono" />
-      </div>
-      <p className="lab mt-3">Hover a star to light up its cluster · full list below</p>
+    <div ref={wrapRef} data-constellation aria-hidden className="constellation-canvas relative size-full">
+      <canvas ref={canvasRef} className="absolute inset-0 size-full font-mono" />
     </div>
   );
 }
