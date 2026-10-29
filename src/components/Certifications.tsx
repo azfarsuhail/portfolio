@@ -103,6 +103,18 @@ const credentials: RowData[] = [
       </>
     ),
   },
+  {
+    id: "C11",
+    title: "Erasmus+ Food Literacy",
+    body: "Certificate of attendance for the Learning Teaching Training Activities organised by ODTÜ, MEBIVA, EKAPDER and the Ministry of Agriculture & Forestry, Ankara (Oct 11 – 15, 2024).",
+    tech: (
+      <>
+        Oct 15, 2024
+        <br />
+        {link("/certificates/erasmus-food-literacy-2024.jpg", "View")}
+      </>
+    ),
+  },
 ];
 
 export default function Certifications() {
@@ -111,7 +123,7 @@ export default function Certifications() {
       <div className="sc-wrap">
         <div data-sc-in>
           <Head title="Training & credentials">
-            Two training programmes, six course badges and two event certificates. The badges link to pages where you can check them yourself.
+            Two training programmes, six course badges and three event certificates. The badges link to pages where you can check them yourself.
           </Head>
         </div>
         <div data-sc-in>
