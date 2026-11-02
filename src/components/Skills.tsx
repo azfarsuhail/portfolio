@@ -3,8 +3,8 @@ import SkillsConstellation from "./SkillsConstellation";
 
 const groups: [string, string[]][] = [
   ["Languages", ["Python", "SQL", "TypeScript", "JavaScript", "Java", "C++", "C"]],
-  ["Backend & APIs", ["FastAPI", "Django", "Django REST Framework", "SQLModel", "Uvicorn", "REST APIs", "external API integration", "webhooks & JSON"]],
-  ["Applied AI", ["generative AI apps", "RAG & vector retrieval", "prompt engineering", "structured AI workflows", "agentic workflows", "AI service integration", "CNN image analysis", "scikit-learn", "OpenCV", "MediaPipe", "Whisper", "OpenAI", "Gemini"]],
+  ["Backend & APIs", ["FastAPI", "Django", "Django REST Framework", "SQLModel", "Uvicorn", "REST APIs", "external API integration", "webhooks & JSON", "n8n"]],
+  ["Applied AI", ["generative AI apps", "RAG & vector retrieval", "prompt engineering", "structured AI workflows", "AI agents", "agentic workflows", "AI service integration", "CNN image analysis", "scikit-learn", "OpenCV", "MediaPipe", "Whisper", "OpenAI", "Gemini"]],
   ["Video & media", ["FFmpeg", "hardware-accelerated transcoding", "real-time processing", "vMix integration", "workflow automation"]],
   ["Infrastructure", ["Docker", "Docker Compose", "Kubernetes", "NGINX", "Linux", "Git", "GitHub", "GitHub Actions", "CI/CD", "secrets management"]],
   ["Cloud", ["AWS EC2", "AWS RDS", "AWS S3", "Azure", "Vercel", "object storage", "production server config"]],
