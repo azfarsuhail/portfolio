@@ -26,14 +26,14 @@ export default function Hero() {
             <div className="mt-8 flex flex-wrap gap-3">
               <a
                 href={`mailto:${site.email}`}
-                className={`${ctaPrimary} px-5 py-3`}
+                className={`${ctaPrimary} grow px-5 py-3 sm:grow-0`}
               >
                 Get in touch
               </a>
               <a
                 href={site.resume}
                 download
-                className={`${ctaSecondary} px-5 py-3`}
+                className={`${ctaSecondary} grow px-5 py-3 sm:grow-0`}
               >
                 Download résumé
               </a>

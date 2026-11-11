@@ -9,12 +9,14 @@ import Certifications from "@/components/Certifications";
 import ImpactMetrics from "@/components/ImpactMetrics";
 import Footer from "@/components/Footer";
 import ScrollCraft from "@/components/ScrollCraft";
+import Loader from "@/components/Loader";
 
 // The owner's journey (BRIEF.md): entrance, the engine, the proof, the record,
 // the metric, the departure. One world behind all of it.
 export default function Home() {
   return (
     <>
+      <Loader />
       <World />
       <Header />
       <main>

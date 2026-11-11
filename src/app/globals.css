@@ -136,6 +136,56 @@ body {
   }
 }
 
+/* ---- the loader: the wiring connects itself while the page loads ----
+   Edges draw in, hold, then clear forward, a beat apart; nodes brighten as
+   their edges arrive. Strokes and fills use the accent (3:1 is enough for
+   non-text); the nodes glow in --glow like the Impact numbers. */
+.loader-edge {
+  fill: none;
+  stroke: var(--sc-accent);
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: loader-draw 1.8s var(--sc-ease-in-out) calc(var(--i) * 140ms) infinite;
+}
+.loader-node {
+  fill: var(--glow);
+  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--glow) 70%, transparent));
+  opacity: 0.35;
+  animation: loader-pulse 1.8s var(--sc-ease-out) calc(var(--i) * 140ms) infinite;
+}
+@keyframes loader-draw {
+  0% { stroke-dashoffset: 1; }
+  45%, 70% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -1; }
+}
+@keyframes loader-pulse {
+  0%, 100% { opacity: 0.35; }
+  45% { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .loader-edge,
+  .loader-node {
+    animation: none;
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+/* Without script nothing would ever lift it; and if script loads but fails,
+   the curtain lifts itself at 8s rather than hiding a working page. */
+@media (scripting: none) {
+  .loader {
+    display: none;
+  }
+}
+.loader {
+  animation: loader-out 500ms var(--sc-ease-out) 8s forwards;
+}
+@keyframes loader-out {
+  to { opacity: 0; visibility: hidden; }
+}
+
 /* The engine hides cues and reveals until its script runs. Without script it
    never runs, so show everything settled. */
 @media (scripting: none) {

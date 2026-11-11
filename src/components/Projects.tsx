@@ -129,10 +129,10 @@ export default function Projects() {
               <div key={p.id} className={item} style={{ "--i": i + 1 } as React.CSSProperties}>
                 <article
                   data-sc-tilt="6"
-                  className="flex min-h-[25rem] flex-col rounded-md border border-hairline bg-surface p-7 shadow-[var(--sc-e2),var(--sc-edge)] transition-colors duration-150 hover:border-accent md:p-8"
+                  className="flex min-h-[25rem] flex-col rounded-md border border-hairline bg-surface p-5 shadow-[var(--sc-e2),var(--sc-edge)] transition-colors duration-150 hover:border-accent sm:p-7 md:p-8"
                 >
                   <span className="font-mono text-xs text-ink-soft">{p.id}</span>
-                  <h3 className="mt-3 text-xl leading-tight font-semibold text-balance">
+                  <h3 className="mt-3 text-xl leading-tight font-semibold text-balance hyphens-auto">
                     {p.title}
                     {p.flag && <Flag>{p.flag}</Flag>}
                   </h3>

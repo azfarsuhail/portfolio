@@ -2,7 +2,13 @@ import { Head } from "./Section";
 import { Row, Table, type RowData } from "./Rows";
 
 const link = (href: string, label: string) => (
-  <a href={href} target="_blank" rel="noopener" className="text-ink underline decoration-hairline-strong transition-colors duration-150 hover:text-glow">
+  // The ::after widens the tap area to 24px+ on touch without moving the text.
+  <a
+    href={href}
+    target="_blank"
+    rel="noopener"
+    className="relative text-ink underline decoration-hairline-strong transition-colors duration-150 after:absolute after:-inset-x-1 after:-inset-y-2 after:content-[''] hover:text-glow"
+  >
     {label}
   </a>
 );

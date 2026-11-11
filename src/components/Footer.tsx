@@ -8,7 +8,9 @@ const links = [
   ["LinkedIn", site.linkedin, site.linkedin],
 ] as const;
 
-const row = "grid grid-cols-[6.5rem_minmax(0,1fr)] items-baseline gap-4 border-b border-hairline py-3 text-sm";
+// Phones stack the label over its value so addresses keep the full width.
+const row =
+  "grid grid-cols-1 items-baseline gap-1 border-b border-hairline py-3 text-sm sm:grid-cols-[6.5rem_minmax(0,1fr)] sm:gap-4";
 // Long URLs wrap instead of pushing the page wider on phones.
 const val = "min-w-0 justify-self-start [overflow-wrap:anywhere]";
 
@@ -36,14 +38,14 @@ export default function Footer() {
                 <a
                   href={`mailto:${site.email}`}
                   data-sc-magnet="0.28"
-                  className={`${ctaPrimary} px-6 py-3.5`}
+                  className={`${ctaPrimary} grow px-6 py-3.5 sm:grow-0`}
                 >
                   Get in touch
                 </a>
                 <a
                   href={site.resume}
                   download
-                  className={`${ctaSecondary} px-6 py-3.5`}
+                  className={`${ctaSecondary} grow px-6 py-3.5 sm:grow-0`}
                 >
                   Download résumé
                 </a>

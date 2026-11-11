@@ -13,7 +13,7 @@ export default function Header() {
         </a>
         <a
           href={`mailto:${site.email}`}
-          className={`${ctaSecondary} px-4 py-2 text-sm whitespace-nowrap`}
+          className={`${ctaSecondary} px-4 py-2 text-sm`}
         >
           Get in touch
         </a>
