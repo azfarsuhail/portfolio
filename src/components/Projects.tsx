@@ -36,8 +36,8 @@ const more: RowData[] = [
     id: "P05",
     title: "Social Platform with Integrated Marketplace",
     flag: "In development",
-    body: "Current work at Traders Global Generation: backend functionality and the infrastructure behind a social platform with marketplace features and Redis-based trend tracking.",
-    tech: "Redis · AWS EC2 · AWS RDS",
+    body: "Current work at Traders Global Generation: a social platform with marketplace features. Next.js frontends for admins, moderators and users, an Expo / React Native mobile app in TestFlight testing, Redis-based trend tracking and AWS hosting.",
+    tech: "Next.js · Expo · React Native · Redis · AWS EC2 · AWS RDS",
   },
   {
     id: "P06",
